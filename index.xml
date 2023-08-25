@@ -2,7 +2,7 @@
     <channel>
         <title></title>
         <link>/</link>
-        <description>This is my cool site</description>
+        <description>Hello, I&#39;am Adi. Welcome to my blog...</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language>
             <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
         </channel>
