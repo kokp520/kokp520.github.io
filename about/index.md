@@ -1,9 +1,12 @@
 # About me
 
-
-> Welcome to my personal blog! Here i'll be sharing insights about my experience as a software engineer. i like to keep things simple and relatable. <br>
-> if you have any questions or any job oppertunities related to engineering. please contact me, let's have a chat.
-> By {{< person "https://kokp520.github.io/" Adi "author of the LoveIt theme" "/adi_avatar.png" >}}.
+{{<admonition info "Abstract" true>}}
+Welcome to my personal blog!<br>
+ Here i'll be sharing insights about my experience as a software engineer.
+ <br> i like to keep things simple and relatable. <br>
+if you have any questions or any job oppertunities related to engineering. please contact me, let's have a chat.
+ By {{< person "https://kokp520.github.io/" Adi "author of the LoveIt theme" "/adi_avatar.png" >}}.
+{{</admonition>}}
 
 ![Hugo Theme LoveIt](/MAN_TYPING.gif)
 
