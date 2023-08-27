@@ -20,29 +20,5 @@
     <guid>https://example.com/tags/markdown/</guid>
     <description><![CDATA[]]></description>
 </item>
-<item>
-    <title>shortcodes</title>
-    <link>https://example.com/tags/shortcodes/</link>
-    <pubDate>Wed, 04 Mar 2020 16:29:41 &#43;0800</pubDate>
-    <author>Adi</author>
-    <guid>https://example.com/tags/shortcodes/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
-    <title>HTML</title>
-    <link>https://example.com/tags/html/</link>
-    <pubDate>Sun, 01 Dec 2019 21:57:40 &#43;0800</pubDate>
-    <author>Adi</author>
-    <guid>https://example.com/tags/html/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
-    <title>emoji</title>
-    <link>https://example.com/tags/emoji/</link>
-    <pubDate>Tue, 01 Oct 2019 17:55:28 &#43;0800</pubDate>
-    <author>Adi</author>
-    <guid>https://example.com/tags/emoji/</guid>
-    <description><![CDATA[]]></description>
-</item>
 </channel>
 </rss>

@@ -4,7 +4,7 @@
         <link>https://example.com/</link>
         <description>Welcome to my blog...</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>kokp520@gmail.com (Adi)</managingEditor>
-            <webMaster>kokp520@gmail.com (Adi)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 26 Aug 2023 18:11:09 &#43;0800</lastBuildDate>
+            <webMaster>kokp520@gmail.com (Adi)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 27 Aug 2023 00:00:00 &#43;0000</lastBuildDate>
             <atom:link href="https://example.com/index.xml" rel="self" type="application/rss+xml" />
         <item>
     <title>world</title>
@@ -15,6 +15,19 @@
     <description><![CDATA[]]></description>
 </item>
 <item>
+    <title>oldroad - 購物網站</title>
+    <link>https://example.com/oldroad-website/</link>
+    <pubDate>Sat, 26 Aug 2023 00:00:00 &#43;0000</pubDate>
+    <author>Adi</author>
+    <guid>https://example.com/oldroad-website/</guid>
+    <description><![CDATA[<p><strong><em>OldroadWebsite | SHOP | Nodejs | Express | MongoDB
+<br>使用<code>Nodejs</code>+<code>express</code>開發購物網站，包含登入系統、後台系統、購物車系統。</em></strong></p>
+<p><figure><a class="lightgallery" href="/oldroad-website/feature-banner.gif" title="banner" data-thumbnail="/oldroad-website/feature-banner.gif" data-sub-html="<h2>Old-Road Shop</h2><p>banner</p>">
+        
+    </a><figcaption class="image-caption">Old-Road Shop</figcaption>
+    </figure></p>]]></description>
+</item>
+<item>
     <title>Theme Documentation - Content</title>
     <link>https://example.com/theme-documentation-content/</link>
     <pubDate>Thu, 05 Mar 2020 15:58:26 &#43;0800</pubDate>
@@ -23,28 +36,12 @@
     <description><![CDATA[<p>Find out how to create and organize your content quickly and intuitively in <strong>LoveIt</strong> theme.</p>]]></description>
 </item>
 <item>
-    <title>Theme Documentation - Built-in Shortcodes</title>
-    <link>https://example.com/theme-documentation-built-in-shortcodes/</link>
-    <pubDate>Wed, 04 Mar 2020 16:29:41 &#43;0800</pubDate>
-    <author>Dillon</author>
-    <guid>https://example.com/theme-documentation-built-in-shortcodes/</guid>
-    <description><![CDATA[<p><strong>Hugo</strong> provides multiple built-in shortcodes for author convenience and to keep your markdown content clean.</p>]]></description>
-</item>
-<item>
-    <title>Basic Markdown Syntax</title>
-    <link>https://example.com/basic-markdown-syntax/</link>
-    <pubDate>Sun, 01 Dec 2019 21:57:40 &#43;0800</pubDate>
-    <author>Dillon</author>
-    <guid>https://example.com/basic-markdown-syntax/</guid>
-    <description><![CDATA[<p>This article offers a sample of basic Markdown syntax that can be used in Hugo content files.</p>]]></description>
-</item>
-<item>
-    <title>Emoji Support</title>
-    <link>https://example.com/emoji-support/</link>
-    <pubDate>Tue, 01 Oct 2019 17:55:28 &#43;0800</pubDate>
-    <author>Dillon</author>
-    <guid>https://example.com/emoji-support/</guid>
-    <description><![CDATA[<p>Emoji can be enabled in a Hugo project in a number of ways.</p>]]></description>
+    <title>First project - automator tool</title>
+    <link>https://example.com/sms-python-gogoro/</link>
+    <pubDate>Sun, 27 Aug 2023 00:00:00 &#43;0000</pubDate>
+    <author>Adi</author>
+    <guid>https://example.com/sms-python-gogoro/</guid>
+    <description><![CDATA[<p>Send sms notification by crawler tool with python.</p>]]></description>
 </item>
 </channel>
 </rss>

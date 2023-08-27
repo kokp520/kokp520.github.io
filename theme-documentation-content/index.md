@@ -16,6 +16,7 @@ A few suggestions to help you get a good looking site quickly:
 {{< admonition note "Local Resource Reference" >}}
 {{< version 0.2.10 >}}
 
+
 There are three ways to reference local resources such as **images** and **music**:
 
 1. Using [page resources](https://gohugo.io/content-management/page-resources/) in [page bundles](https://gohugo.io/content-management/page-bundles/).

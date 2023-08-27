@@ -1,0 +1,29 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>project - Category - Adi&#39;s Blog</title>
+        <link>https://example.com/categories/project/</link>
+        <description>project - Category - Adi&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>kokp520@gmail.com (Adi)</managingEditor>
+            <webMaster>kokp520@gmail.com (Adi)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 27 Aug 2023 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://example.com/categories/project/" rel="self" type="application/rss+xml" /><item>
+    <title>oldroad - 購物網站</title>
+    <link>https://example.com/oldroad-website/</link>
+    <pubDate>Sat, 26 Aug 2023 00:00:00 &#43;0000</pubDate>
+    <author>Adi</author>
+    <guid>https://example.com/oldroad-website/</guid>
+    <description><![CDATA[<p><strong><em>OldroadWebsite | SHOP | Nodejs | Express | MongoDB
+<br>使用<code>Nodejs</code>+<code>express</code>開發購物網站，包含登入系統、後台系統、購物車系統。</em></strong></p>
+<p><figure><a class="lightgallery" href="/oldroad-website/feature-banner.gif" title="banner" data-thumbnail="/oldroad-website/feature-banner.gif" data-sub-html="<h2>Old-Road Shop</h2><p>banner</p>">
+        
+    </a><figcaption class="image-caption">Old-Road Shop</figcaption>
+    </figure></p>]]></description>
+</item>
+<item>
+    <title>First project - automator tool</title>
+    <link>https://example.com/sms-python-gogoro/</link>
+    <pubDate>Sun, 27 Aug 2023 00:00:00 &#43;0000</pubDate>
+    <author>Adi</author>
+    <guid>https://example.com/sms-python-gogoro/</guid>
+    <description><![CDATA[<p>Send sms notification by crawler tool with python.</p>]]></description>
+</item>
+</channel>
+</rss>
