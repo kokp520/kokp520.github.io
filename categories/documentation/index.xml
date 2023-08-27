@@ -1,8 +1,8 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>Documentation - Category - Adi&#39;s Blog</title>
+        <title>Documentation - Category - Adiwu98&#39;s Blog</title>
         <link>https://example.com/categories/documentation/</link>
-        <description>Documentation - Category - Adi&#39;s Blog</description>
+        <description>Documentation - Category - Adiwu98&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>kokp520@gmail.com (Adi)</managingEditor>
             <webMaster>kokp520@gmail.com (Adi)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><atom:link href="https://example.com/categories/documentation/" rel="self" type="application/rss+xml" /><item>
     <title>Theme Documentation - Content</title>
