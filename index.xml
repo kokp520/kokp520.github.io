@@ -1,13 +1,13 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>Adiwu98&#39;s Blog</title>
+        <title>Adi98&#39;s Blog</title>
         <link>https://example.com/</link>
         <description>Welcome to my blog...</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>kokp520@gmail.com (Adi)</managingEditor>
             <webMaster>kokp520@gmail.com (Adi)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 27 Aug 2023 00:00:00 &#43;0000</lastBuildDate>
             <atom:link href="https://example.com/index.xml" rel="self" type="application/rss+xml" />
         <item>
-    <title>world</title>
+    <title>如何創建Hugo網站</title>
     <link>https://example.com/world/</link>
     <pubDate>Sat, 26 Aug 2023 18:11:09 &#43;0800</pubDate>
     <author>Adi</author>
@@ -26,14 +26,6 @@
         
     </a><figcaption class="image-caption">Old-Road Shop</figcaption>
     </figure></p>]]></description>
-</item>
-<item>
-    <title>Theme Documentation - Content</title>
-    <link>https://example.com/theme-documentation-content/</link>
-    <pubDate>Thu, 05 Mar 2020 15:58:26 &#43;0800</pubDate>
-    <author>Dillon</author>
-    <guid>https://example.com/theme-documentation-content/</guid>
-    <description><![CDATA[<p>Find out how to create and organize your content quickly and intuitively in <strong>LoveIt</strong> theme.</p>]]></description>
 </item>
 <item>
     <title>First project - automator tool</title>
