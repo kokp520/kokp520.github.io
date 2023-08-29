@@ -1,10 +1,10 @@
-# 如何創建Hugo網站
+# comming soon...
 
+
+第一篇文製作中...
 
 <!--more-->
 # my blog!
-
-hello world
 
 {{<figure src="banner.png" title="banner" >}}
 

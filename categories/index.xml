@@ -12,5 +12,13 @@
     <guid>https://example.com/categories/project/</guid>
     <description><![CDATA[]]></description>
 </item>
+<item>
+    <title>comming soon</title>
+    <link>https://example.com/categories/comming-soon/</link>
+    <pubDate>Sat, 26 Aug 2023 18:11:09 &#43;0800</pubDate>
+    <author>Adi</author>
+    <guid>https://example.com/categories/comming-soon/</guid>
+    <description><![CDATA[]]></description>
+</item>
 </channel>
 </rss>

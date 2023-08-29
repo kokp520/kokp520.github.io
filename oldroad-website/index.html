@@ -9,7 +9,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://example.com/oldroad-website/" /><meta property="og:image" content="https://example.com/oldroad-website/feature-banner.gif"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-08-26T00:00:00+00:00" />
-<meta property="article:modified_time" content="2023-08-27T22:37:23+08:00" /><meta property="og:site_name" content="Adiwu98&#39;s blog" />
+<meta property="article:modified_time" content="2023-08-29T08:26:00+08:00" /><meta property="og:site_name" content="Adiwu98&#39;s blog" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://example.com/oldroad-website/feature-banner.gif"/>
 <meta name="twitter:title" content="oldroad - 購物網站"/>
@@ -26,8 +26,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/example.com\/oldroad-website\/"
-        },"image": ["https:\/\/example.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","wordcount":  398 ,
-        "url": "https:\/\/example.com\/oldroad-website\/","datePublished": "2023-08-26T00:00:00+00:00","dateModified": "2023-08-27T22:37:23+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        },"image": ["https:\/\/example.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","wordcount":  427 ,
+        "url": "https:\/\/example.com\/oldroad-website\/","datePublished": "2023-08-26T00:00:00+00:00","dateModified": "2023-08-29T08:26:00+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "xxxx","logo": "https:\/\/example.com\/images\/avatar.png"},"author": {
                 "@type": "Person",
@@ -114,8 +114,8 @@
             <div class="toc-content always-active" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">oldroad - 購物網站</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://kokp520.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Adi</a></span>&nbsp;<span class="post-category">included in <a href="/categories/project/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>project</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-08-26">2023-08-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;398 words&nbsp;
-                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;<span id="/oldroad-website/" class="leancloud_visitors" data-flag-title="oldroad - 購物網站">
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-08-26">2023-08-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;427 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;3 minutes&nbsp;<span id="/oldroad-website/" class="leancloud_visitors" data-flag-title="oldroad - 購物網站">
                         <i class="far fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
                     </span>&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="">
@@ -140,9 +140,10 @@
         <li><a href="#nodejs-express-and-mongodb">Node.js, Express, and MongoDB</a></li>
         <li><a href="#brain-storming---process">Brain storming - process</a></li>
         <li><a href="#retrospect">Retrospect</a></li>
-        <li><a href="#source-code">Source code</a></li>
       </ul>
     </li>
+    <li><a href="#architecture-of-folder">Architecture of folder</a></li>
+    <li><a href="#source-code">Source code</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p><strong><em>OldroadWebsite | SHOP | Nodejs | Express | MongoDB
@@ -216,7 +217,32 @@ A few infomations to help you get a good looking for the project:</p>
 <p>The <code>process</code> was a fusion of self-guided learning and hands-on experience. I started to think what <code>users require</code> and how the bussiness models of those major brands were constructed. what kind of services are important to establish on the website.<br><br></p>
 <h3 id="retrospect">Retrospect</h3>
 <p>In retrospect, this achievement has force my foundation as a developer. My E-commerce creation not only showcases products but also <code>embodies the culmination of hours spent learning</code>.</p>
-<h3 id="source-code">Source code</h3>
+<h2 id="architecture-of-folder">Architecture of folder</h2>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">./OldroadWebsite
+</span></span><span class="line"><span class="cl">├── config
+</span></span><span class="line"><span class="cl">├── controllers
+</span></span><span class="line"><span class="cl">├── hero
+</span></span><span class="line"><span class="cl">├── middleware
+</span></span><span class="line"><span class="cl">├── model
+</span></span><span class="line"><span class="cl">├── photo
+</span></span><span class="line"><span class="cl">├── router
+</span></span><span class="line"><span class="cl">├── views
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="source-code">Source code</h2>
 <p><a href="https://github.com/kokp520/oldroad-shop-website-nodejs-express-mongodb" target="_blank" rel="noopener noreffer ">my github repo</a></p>
 <div class="details admonition tip open">
         <div class="details-summary admonition-title">
@@ -229,8 +255,8 @@ A few infomations to help you get a good looking for the project:</p>
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2023-08-27&nbsp;<a class="git-hash" href="https://github.com/kokp520/commit/b02b6f3eada3c62ca32731e317777bb797253374" target="_blank" title="commit by adiwu(kokp520@gmail.com) b02b6f3eada3c62ca32731e317777bb797253374: post oldorad">
-                                    <i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>b02b6f3</a></span>
+                <span>Updated on 2023-08-29&nbsp;<a class="git-hash" href="https://github.com/kokp520/commit/1e59812f2a670dd0d1595007c9363553097b6dc4" target="_blank" title="commit by adiwu(kokp520@gmail.com) 1e59812f2a670dd0d1595007c9363553097b6dc4: update base post">
+                                    <i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>1e59812</a></span>
             </div></div>
         <div class="post-info-line">
             <div class="post-info-md"><span>
@@ -250,7 +276,7 @@ A few infomations to help you get a good looking for the project:</p>
     </div>
 
     <div class="post-nav"><a href="/sms-python-gogoro/" class="prev" rel="prev" title="First project - automator tool"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>First project - automator tool</a>
-            <a href="/world/" class="next" rel="next" title="如何創建Hugo網站">如何創建Hugo網站<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+            <a href="/world/" class="next" rel="next" title="comming soon...">comming soon...<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
 </div>
 <div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
                 Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
