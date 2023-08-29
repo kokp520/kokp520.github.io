@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Documents - Category - Adi98&#39;s Blog</title>
+        <link>https://example.com/categories/documents/</link>
+        <description>Documents - Category - Adi98&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>kokp520@gmail.com (Adi)</managingEditor>
+            <webMaster>kokp520@gmail.com (Adi)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 26 Aug 2023 18:11:09 &#43;0800</lastBuildDate><atom:link href="https://example.com/categories/documents/" rel="self" type="application/rss+xml" /><item>
+    <title>如何建立個人靜態網站 - Hugo</title>
+    <link>https://example.com/adi-website/</link>
+    <pubDate>Sat, 26 Aug 2023 18:11:09 &#43;0800</pubDate>
+    <author>Adi</author>
+    <guid>https://example.com/adi-website/</guid>
+    <description><![CDATA[<p><em><strong>教學要怎麼建立自己的hugo靜態網站 + github.io</strong></em></p>]]></description>
+</item>
+</channel>
+</rss>

@@ -5,12 +5,12 @@
         <description>All Posts | Adi98&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>kokp520@gmail.com (Adi)</managingEditor>
             <webMaster>kokp520@gmail.com (Adi)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 27 Aug 2023 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://example.com/posts/" rel="self" type="application/rss+xml" /><item>
-    <title>comming soon...</title>
-    <link>https://example.com/world/</link>
+    <title>如何建立個人靜態網站 - Hugo</title>
+    <link>https://example.com/adi-website/</link>
     <pubDate>Sat, 26 Aug 2023 18:11:09 &#43;0800</pubDate>
     <author>Adi</author>
-    <guid>https://example.com/world/</guid>
-    <description><![CDATA[<p>第一篇文製作中&hellip;</p>]]></description>
+    <guid>https://example.com/adi-website/</guid>
+    <description><![CDATA[<p><em><strong>教學要怎麼建立自己的hugo靜態網站 + github.io</strong></em></p>]]></description>
 </item>
 <item>
     <title>oldroad - 購物網站</title>
