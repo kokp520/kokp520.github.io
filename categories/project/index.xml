@@ -11,11 +11,7 @@
     <author>Adi</author>
     <guid>https://example.com/oldroad-website/</guid>
     <description><![CDATA[<p><strong><em>OldroadWebsite | SHOP | Nodejs | Express | MongoDB
-<br>使用<code>Nodejs</code>+<code>express</code>開發購物網站，包含登入系統、後台系統、購物車系統。</em></strong></p>
-<p><figure><a class="lightgallery" href="/oldroad-website/feature-banner.gif" title="banner" data-thumbnail="/oldroad-website/feature-banner.gif" data-sub-html="<h2>Old-Road Shop</h2><p>banner</p>">
-        
-    </a><figcaption class="image-caption">Old-Road Shop</figcaption>
-    </figure></p>]]></description>
+<br>使用<code>Nodejs</code>+<code>express</code>開發購物網站，包含登入系統、後台系統、購物車系統。</em></strong></p>]]></description>
 </item>
 <item>
     <title>First project - automator tool</title>

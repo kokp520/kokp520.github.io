@@ -10,7 +10,7 @@
     <pubDate>Sat, 26 Aug 2023 18:11:09 &#43;0800</pubDate>
     <author>Adi</author>
     <guid>https://example.com/adi-website/</guid>
-    <description><![CDATA[<p><em><strong>教學要怎麼建立自己的hugo靜態網站 + github.io</strong></em></p>]]></description>
+    <description><![CDATA[<p><strong><em>教學要怎麼建立自己的 hugo 靜態網站 + github.io</em></strong></p>]]></description>
 </item>
 <item>
     <title>oldroad - 購物網站</title>
@@ -19,11 +19,7 @@
     <author>Adi</author>
     <guid>https://example.com/oldroad-website/</guid>
     <description><![CDATA[<p><strong><em>OldroadWebsite | SHOP | Nodejs | Express | MongoDB
-<br>使用<code>Nodejs</code>+<code>express</code>開發購物網站，包含登入系統、後台系統、購物車系統。</em></strong></p>
-<p><figure><a class="lightgallery" href="/oldroad-website/feature-banner.gif" title="banner" data-thumbnail="/oldroad-website/feature-banner.gif" data-sub-html="<h2>Old-Road Shop</h2><p>banner</p>">
-        
-    </a><figcaption class="image-caption">Old-Road Shop</figcaption>
-    </figure></p>]]></description>
+<br>使用<code>Nodejs</code>+<code>express</code>開發購物網站，包含登入系統、後台系統、購物車系統。</em></strong></p>]]></description>
 </item>
 <item>
     <title>First project - automator tool</title>
