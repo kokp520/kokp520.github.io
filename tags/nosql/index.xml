@@ -1,0 +1,18 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>nosql - Tag - Adi98&#39;s Blog</title>
+        <link>https://example.com/tags/nosql/</link>
+        <description>nosql - Tag - Adi98&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>kokp520@gmail.com (Adi)</managingEditor>
+            <webMaster>kokp520@gmail.com (Adi)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 31 Aug 2023 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://example.com/tags/nosql/" rel="self" type="application/rss+xml" /><item>
+    <title>SQL vs NoSQL 資料庫的選擇</title>
+    <link>https://example.com/sql-vs-nosql/</link>
+    <pubDate>Thu, 31 Aug 2023 00:00:00 &#43;0000</pubDate>
+    <author>Adi</author>
+    <guid>https://example.com/sql-vs-nosql/</guid>
+    <description><![CDATA[<p>在後端工程領域，我們經常需要存儲和處理數據。</p>
+<p>NoSQL和DBMS是兩種不同的數據存儲和管理方法，各有其優點和缺點。今天讓我們深入瞭解它們之間的區別。</p>
+<p>此文章的重點會比較放在<strong>差異</strong>上。</p>]]></description>
+</item>
+</channel>
+</rss>

@@ -4,7 +4,7 @@
         <link>https://example.com/</link>
         <description>Welcome to my blog...</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>kokp520@gmail.com (Adi)</managingEditor>
-            <webMaster>kokp520@gmail.com (Adi)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 27 Aug 2023 00:00:00 &#43;0000</lastBuildDate>
+            <webMaster>kokp520@gmail.com (Adi)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 31 Aug 2023 00:00:00 &#43;0000</lastBuildDate>
             <atom:link href="https://example.com/index.xml" rel="self" type="application/rss+xml" />
         <item>
     <title>如何建立個人靜態網站 - Hugo</title>
@@ -22,6 +22,16 @@
     <guid>https://example.com/oldroad-website/</guid>
     <description><![CDATA[<p><strong><em>OldroadWebsite | SHOP | Nodejs | Express | MongoDB
 <br>使用<code>Nodejs</code>+<code>express</code>開發購物網站，包含登入系統、後台系統、購物車系統。</em></strong></p>]]></description>
+</item>
+<item>
+    <title>SQL vs NoSQL 資料庫的選擇</title>
+    <link>https://example.com/sql-vs-nosql/</link>
+    <pubDate>Thu, 31 Aug 2023 00:00:00 &#43;0000</pubDate>
+    <author>Adi</author>
+    <guid>https://example.com/sql-vs-nosql/</guid>
+    <description><![CDATA[<p>在後端工程領域，我們經常需要存儲和處理數據。</p>
+<p>NoSQL和DBMS是兩種不同的數據存儲和管理方法，各有其優點和缺點。今天讓我們深入瞭解它們之間的區別。</p>
+<p>此文章的重點會比較放在<strong>差異</strong>上。</p>]]></description>
 </item>
 <item>
     <title>First project - automator tool</title>

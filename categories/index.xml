@@ -4,20 +4,20 @@
         <link>https://example.com/categories/</link>
         <description>Categories - Category - Adi98&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>kokp520@gmail.com (Adi)</managingEditor>
-            <webMaster>kokp520@gmail.com (Adi)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sun, 27 Aug 2023 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://example.com/categories/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>kokp520@gmail.com (Adi)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 31 Aug 2023 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://example.com/categories/" rel="self" type="application/rss+xml" /><item>
+    <title>Documents</title>
+    <link>https://example.com/categories/documents/</link>
+    <pubDate>Thu, 31 Aug 2023 00:00:00 &#43;0000</pubDate>
+    <author>Adi</author>
+    <guid>https://example.com/categories/documents/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
     <title>project</title>
     <link>https://example.com/categories/project/</link>
     <pubDate>Sun, 27 Aug 2023 00:00:00 &#43;0000</pubDate>
     <author>Adi</author>
     <guid>https://example.com/categories/project/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
-    <title>Documents</title>
-    <link>https://example.com/categories/documents/</link>
-    <pubDate>Sat, 26 Aug 2023 18:11:09 &#43;0800</pubDate>
-    <author>Adi</author>
-    <guid>https://example.com/categories/documents/</guid>
     <description><![CDATA[]]></description>
 </item>
 </channel>
