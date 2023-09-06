@@ -9,7 +9,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://example.com/sql-vs-nosql/" /><meta property="og:image" content="https://example.com/main2.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-08-31T00:00:00+00:00" />
-<meta property="article:modified_time" content="2023-09-06T01:03:09+08:00" /><meta property="og:site_name" content="Adiwu98&#39;s blog" />
+<meta property="article:modified_time" content="2023-09-06T13:26:33+08:00" /><meta property="og:site_name" content="Adiwu98&#39;s blog" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://example.com/main2.png"/>
 
@@ -27,8 +27,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/example.com\/sql-vs-nosql\/"
-        },"image": ["https:\/\/example.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "sql, nosql, 淺談, DBMS","wordcount":  274 ,
-        "url": "https:\/\/example.com\/sql-vs-nosql\/","datePublished": "2023-08-31T00:00:00+00:00","dateModified": "2023-09-06T01:03:09+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        },"image": ["https:\/\/example.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "sql, nosql, 淺談, DBMS","wordcount":  280 ,
+        "url": "https:\/\/example.com\/sql-vs-nosql\/","datePublished": "2023-08-31T00:00:00+00:00","dateModified": "2023-09-06T13:26:33+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "xxxx","logo": "https:\/\/example.com\/images\/avatar.png"},"author": {
                 "@type": "Person",
@@ -115,7 +115,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">SQL vs NoSQL 資料庫的選擇</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://kokp520.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Adi</a></span>&nbsp;<span class="post-category">included in <a href="/categories/documents/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Documents</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-08-31">2023-08-31</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;274 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-08-31">2023-08-31</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;280 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;<span id="/sql-vs-nosql/" class="leancloud_visitors" data-flag-title="SQL vs NoSQL 資料庫的選擇">
                         <i class="far fa-eye fa-fw" aria-hidden="true"></i>&nbsp;<span class=leancloud-visitors-count></span>&nbsp;views
                     </span>&nbsp;</div>
@@ -138,7 +138,7 @@
         <li><a href="#unstructured-data">Unstructured Data</a></li>
         <li><a href="#key-value">Key-Value</a></li>
         <li><a href="#redis-example">Redis Example</a></li>
-        <li><a href="#heading"></a></li>
+        <li><a href="#query與資料結構的關聯性">Query與資料結構的關聯性</a></li>
         <li><a href="#sql-example">SQL Example</a></li>
       </ul>
     </li>
@@ -279,7 +279,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>那你可能會好奇那我就都用key-value的方式儲存就好，反正這麼好用，我下面會舉個SQL優勢的例子：</p>
-<h3 id="heading"></h3>
+<h3 id="query與資料結構的關聯性">Query與資料結構的關聯性</h3>
 <p>如果今天要處理我想要一次對多個table做資料搜集該怎麼做。</p>
 <p>如果是key-value的資料結構，我需要把所有table都拿需要的資料出來再整理。</p>
 <p>但sql可以透過table關聯的index去簡化整個流程。</p>
@@ -409,7 +409,9 @@
         </div>
         <div class="details-content">
             <div class="admonition-content"><ul>
-<li>這部分會比sql好的主要原因是因為sql還會需要去建立<code>Index</code>的緣故。<br></li>
+<li>sql在建立table時還會需要去建立<code>Index</code>，所以sql也會更適合垂直擴展。<br>
+(當然水平擴展也可以，只是方法不同，並沒有一定也沒有哪個一定比較好。)</li>
+<li>sql資料結構的複雜性以及一致性，會導致相比no-sql複製資料來說比較有優勢。</li>
 </ul>
 </div>
         </div>
@@ -421,7 +423,12 @@
 <p>但當然要考慮<code>資料庫正規化</code>的內容</p>
 <p>甚至你可以兩種sql and no-sql 都用也可以</p>
 <h2 id="simple-compare">Simple Compare</h2>
-<p>🪣 <strong>NoSQL數據庫：</strong></p>
+<div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw" aria-hidden="true"></i>Note<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><p>🪣 <strong>NoSQL數據庫：</strong></p>
 <p>✔️ 靈活性：NoSQL數據庫以鍵值對、文檔、列和圖形等形式存儲數據，適用於各種數據結構。</p>
 <p>✔️ 擴展性：易於水平擴展，可以處理大量數據和高負載。</p>
 <p>❌ 一致性：在某些情況下，一致性可能較弱，取決於所選擇的NoSQL數據庫類型。</p>
@@ -429,18 +436,21 @@
 <p>✔️ 一致性：嚴格的一致性，確保數據完整性和一致性。</p>
 <p>✔️ 複雜查詢：支持複雜的SQL查詢，適用於需要多表關聯的場景。</p>
 <p>❌ 靈活性：對於半結構化數據，可能需要複雜的模式更改。</p>
+</div>
+        </div>
+    </div>
 <p>📺 <strong>總結：</strong>
 NoSQL適用於需要高度靈活性和可擴展性的場景，如大數據和實時數據處理。然而，DBMS在需要強一致性和複雜查詢的傳統業務應用中表現出色。</p>
 <p>無論您選擇哪種數據存儲方法，都需要根據項目需求和性能目標進行明智的選擇。</p>
 <h2 id="thinking">Thinking</h2>
 <p>許多事情跟標準都是人們訂出來的，我認為要有能夠<strong>動態思考</strong>且不被框架限制住的思維，才更為重要。</p>
-<p>很多觀念或是人們<strong>現在</strong>認為是***『用這個很好』***的經驗，都有可能在明天因為某個大神寫的新的工具而改變。</p>
+<p>很多觀念或是人們<strong>現在</strong>認為是 <strong>『用這個很好』</strong> 的經驗，都有可能在明天因為某個大神寫的新的工具而改變。</p>
 <p><strong>Thanks for watching</strong></p></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2023-09-06&nbsp;<a class="git-hash" href="https://github.com/kokp520/commit/499d5f02c1f32b1d943ada6d87505a6e39f5e45b" target="_blank" title="commit by adiwu(kokp520@gmail.com) 499d5f02c1f32b1d943ada6d87505a6e39f5e45b: update new post">
-                                    <i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>499d5f0</a></span>
+                <span>Updated on 2023-09-06&nbsp;<a class="git-hash" href="https://github.com/kokp520/commit/42559ca279d45b5cb06193a8916542073eee57ca" target="_blank" title="commit by adiwu(kokp520@gmail.com) 42559ca279d45b5cb06193a8916542073eee57ca: update new post">
+                                    <i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>42559ca</a></span>
             </div></div>
         <div class="post-info-line">
             <div class="post-info-md"><span>
