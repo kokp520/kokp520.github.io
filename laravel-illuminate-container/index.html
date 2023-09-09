@@ -9,7 +9,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://example.com/laravel-illuminate-container/" /><meta property="og:image" content="https://example.com/main2.png"/><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2023-09-09T00:00:00+00:00" />
-<meta property="article:modified_time" content="2023-09-09T14:21:58+08:00" /><meta property="og:site_name" content="Adiwu98&#39;s blog" />
+<meta property="article:modified_time" content="2023-09-09T15:11:46+08:00" /><meta property="og:site_name" content="Adiwu98&#39;s blog" />
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://example.com/main2.png"/>
 
@@ -27,8 +27,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/example.com\/laravel-illuminate-container\/"
-        },"image": ["https:\/\/example.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "依賴注入, DI, singleton, bind, DependencyManager","wordcount":  306 ,
-        "url": "https:\/\/example.com\/laravel-illuminate-container\/","datePublished": "2023-09-09T00:00:00+00:00","dateModified": "2023-09-09T14:21:58+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+        },"image": ["https:\/\/example.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "依賴注入, DI, singleton, bind, DependencyManager","wordcount":  340 ,
+        "url": "https:\/\/example.com\/laravel-illuminate-container\/","datePublished": "2023-09-09T00:00:00+00:00","dateModified": "2023-09-09T15:11:46+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
             "name": "xxxx","logo": "https:\/\/example.com\/images\/avatar.png"},"author": {
                 "@type": "Person",
@@ -115,7 +115,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Laravel Singleton and Binding</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="https://kokp520.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Adi</a></span>&nbsp;<span class="post-category">included in <a href="/categories/documents/"><i class="far fa-folder fa-fw" aria-hidden="true"></i>Documents</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-09-09">2023-09-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;306 words&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2023-09-09">2023-09-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;340 words&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;2 minutes&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="">
                 <div class="details-summary toc-title">
@@ -132,6 +132,11 @@
         <li><a href="#instance">Instance</a></li>
         <li><a href="#container-功能">Container 功能</a></li>
         <li><a href="#singleton">Singleton</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a>
+      <ul>
+        <li><a href="#significance">Significance</a></li>
       </ul>
     </li>
   </ul>
@@ -362,12 +367,37 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><strong>單例模式來確保只有一個 Cabinet 實例存在並在不同地方共享使用。</strong></p></div><div class="post-footer" id="post-footer">
+</div><p><strong>單例模式來確保只有一個 Cabinet 實例存在並在不同地方共享使用。</strong></p>
+<h2 id="conclusion">Conclusion</h2>
+<ul>
+<li>依賴注入 (Dependency Injection) 在 Laravel 中的重要性：</li>
+</ul>
+<p><strong>鬆散耦合的代碼：</strong> 依賴注入允許您定義類之間的依賴關係，這使代碼變得更加鬆散耦合。這意味著您可以更容易地更改、擴展或替換組件，而不必修改大量代碼。</p>
+<p><strong>測試性提升：</strong> DI 使測試代碼變得更容易，因為您可以輕鬆地模擬和注入假的依賴，從而進行單元測試。</p>
+<p><strong>可維護性：</strong> 通過使用 DI，代碼變得更加結構化和清晰，更容易閱讀和維護。</p>
+<div class="details admonition tip open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-lightbulb fa-fw" aria-hidden="true"></i>Different between DI or not<i class="details-icon fas fa-angle-right fa-fw" aria-hidden="true"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><p>在不使用 DI 的專案中，通常您必須在每個類中硬編碼其依賴，這會導致代碼變得緊耦合，難以測試和修改。</p>
+<p>而使用 DI 的專案中，您可以將依賴關係委託給容器管理，這樣代碼就變得鬆散耦合、可測試且易於修改。</p>
+</div>
+        </div>
+    </div>
+<h3 id="significance">Significance</h3>
+<p><strong>依賴注入</strong>和<strong>容器</strong>是 Laravel 中強大的功能，它們可以使您的代碼更加</p>
+<ul>
+<li>模組化</li>
+<li>可測試</li>
+<li>易於維護</li>
+</ul>
+<p>通過使用這些功能，您可以更好地組織您的應用程序並提高代碼質量。</p></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2023-09-09&nbsp;<a class="git-hash" href="https://github.com/kokp520/commit/6eeb2235a34ef0b84fb6293fe48eba6e8587a69a" target="_blank" title="commit by adiwu(kokp520@gmail.com) 6eeb2235a34ef0b84fb6293fe48eba6e8587a69a: update new post">
-                                    <i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>6eeb223</a></span>
+                <span>Updated on 2023-09-09&nbsp;<a class="git-hash" href="https://github.com/kokp520/commit/6c57a7af2941b152db835cbf985856ffc1ee3635" target="_blank" title="commit by adiwu(kokp520@gmail.com) 6c57a7af2941b152db835cbf985856ffc1ee3635: update new post">
+                                    <i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>6c57a7a</a></span>
             </div></div>
         <div class="post-info-line">
             <div class="post-info-md"><span>
