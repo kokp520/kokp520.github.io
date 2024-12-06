@@ -1,8 +1,8 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>DependencyManager - Tag - Adi98&#39;s Blog</title>
+        <title>DependencyManager - tag - Adi98&#39;s Blog</title>
         <link>https://example.com/tags/dependencymanager/</link>
-        <description>DependencyManager - Tag - Adi98&#39;s Blog</description>
+        <description>DependencyManager - tag - Adi98&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>kokp520@gmail.com (Adi)</managingEditor>
             <webMaster>kokp520@gmail.com (Adi)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 09 Sep 2023 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://example.com/tags/dependencymanager/" rel="self" type="application/rss+xml" /><item>
     <title>Laravel Singleton and Binding</title>

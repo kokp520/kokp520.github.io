@@ -1,11 +1,11 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>Tags - Tag - Adi98&#39;s Blog</title>
+        <title>Tags - tag - Adi98&#39;s Blog</title>
         <link>https://example.com/tags/</link>
-        <description>Tags - Tag - Adi98&#39;s Blog</description>
+        <description>Tags - tag - Adi98&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>kokp520@gmail.com (Adi)</managingEditor>
             <webMaster>kokp520@gmail.com (Adi)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 09 Sep 2023 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://example.com/tags/" rel="self" type="application/rss+xml" /><item>
-    <title>bind</title>
+    <title>Bind</title>
     <link>https://example.com/tags/bind/</link>
     <pubDate>Sat, 09 Sep 2023 00:00:00 &#43;0000</pubDate>
     <author>Adi</author>
@@ -29,7 +29,7 @@
     <description><![CDATA[]]></description>
 </item>
 <item>
-    <title>singleton</title>
+    <title>Singleton</title>
     <link>https://example.com/tags/singleton/</link>
     <pubDate>Sat, 09 Sep 2023 00:00:00 &#43;0000</pubDate>
     <author>Adi</author>
@@ -53,7 +53,7 @@
     <description><![CDATA[]]></description>
 </item>
 <item>
-    <title>nosql</title>
+    <title>Nosql</title>
     <link>https://example.com/tags/nosql/</link>
     <pubDate>Thu, 31 Aug 2023 00:00:00 &#43;0000</pubDate>
     <author>Adi</author>
@@ -61,7 +61,7 @@
     <description><![CDATA[]]></description>
 </item>
 <item>
-    <title>sql</title>
+    <title>Sql</title>
     <link>https://example.com/tags/sql/</link>
     <pubDate>Thu, 31 Aug 2023 00:00:00 &#43;0000</pubDate>
     <author>Adi</author>
