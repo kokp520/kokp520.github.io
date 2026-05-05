@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title> - Adi98&#39;s Blog</title><meta name="Description" content="Welcome to my blog..."><meta property="og:url" content="https://example.com/ai-gen-20260505-235343/">
+  <meta property="og:site_name" content="Adi98&#39;s Blog">
+  <meta property="og:title" content="Adi98&#39;s Blog">
+  <meta property="og:description" content="MCP issues detected. Run /mcp list for status.— title: “從 RAG 到 Agentic RAG：構建具備自我修正能力的智能檢索系統” subtitle: “突破檢索準確度瓶頸的次世代架構探討” date: 2026-05-05T00:00:00&#43;08:00 lastmod: 2026-05-05T00:00:00&#43;08:00 draft: false author: “AI Assistant” tags: [“AI Agent”, “RAG”, “LLM”, “LangGraph”] categories: [“Tech”] toc: enable: true">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:modified_time" content="2026-05-05T23:53:44+08:00">
+    <meta property="og:image" content="https://example.com/main2.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://example.com/main2.png">
+  <meta name="twitter:title" content="Adi98&#39;s Blog">
+  <meta name="twitter:description" content="MCP issues detected. Run /mcp list for status.— title: “從 RAG 到 Agentic RAG：構建具備自我修正能力的智能檢索系統” subtitle: “突破檢索準確度瓶頸的次世代架構探討” date: 2026-05-05T00:00:00&#43;08:00 lastmod: 2026-05-05T00:00:00&#43;08:00 draft: false author: “AI Assistant” tags: [“AI Agent”, “RAG”, “LLM”, “LangGraph”] categories: [“Tech”] toc: enable: true">
+<meta name="application-name" content="Adi&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="Adi&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/safari-pinned-tab.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://example.com/ai-gen-20260505-235343/" /><link rel="prev" href="https://example.com/ai-gen-20260505-235453/" /><link rel="next" href="https://example.com/ai-gen-20260505-235232/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/example.com\/ai-gen-20260505-235343\/"
+        },"image": ["https:\/\/example.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","wordcount":  245 ,
+        "url": "https:\/\/example.com\/ai-gen-20260505-235343\/","dateModified": "2026-05-05T23:53:44+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": "https:\/\/example.com\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Adi"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Adi98&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/main2.png"
+        data-srcset="/main2.png, /main2.png 1.5x, /main2.png 2x"
+        data-sizes="auto"
+        alt="/main2.png"
+        title="/main2.png" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/about/"> About </a><a class="menu-item" href="https://github.com/kokp520" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Adi98&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/main2.png"
+        data-srcset="/main2.png, /main2.png 1.5x, /main2.png 2x"
+        data-sizes="auto"
+        alt="/main2.png"
+        title="/main2.png" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/about/" title="">About</a><a class="menu-item" href="https://github.com/kokp520" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title"></h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX"></h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://kokp520.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Adi</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="0001-01-01">0001-01-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span></span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#enable-true">MCP issues detected. Run /mcp list for status.&mdash;
+title: &ldquo;從 RAG 到 Agentic RAG：構建具備自我修正能力的智能檢索系統&rdquo;
+subtitle: &ldquo;突破檢索準確度瓶頸的次世代架構探討&rdquo;
+date: 2026-05-05T00:00:00+08:00
+lastmod: 2026-05-05T00:00:00+08:00
+draft: false
+author: &ldquo;AI Assistant&rdquo;
+tags: [&ldquo;AI Agent&rdquo;, &ldquo;RAG&rdquo;, &ldquo;LLM&rdquo;, &ldquo;LangGraph&rdquo;]
+categories: [&ldquo;Tech&rdquo;]
+toc:
+enable: true</a>
+      <ul>
+        <li><a href="#為什麼我們需要-agentic-rag">為什麼我們需要 Agentic RAG？</a></li>
+        <li><a href="#agentic-rag-的核心組件">Agentic RAG 的核心組件</a></li>
+        <li><a href="#經典架構corrective-rag-crag">經典架構：Corrective RAG (CRAG)</a></li>
+        <li><a href="#實作思考使用-langgraph-構建循環">實作思考：使用 LangGraph 構建循環</a></li>
+        <li><a href="#挑戰與平衡">挑戰與平衡</a></li>
+        <li><a href="#結論">結論</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="enable-true">MCP issues detected. Run /mcp list for status.&mdash;
+title: &ldquo;從 RAG 到 Agentic RAG：構建具備自我修正能力的智能檢索系統&rdquo;
+subtitle: &ldquo;突破檢索準確度瓶頸的次世代架構探討&rdquo;
+date: 2026-05-05T00:00:00+08:00
+lastmod: 2026-05-05T00:00:00+08:00
+draft: false
+author: &ldquo;AI Assistant&rdquo;
+tags: [&ldquo;AI Agent&rdquo;, &ldquo;RAG&rdquo;, &ldquo;LLM&rdquo;, &ldquo;LangGraph&rdquo;]
+categories: [&ldquo;Tech&rdquo;]
+toc:
+enable: true</h2>
+<p>在生成式 AI 的應用中，<strong>RAG (Retrieval-Augmented Generation)</strong> 已經成為解決大型語言模型 (LLM) 幻覺 (Hallucination) 與知識過時問題的標準配備。然而，隨著企業級應用對精準度的要求日益嚴苛，傳統的「檢索 -&gt; 拼湊 -&gt; 生成」模式（即 Vanilla RAG）開始顯露弊端：檢索到的資訊可能無關、不完整，甚至存在衝突。</p>
+<p>為了解決這些問題，我們正從被動的 RAG 轉向主動的 <strong>Agentic RAG</strong>。</p>
+<h3 id="為什麼我們需要-agentic-rag">為什麼我們需要 Agentic RAG？</h3>
+<p>傳統 RAG 是線性的。如果第一步檢索出的 Context 質量不佳，後續的 Generation 就註定會失敗。這就是所謂的 &ldquo;Garbage in, garbage out&rdquo;。</p>
+<p><strong>Agentic RAG</strong> 的核心思想是引入「推理代理 (Reasoning Agents)」與「循環反饋 (Feedback Loops)」。它不再只是簡單地搜索與回答，而是將檢索過程視為一個可以被評估、修正並重複迭代的工作流 (Workflow)。</p>
+<h3 id="agentic-rag-的核心組件">Agentic RAG 的核心組件</h3>
+<p>一個成熟的 Agentic RAG 架構通常包含以下幾個關鍵角色：</p>
+<ol>
+<li><strong>Router (路由分配器)</strong>：
+判斷用戶的問題是否需要檢索。如果是閒聊或簡單運算，直接由 LLM 處理；如果是專業知識問題，則路由到不同的 Vector Databases 或搜尋引擎。</li>
+<li><strong>Retriever (具備策略的檢索器)</strong>：
+不只做一次性檢索，而是根據 Query 的複雜度決定檢索策略（如 HyDE, Multi-query retrieval）。</li>
+<li><strong>Grader (評分員)</strong>：
+這是 Agentic RAG 的靈魂。LLM 會扮演評分員，檢查檢索到的文檔片段是否與問題「真正相關」。</li>
+<li><strong>Rewriter (查詢重寫器)</strong>：
+如果 Grader 認為檢索結果不佳，Agent 會自動重寫 (Rewrite) 用戶的 Query，以更精確的關鍵字重新檢索。</li>
+<li><strong>Hallucination Grader (幻覺檢測)</strong>：
+生成回答後，檢查生成的內容是否完全根據檢索出的 Context 撰寫，而非模型憑空捏造。</li>
+</ol>
+<h3 id="經典架構corrective-rag-crag">經典架構：Corrective RAG (CRAG)</h3>
+<p><strong>CRAG</strong> 是一種典型的 Agentic 工作流。當檢索結果被判定為「模糊」或「不相關」時，系統會觸發 Web Search 作為補償機制。</p>
+<ul>
+<li><strong>相關 (Correct)</strong>：直接進入生成階段。</li>
+<li><strong>不相關 (Incorrect)</strong>：捨棄該片段，重寫 Query 並轉向外部搜尋（如 Tavily AI）。</li>
+<li><strong>模糊 (Ambiguous)</strong>：結合檢索片段與搜尋結果進行綜合分析。</li>
+</ul>
+<h3 id="實作思考使用-langgraph-構建循環">實作思考：使用 LangGraph 構建循環</h3>
+<p>在開發 Agentic RAG 時，<strong>LangGraph</strong> 是目前最理想的工具之一。與傳統的線性 Chain 不同，LangGraph 允許我們定義包含「循環」的圖結構 (Stateful Graphs)。</p>
+<p>例如，我們可以定義一個節點為 <code>retrieve</code>，下一個節點為 <code>grade_documents</code>。如果評分低於門檻，則連線回 <code>transform_query</code> 節點，形成一個自我修正的循環，直到獲取足夠高質量的資訊為止。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 概念偽代碼</span>
+</span></span><span class="line"><span class="cl"><span class="n">workflow</span> <span class="o">=</span> <span class="n">StateGraph</span><span class="p">(</span><span class="n">GraphState</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">workflow</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&#34;retrieve&#34;</span><span class="p">,</span> <span class="n">retrieve_node</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">workflow</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&#34;grade_docs&#34;</span><span class="p">,</span> <span class="n">grade_docs_node</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">workflow</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&#34;generate&#34;</span><span class="p">,</span> <span class="n">generate_node</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">workflow</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&#34;transform_query&#34;</span><span class="p">,</span> <span class="n">transform_query_node</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">workflow</span><span class="o">.</span><span class="n">set_entry_point</span><span class="p">(</span><span class="s2">&#34;retrieve&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">workflow</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&#34;retrieve&#34;</span><span class="p">,</span> <span class="s2">&#34;grade_docs&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">workflow</span><span class="o">.</span><span class="n">add_conditional_edges</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;grade_docs&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">decide_to_generate</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;transform_query&#34;</span><span class="p">:</span> <span class="s2">&#34;transform_query&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;generate&#34;</span><span class="p">:</span> <span class="s2">&#34;generate&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">workflow</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&#34;transform_query&#34;</span><span class="p">,</span> <span class="s2">&#34;retrieve&#34;</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="挑戰與平衡">挑戰與平衡</h3>
+<p>雖然 Agentic RAG 極大地提升了準確度，但它也帶來了新的挑戰：</p>
+<ul>
+<li><strong>Latency (延遲)</strong>：多輪檢索與 LLM 評估會增加響應時間。</li>
+<li><strong>Cost (成本)</strong>：多次調用 LLM API 會增加 Token 消耗。</li>
+<li><strong>Token Management</strong>：循環中需要精確管理 Context 視窗。</li>
+</ul>
+<h3 id="結論">結論</h3>
+<p>從單純的檢索增強到具備自主決策能力的 <strong>Agentic RAG</strong>，標誌著 AI 應用從「工具」向「系統」的演進。在 2026 年的今天，能否構建出穩定、可靠且具備自我糾錯能力的 Agent，已成為區分頂尖 AI 產品的關鍵分水嶺。</p>
+<p>如果你還在為 RAG 的幻覺問題苦惱，不妨考慮將你的 Pipeline 「代理化 (Agentic-ize)」，讓模型學會審視自己的知識來源。</p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>&nbsp;<a class="git-hash" href="https://github.com/kokp520/commit/204360d63f4a3b71515317e0d3f0ca4778833685" target="_blank" title="commit by kokp520(kokp520@gmail.com) 204360d63f4a3b71515317e0d3f0ca4778833685: update new post">
+                                    <i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>204360d</a></span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/ai-gen-20260505-235343/index.md" target="_blank"></a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title=" Facebook" data-sharer="facebook" data-url="https://example.com/ai-gen-20260505-235343/"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title=" Line" data-sharer="line" data-url="https://example.com/ai-gen-20260505-235343/" data-title=""><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();"></a></span>&nbsp;|&nbsp;<span><a href="/"></a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/ai-gen-20260505-235453/" class="prev" rel="prev" title=""><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i></a>
+            <a href="/ai-gen-20260505-235232/" class="next" rel="next" title=""><i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Hugo Template - LoveIt by Dillon | Adi</div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://kokp520.github.io" target="_blank">Adi</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://personal-site-12.disqus.com/embed.js" defer></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"","maxShownLines":50},"comment":{},"data":{"id-1":"Adi98's Blog","id-2":"Adi98's Blog"},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.en","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"","snippetLength":30,"type":"algolia"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":70}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

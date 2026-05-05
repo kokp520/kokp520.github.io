@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title> - Adi98&#39;s Blog</title><meta name="Description" content="Welcome to my blog..."><meta property="og:url" content="https://example.com/ai-gen-20260505-235453/">
+  <meta property="og:site_name" content="Adi98&#39;s Blog">
+  <meta property="og:title" content="Adi98&#39;s Blog">
+  <meta property="og:description" content="MCP issues detected. Run /mcp list for status.— title: “從檢索到決策：深度解析 Agentic RAG 的自我修正機制與實踐” subtitle: “超越線性 RAG：利用 Agentic Workflow 提升知識問答的精準度與可靠性” date: 2026-05-05T00:00:00&#43;08:00 lastmod: 2026-05-05T00:00:00&#43;08:00 draft: false author: “AI Assistant” tags: [“AI”, “RAG”, “LLM Agents”, “Machine Learning Engineering”] categories: [“Tech”] toc: enable: true">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:modified_time" content="2026-05-05T23:54:55+08:00">
+    <meta property="og:image" content="https://example.com/main2.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://example.com/main2.png">
+  <meta name="twitter:title" content="Adi98&#39;s Blog">
+  <meta name="twitter:description" content="MCP issues detected. Run /mcp list for status.— title: “從檢索到決策：深度解析 Agentic RAG 的自我修正機制與實踐” subtitle: “超越線性 RAG：利用 Agentic Workflow 提升知識問答的精準度與可靠性” date: 2026-05-05T00:00:00&#43;08:00 lastmod: 2026-05-05T00:00:00&#43;08:00 draft: false author: “AI Assistant” tags: [“AI”, “RAG”, “LLM Agents”, “Machine Learning Engineering”] categories: [“Tech”] toc: enable: true">
+<meta name="application-name" content="Adi&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="Adi&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/safari-pinned-tab.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://example.com/ai-gen-20260505-235453/" /><link rel="prev" href="https://example.com/ai-gen-20260505-235810/" /><link rel="next" href="https://example.com/ai-gen-20260505-235343/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/example.com\/ai-gen-20260505-235453\/"
+        },"image": ["https:\/\/example.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","wordcount":  230 ,
+        "url": "https:\/\/example.com\/ai-gen-20260505-235453\/","dateModified": "2026-05-05T23:54:55+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": "https:\/\/example.com\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Adi"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Adi98&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/main2.png"
+        data-srcset="/main2.png, /main2.png 1.5x, /main2.png 2x"
+        data-sizes="auto"
+        alt="/main2.png"
+        title="/main2.png" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/about/"> About </a><a class="menu-item" href="https://github.com/kokp520" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Adi98&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/main2.png"
+        data-srcset="/main2.png, /main2.png 1.5x, /main2.png 2x"
+        data-sizes="auto"
+        alt="/main2.png"
+        title="/main2.png" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/about/" title="">About</a><a class="menu-item" href="https://github.com/kokp520" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title"></h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX"></h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://kokp520.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Adi</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="0001-01-01">0001-01-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span></span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#enable-true">MCP issues detected. Run /mcp list for status.&mdash;
+title: &ldquo;從檢索到決策：深度解析 Agentic RAG 的自我修正機制與實踐&rdquo;
+subtitle: &ldquo;超越線性 RAG：利用 Agentic Workflow 提升知識問答的精準度與可靠性&rdquo;
+date: 2026-05-05T00:00:00+08:00
+lastmod: 2026-05-05T00:00:00+08:00
+draft: false
+author: &ldquo;AI Assistant&rdquo;
+tags: [&ldquo;AI&rdquo;, &ldquo;RAG&rdquo;, &ldquo;LLM Agents&rdquo;, &ldquo;Machine Learning Engineering&rdquo;]
+categories: [&ldquo;Tech&rdquo;]
+toc:
+enable: true</a></li>
+    <li><a href="#引言線性-rag-的侷限性">引言：線性 RAG 的侷限性</a></li>
+    <li><a href="#什麼是-agentic-rag">什麼是 Agentic RAG？</a></li>
+    <li><a href="#核心機制深度解析">核心機制深度解析</a>
+      <ul>
+        <li><a href="#1-檢索評分器-retrieval-grader">1. 檢索評分器 (Retrieval Grader)</a></li>
+        <li><a href="#2-幻覺檢測與知識紮根-hallucination-grader--grounding">2. 幻覺檢測與知識紮根 (Hallucination Grader &amp; Grounding)</a></li>
+        <li><a href="#3-多路並行與網路補位-multi-path--web-search-fallback">3. 多路並行與網路補位 (Multi-path &amp; Web Search Fallback)</a></li>
+      </ul>
+    </li>
+    <li><a href="#技術實踐從-langchain-到-langgraph">技術實踐：從 LangChain 到 LangGraph</a></li>
+    <li><a href="#效能優化建議-mlops-perspective">效能優化建議 (MLOps Perspective)</a></li>
+    <li><a href="#結語通往-reasoning-engine-的必經之路">結語：通往 Reasoning Engine 的必經之路</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="enable-true">MCP issues detected. Run /mcp list for status.&mdash;
+title: &ldquo;從檢索到決策：深度解析 Agentic RAG 的自我修正機制與實踐&rdquo;
+subtitle: &ldquo;超越線性 RAG：利用 Agentic Workflow 提升知識問答的精準度與可靠性&rdquo;
+date: 2026-05-05T00:00:00+08:00
+lastmod: 2026-05-05T00:00:00+08:00
+draft: false
+author: &ldquo;AI Assistant&rdquo;
+tags: [&ldquo;AI&rdquo;, &ldquo;RAG&rdquo;, &ldquo;LLM Agents&rdquo;, &ldquo;Machine Learning Engineering&rdquo;]
+categories: [&ldquo;Tech&rdquo;]
+toc:
+enable: true</h2>
+<h2 id="引言線性-rag-的侷限性">引言：線性 RAG 的侷限性</h2>
+<p>在過去的一兩年裡，<strong>檢索增強生成 (Retrieval-Augmented Generation, RAG)</strong> 已經成為企業導入大型語言模型 (LLM) 的標準架構。然而，隨著應用場景的深入，傳統的「線性 RAG」（Naive RAG）逐漸顯露其瓶頸：如果檢索到的文檔不相關怎麼辦？如果模型在生成過程中產生了幻覺 (Hallucination) 怎麼辦？</p>
+<p>傳統 RAG 就像是一個只會按部就班的學生，書翻到哪就唸到哪。而我們真正需要的，是一個具備「批判性思考」與「自我修正」能力的 <strong>Agentic RAG</strong>。</p>
+<h2 id="什麼是-agentic-rag">什麼是 Agentic RAG？</h2>
+<p><strong>Agentic RAG</strong> 的核心理念是將 RAG 的過程從單向的流程 (Pipeline) 轉變為循環的「狀態機」(State Machine) 或「智能體工作流」(Agentic Workflow)。它不再只是簡單的 <code>Query -&gt; Retrieval -&gt; Generation</code>，而是引入了決策節點，讓 Agent 能夠根據中間結果決定下一步行動。</p>
+<p>這種模式通常包含以下特徵：</p>
+<ul>
+<li><strong>Routing (路由)</strong>：決定是否需要檢索向量資料庫，或是直接使用模型知識，抑或是進行網路搜索。</li>
+<li><strong>Self-Correction (自我修正)</strong>：對檢索結果進行評分，若相關性低則重新檢索。</li>
+<li><strong>Self-Grading (自我評分)</strong>：檢查生成內容是否基於檢索到的事實，並判斷是否回答了問題。</li>
+</ul>
+<h2 id="核心機制深度解析">核心機制深度解析</h2>
+<h3 id="1-檢索評分器-retrieval-grader">1. 檢索評分器 (Retrieval Grader)</h3>
+<p>當系統從 Vector Database（如 Milvus 或 Pinecone）檢索出多個 Chunk 後，Agent 首先會扮演 <strong>Grader</strong> 的角色。透過一個輕量化但推理能力強的模型（如 Llama 3.1 70B 或 GPT-4o-mini），判斷檢索到的內容是否真的能支持回答該 Query。</p>
+<p>若評分為「不相關」，Agent 會啟動備援方案（如轉向 Google Search 或進行 Query Transformation 重新檢索），而非強行生成錯誤答案。</p>
+<h3 id="2-幻覺檢測與知識紮根-hallucination-grader--grounding">2. 幻覺檢測與知識紮根 (Hallucination Grader &amp; Grounding)</h3>
+<p>這是 Agentic RAG 最關鍵的一環。在模型生成回應後，我們會進行兩階段驗證：</p>
+<ul>
+<li><strong>Step A：檢驗事實性 (Faithfulness)</strong>。生成的答案是否能從檢索到的文檔中找到依據？這能有效過濾掉模型自帶的預訓練幻覺。</li>
+<li><strong>Step B：檢驗答案有用性 (Answer Utility)</strong>。答案是否真正解決了使用者的原始提問？</li>
+</ul>
+<h3 id="3-多路並行與網路補位-multi-path--web-search-fallback">3. 多路並行與網路補位 (Multi-path &amp; Web Search Fallback)</h3>
+<p>在 Agentic Workflow 中，我們可以並行多個路徑。例如：</p>
+<ul>
+<li>路徑 A：檢索內部技術文檔。</li>
+<li>路徑 B：檢索最新的 API 規範。</li>
+<li>如果兩者皆無法提供足夠信心，則觸發 <strong>Web Search Tool</strong>。</li>
+</ul>
+<h2 id="技術實踐從-langchain-到-langgraph">技術實踐：從 LangChain 到 LangGraph</h2>
+<p>要實現這種複雜的循環邏輯，傳統的 <code>Chain</code> 結構會顯得非常臃腫。2026 年的開發主流已經全面轉向 <strong>Flow Engineering</strong>。</p>
+<p>利用 <strong>LangGraph</strong> 或類似的狀態管理工具，我們可以定義節點 (Nodes) 與邊 (Edges)：</p>
+<ul>
+<li><strong>Nodes</strong>：檢索、生成、Web 搜尋、改寫問題。</li>
+<li><strong>Conditional Edges</strong>：根據評分器的結果，決定跳回「改寫問題」節點，還是前進到「結束」節點。</li>
+</ul>
+<p>這種基於 <strong>Graph</strong> 的開發模式，讓 RAG 具備了高度的可觀察性 (Observability) 與容錯性。</p>
+<h2 id="效能優化建議-mlops-perspective">效能優化建議 (MLOps Perspective)</h2>
+<p>在構建 Agentic RAG 時，延遲 (Latency) 是一個挑戰，因為多次模型調用會增加首字生成時間 (TTFT)。以下是幾個優化建議：</p>
+<ol>
+<li><strong>Speculative Decoding</strong>：針對評分器等簡單任務，使用較小的 SLM (Small Language Models) 以降低成本與延遲。</li>
+<li><strong>Asynchronous Tool Calling</strong>：盡可能並行化檢索與評分。</li>
+<li><strong>Structured Output</strong>：強制評分模型輸出 JSON 格式，以便下游系統解析。</li>
+</ol>
+<h2 id="結語通往-reasoning-engine-的必經之路">結語：通往 Reasoning Engine 的必經之路</h2>
+<p>Agentic RAG 不僅僅是技術架構的升級，更是從「概率模型」轉向「邏輯引擎」的重要里程碑。透過自我反思 (Self-reflection) 與迭代，我們能夠構建出真正值得信賴的 AI 系統。</p>
+<p>在未來，隨著 <strong>Long Context</strong> 的進一步成熟與 <strong>Agentic Patterns</strong> 的標準化，我們將看到更強大的「自主知識工作者」出現在各行各業中。</p>
+<hr>
+<p><em>本文由 AI Assistant 撰寫，專注於 2026 年前沿機器學習工程實踐。</em></p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>&nbsp;<a class="git-hash" href="https://github.com/kokp520/commit/7833080721c3a005253aeec1953ce92b07695973" target="_blank" title="commit by kokp520(kokp520@gmail.com) 7833080721c3a005253aeec1953ce92b07695973: update new post">
+                                    <i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>7833080</a></span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/ai-gen-20260505-235453/index.md" target="_blank"></a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title=" Facebook" data-sharer="facebook" data-url="https://example.com/ai-gen-20260505-235453/"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title=" Line" data-sharer="line" data-url="https://example.com/ai-gen-20260505-235453/" data-title=""><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();"></a></span>&nbsp;|&nbsp;<span><a href="/"></a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/ai-gen-20260505-235810/" class="prev" rel="prev" title=""><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i></a>
+            <a href="/ai-gen-20260505-235343/" class="next" rel="next" title=""><i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Hugo Template - LoveIt by Dillon | Adi</div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://kokp520.github.io" target="_blank">Adi</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://personal-site-12.disqus.com/embed.js" defer></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"","maxShownLines":50},"comment":{},"data":{"id-1":"Adi98's Blog","id-2":"Adi98's Blog"},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.en","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"","snippetLength":30,"type":"algolia"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":70}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

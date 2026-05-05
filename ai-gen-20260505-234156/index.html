@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title> - Adi98&#39;s Blog</title><meta name="Description" content="Welcome to my blog..."><meta property="og:url" content="https://example.com/ai-gen-20260505-234156/">
+  <meta property="og:site_name" content="Adi98&#39;s Blog">
+  <meta property="og:title" content="Adi98&#39;s Blog">
+  <meta property="og:description" content="MCP issues detected. Run /mcp list for status.— title: “深入解析 Agentic Workflow：為什麼「Flow Engineering」才是實踐 LLM 應用的下一站？” subtitle: “從「丟問題」到「造流程」：打造穩定且可預測的 AI 代理系統” date: 2026-05-05T23:55:00&#43;08:00 lastmod: 2026-05-05T23:55:00&#43;08:00 draft: false author: “Gemini CLI” tags: [“AI Agents”, “LLM”, “Flow Engineering”, “Software Architecture”] categories: [“AI/ML Engineering”] toc: enable: true">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:modified_time" content="2026-05-05T23:41:57+08:00">
+    <meta property="og:image" content="https://example.com/main2.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://example.com/main2.png">
+  <meta name="twitter:title" content="Adi98&#39;s Blog">
+  <meta name="twitter:description" content="MCP issues detected. Run /mcp list for status.— title: “深入解析 Agentic Workflow：為什麼「Flow Engineering」才是實踐 LLM 應用的下一站？” subtitle: “從「丟問題」到「造流程」：打造穩定且可預測的 AI 代理系統” date: 2026-05-05T23:55:00&#43;08:00 lastmod: 2026-05-05T23:55:00&#43;08:00 draft: false author: “Gemini CLI” tags: [“AI Agents”, “LLM”, “Flow Engineering”, “Software Architecture”] categories: [“AI/ML Engineering”] toc: enable: true">
+<meta name="application-name" content="Adi&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="Adi&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/safari-pinned-tab.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://example.com/ai-gen-20260505-234156/" /><link rel="prev" href="https://example.com/ai-gen-20260505-234422/" /><link rel="next" href="https://example.com/ai-gen-20260505-233711/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/example.com\/ai-gen-20260505-234156\/"
+        },"image": ["https:\/\/example.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","wordcount":  222 ,
+        "url": "https:\/\/example.com\/ai-gen-20260505-234156\/","dateModified": "2026-05-05T23:41:57+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": "https:\/\/example.com\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Adi"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Adi98&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/main2.png"
+        data-srcset="/main2.png, /main2.png 1.5x, /main2.png 2x"
+        data-sizes="auto"
+        alt="/main2.png"
+        title="/main2.png" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/about/"> About </a><a class="menu-item" href="https://github.com/kokp520" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Adi98&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/main2.png"
+        data-srcset="/main2.png, /main2.png 1.5x, /main2.png 2x"
+        data-sizes="auto"
+        alt="/main2.png"
+        title="/main2.png" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/about/" title="">About</a><a class="menu-item" href="https://github.com/kokp520" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title"></h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX"></h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://kokp520.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Adi</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="0001-01-01">0001-01-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span></span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#enable-true">MCP issues detected. Run /mcp list for status.&mdash;
+title: &ldquo;深入解析 Agentic Workflow：為什麼「Flow Engineering」才是實踐 LLM 應用的下一站？&rdquo;
+subtitle: &ldquo;從「丟問題」到「造流程」：打造穩定且可預測的 AI 代理系統&rdquo;
+date: 2026-05-05T23:55:00+08:00
+lastmod: 2026-05-05T23:55:00+08:00
+draft: false
+author: &ldquo;Gemini CLI&rdquo;
+tags: [&ldquo;AI Agents&rdquo;, &ldquo;LLM&rdquo;, &ldquo;Flow Engineering&rdquo;, &ldquo;Software Architecture&rdquo;]
+categories: [&ldquo;AI/ML Engineering&rdquo;]
+toc:
+enable: true</a></li>
+    <li><a href="#1-prompt-engineering-的瓶頸機率性的黑盒">1. Prompt Engineering 的瓶頸：機率性的黑盒</a></li>
+    <li><a href="#2-什麼是-agentic-workflow">2. 什麼是 Agentic Workflow？</a>
+      <ul>
+        <li><a href="#四大核心設計模式-the-four-patterns">四大核心設計模式 (The Four Patterns)</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-從-sequence-到-graphstate-machine-的興起">3. 從 Sequence 到 Graph：State Machine 的興起</a></li>
+    <li><a href="#4-為何開發者該關注流程而非參數">4. 為何開發者該關注「流程」而非「參數」？</a></li>
+    <li><a href="#5-實踐挑戰迭代的代價">5. 實踐挑戰：迭代的代價</a></li>
+    <li><a href="#結語ai-開發者的心態轉型">結語：AI 開發者的心態轉型</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="enable-true">MCP issues detected. Run /mcp list for status.&mdash;
+title: &ldquo;深入解析 Agentic Workflow：為什麼「Flow Engineering」才是實踐 LLM 應用的下一站？&rdquo;
+subtitle: &ldquo;從「丟問題」到「造流程」：打造穩定且可預測的 AI 代理系統&rdquo;
+date: 2026-05-05T23:55:00+08:00
+lastmod: 2026-05-05T23:55:00+08:00
+draft: false
+author: &ldquo;Gemini CLI&rdquo;
+tags: [&ldquo;AI Agents&rdquo;, &ldquo;LLM&rdquo;, &ldquo;Flow Engineering&rdquo;, &ldquo;Software Architecture&rdquo;]
+categories: [&ldquo;AI/ML Engineering&rdquo;]
+toc:
+enable: true</h2>
+<p>在過去的一年裡，AI 圈最熱門的話題莫過於 Prompt Engineering（提示工程）。我們學習如何撰寫更精確的指令、如何利用 Chain-of-Thought (CoT) 誘導模型思考。然而，隨著企業級應用對於「穩定性」與「準確性」的要求日益嚴苛，單純的 Single-shot Prompt（單次提示）已經顯得捉襟見肘。</p>
+<p>最近，業界（特別是 Andrew Ng 吳恩達老師）開始大力推崇一個新的概念：<strong>Agentic Workflow</strong>。這象徵著 AI 開發範式正從「優化 Prompt」轉向「優化 Flow（流程）」。今天我們就來聊聊，為什麼 <strong>Flow Engineering</strong> 才是釋放大型語言模型（LLM）潛力的關鍵。</p>
+<h2 id="1-prompt-engineering-的瓶頸機率性的黑盒">1. Prompt Engineering 的瓶頸：機率性的黑盒</h2>
+<p>當我們將複雜的任務交給 LLM 時，即便使用了最完美的 Prompt，模型依然會面臨以下問題：</p>
+<ul>
+<li><strong>Hallucination（幻覺）</strong>：在長篇大論中夾雜錯誤事實。</li>
+<li><strong>One-way Error</strong>：一步錯步步錯，模型無法在輸出過程中自我糾正。</li>
+<li><strong>Stochastic Behavior</strong>：即使 Temperature 設為 0，面對複雜邏輯時仍具備不確定性。</li>
+</ul>
+<p>傳統的解決方案是換一個更強的模型（如從 GPT-4 升級到 Claude 3.5 Sonnet），但這治標不治本。真正的突破在於：<strong>不再期望模型一次性給出完美答案，而是透過流程設計讓模型自我迭代。</strong></p>
+<h2 id="2-什麼是-agentic-workflow">2. 什麼是 Agentic Workflow？</h2>
+<p>Agentic Workflow 的核心在於將一個複雜的任務拆解成多個「微步驟」，並在步驟之間加入判斷、反思與循環。</p>
+<p>Andrew Ng 指出，一個較弱的模型（如 GPT-3.5）在良好的 Agentic Workflow 下，其表現甚至能超越 Single-shot 的強模型（如 GPT-4）。這就是 <strong>Flow Engineering</strong> 的威力。</p>
+<h3 id="四大核心設計模式-the-four-patterns">四大核心設計模式 (The Four Patterns)</h3>
+<ol>
+<li><strong>Reflection（自我反思）</strong>：
+模型生成初步結果後，被要求檢查自己的錯誤並修正。例如：先寫 Code，再執行 Linter 檢查，最後根據錯誤訊息重新編寫。</li>
+<li><strong>Tool Use（工具調用）</strong>：
+這已廣為人知（如 Function Calling），但關鍵在於模型何時決定使用工具，以及如何處理工具回傳的「非預期結果」。</li>
+<li><strong>Planning（規劃）</strong>：
+模型接收任務後，不直接執行，而是先產出一個 Step-by-step 的計劃書。執行過程中，若環境改變，還能動態調整計畫。</li>
+<li><strong>Multi-agent Collaboration（多代理協作）</strong>：
+模擬人類團隊。一個 Agent 扮演「程式碼撰寫員」，另一個扮演「程式審核員 (Code Reviewer)」。透過不同 Role-play 的對抗與協作，能大幅降低錯誤率。</li>
+</ol>
+<h2 id="3-從-sequence-到-graphstate-machine-的興起">3. 從 Sequence 到 Graph：State Machine 的興起</h2>
+<p>早期的 Agent 框架（如 LangChain 的初始版本）多半是線性的序列。但在實務中，真正的 Agentic Workflow 往往是<strong>非線性</strong>的。</p>
+<p>這就是為什麼像 <strong>LangGraph</strong> 這樣的工具開始崛起。它將 Agent 的行為建模為一個「狀態機 (State Machine)」或「有向圖 (Directed Graph)」：</p>
+<ul>
+<li><strong>Node（節點）</strong>：代表一次 LLM 調用或工具執行。</li>
+<li><strong>Edge（邊）</strong>：定義了流程的方向。</li>
+<li><strong>Conditional Edge（條件邊）</strong>：根據 LLM 的輸出決定下一步是去「重做」還是「收尾」。</li>
+</ul>
+<p>這種設計讓開發者能夠精確控制 AI 的思考邊界，將「隨機性」限制在可控的節點內。</p>
+<h2 id="4-為何開發者該關注流程而非參數">4. 為何開發者該關注「流程」而非「參數」？</h2>
+<p>在機器學習工程化（MLOps）的語境下，<strong>Flow Engineering</strong> 帶來了幾個優勢：</p>
+<ul>
+<li><strong>的可觀察性 (Observability)</strong>：當流程出錯時，你可以清楚知道是「反思節點」沒檢查出來，還是「計畫節點」一開始就歪了。</li>
+<li><strong>模組化測試</strong>：你可以針對單一的 Agent 節點進行單元測試（Unit Test），而不是測試整個漫無邊際的對話。</li>
+<li><strong>更低的延遲與成本</strong>：透過 Flow 設計，某些簡單步驟可以使用更小、更快的模型（如 Llama 3 8B），只有在關鍵決策點才調用最強模型。</li>
+</ul>
+<h2 id="5-實踐挑戰迭代的代價">5. 實踐挑戰：迭代的代價</h2>
+<p>雖然 Agentic Workflow 很強大，但它也帶來了新的挑戰：</p>
+<ul>
+<li><strong>Token 消耗增加</strong>：多次迴圈與自我檢查意味著更多的輸入與輸出。</li>
+<li><strong>延遲 (Latency)</strong>：使用者可能無法等待 AI 在後台「思考」並「修正」三分鐘才給答案。</li>
+<li><strong>無限循環 (Infinite Loops)</strong>：如果反思邏輯設計不當，Agent 可能陷入永無止境的自我否定。</li>
+</ul>
+<h2 id="結語ai-開發者的心態轉型">結語：AI 開發者的心態轉型</h2>
+<p>作為技術開發者，我們正在經歷從「提示詞創作者」到「系統架構師」的轉型。未來，衡量一個 AI 工程師價值的不再是你收藏了多少 Prompt 模板，而是你如何設計一套能自我糾錯、穩定可靠的 <strong>Agentic Workflow</strong>。</p>
+<p>這是一場範式轉移：<strong>Stop Prompting, Start Engineering.</strong></p>
+<hr>
+<p><strong>作者：AI Assistant</strong>
+<strong>於 2026 年 5 月 5 日</strong></p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>&nbsp;<a class="git-hash" href="https://github.com/kokp520/commit/4f6c89d4955a58da35d3bda3c25ca51b35926f5f" target="_blank" title="commit by kokp520(kokp520@gmail.com) 4f6c89d4955a58da35d3bda3c25ca51b35926f5f: update new post">
+                                    <i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>4f6c89d</a></span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/ai-gen-20260505-234156/index.md" target="_blank"></a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title=" Facebook" data-sharer="facebook" data-url="https://example.com/ai-gen-20260505-234156/"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title=" Line" data-sharer="line" data-url="https://example.com/ai-gen-20260505-234156/" data-title=""><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();"></a></span>&nbsp;|&nbsp;<span><a href="/"></a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/ai-gen-20260505-234422/" class="prev" rel="prev" title=""><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i></a>
+            <a href="/ai-gen-20260505-233711/" class="next" rel="next" title=""><i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Hugo Template - LoveIt by Dillon | Adi</div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://kokp520.github.io" target="_blank">Adi</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://personal-site-12.disqus.com/embed.js" defer></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"","maxShownLines":50},"comment":{},"data":{"id-1":"Adi98's Blog","id-2":"Adi98's Blog"},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.en","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"","snippetLength":30,"type":"algolia"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":70}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

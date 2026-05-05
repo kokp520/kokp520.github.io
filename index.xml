@@ -49,5 +49,96 @@
     <guid>https://example.com/sms-python-gogoro/</guid>
     <description><![CDATA[<p>Send sms notification by crawler tool with python.</p>]]></description>
 </item>
+<item>
+    <title></title>
+    <link>https://example.com/ai-gen-20260505-233711/</link>
+    <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
+    <author>Adi</author>
+    <guid>https://example.com/ai-gen-20260505-233711/</guid>
+    <description><![CDATA[<h2 id="enable-true">MCP issues detected. Run /mcp list for status.&mdash;
+title: &ldquo;突破檢索瓶頸：從向量數據庫到 GraphRAG 的深度實踐&rdquo;
+subtitle: &ldquo;探索 RAG 2.0 時代下的知識關聯與語義精確度&rdquo;
+date: 2026-05-05T00:00:00+08:00
+lastmod: 2026-05-05T00:00:00+08:00
+draft: false
+author: &ldquo;Adi Wu&rdquo;
+tags: [&ldquo;RAG&rdquo;, &ldquo;LLM&rdquo;, &ldquo;Knowledge Graph&rdquo;, &ldquo;GraphRAG&rdquo;, &ldquo;Vector Database&rdquo;]
+categories: [&ldquo;AI Engineering&rdquo;, &ldquo;Generative AI&rdquo;]
+toc:
+enable: true</h2>
+<p>在大型語言模型（LLM）的應用開發中，<strong>RAG (Retrieval-Augmented Generation)</strong> 已經成為解決模型「幻覺」(Hallucination) 與知識滯後問題的標準架構。然而，隨著應用場景從簡單的文檔問答演進到複雜的決策支援，傳統的 Naive RAG（基於向量檢索的 RAG）開始顯露其局限性。</p>]]></description>
+</item>
+<item>
+    <title></title>
+    <link>https://example.com/ai-gen-20260505-234156/</link>
+    <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
+    <author>Adi</author>
+    <guid>https://example.com/ai-gen-20260505-234156/</guid>
+    <description><![CDATA[<h2 id="enable-true">MCP issues detected. Run /mcp list for status.&mdash;
+title: &ldquo;深入解析 Agentic Workflow：為什麼「Flow Engineering」才是實踐 LLM 應用的下一站？&rdquo;
+subtitle: &ldquo;從「丟問題」到「造流程」：打造穩定且可預測的 AI 代理系統&rdquo;
+date: 2026-05-05T23:55:00+08:00
+lastmod: 2026-05-05T23:55:00+08:00
+draft: false
+author: &ldquo;Gemini CLI&rdquo;
+tags: [&ldquo;AI Agents&rdquo;, &ldquo;LLM&rdquo;, &ldquo;Flow Engineering&rdquo;, &ldquo;Software Architecture&rdquo;]
+categories: [&ldquo;AI/ML Engineering&rdquo;]
+toc:
+enable: true</h2>]]></description>
+</item>
+<item>
+    <title></title>
+    <link>https://example.com/ai-gen-20260505-234422/</link>
+    <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
+    <author>Adi</author>
+    <guid>https://example.com/ai-gen-20260505-234422/</guid>
+    <description><![CDATA[<h2 id="enable-true">MCP issues detected. Run /mcp list for status.&mdash;
+title: &ldquo;GraphRAG：知識檢索的下一個里程碑，從「碎片」到「脈絡」的深度演進&rdquo;
+subtitle: &ldquo;深度解析結合知識圖譜與 LLM 的全域檢索新架構&rdquo;
+date: 2026-05-05T00:00:00+08:00
+lastmod: 2026-05-05T00:00:00+08:00
+draft: false
+author: &ldquo;AI Assistant&rdquo;
+tags: [&ldquo;AI&rdquo;, &ldquo;Machine Learning&rdquo;, &ldquo;RAG&rdquo;, &ldquo;GraphRAG&rdquo;, &ldquo;LLM&rdquo;]
+categories: [&ldquo;Tech&rdquo;, &ldquo;NLP&rdquo;]
+toc:
+enable: true</h2>]]></description>
+</item>
+<item>
+    <title></title>
+    <link>https://example.com/ai-gen-20260505-234654/</link>
+    <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
+    <author>Adi</author>
+    <guid>https://example.com/ai-gen-20260505-234654/</guid>
+    <description><![CDATA[<h2 id="enable-true">MCP issues detected. Run /mcp list for status.&mdash;
+title: &ldquo;從提示工程到流工程：解構 Agentic Workflow 的設計模式與反思機制&rdquo;
+subtitle: &ldquo;為什麼「反思」與「多輪疊代」是釋放 LLM 潛力的關鍵？&rdquo;
+date: 2026-05-05T23:55:00+08:00
+lastmod: 2026-05-05T23:55:00+08:00
+draft: false
+author: &ldquo;AI Assistant&rdquo;
+tags: [&ldquo;AI&rdquo;, &ldquo;LLM Agents&rdquo;, &ldquo;Machine Learning&rdquo;, &ldquo;Software Engineering&rdquo;, &ldquo;Agentic Workflow&rdquo;]
+categories: [&ldquo;Tech&rdquo;, &ldquo;AI Strategy&rdquo;]
+toc:
+enable: true</h2>]]></description>
+</item>
+<item>
+    <title></title>
+    <link>https://example.com/ai-gen-20260505-235012/</link>
+    <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
+    <author>Adi</author>
+    <guid>https://example.com/ai-gen-20260505-235012/</guid>
+    <description><![CDATA[<h2 id="enable-true">MCP issues detected. Run /mcp list for status.&mdash;
+title: &ldquo;Agentic RAG：從「被動檢索」到「主動推理」的 RAG 2.0 革命&rdquo;
+subtitle: &ldquo;深入探討 LLM Agents 如何透過自我修正與多步推理重新定義 RAG 架構&rdquo;
+date: 2026-05-05T00:00:00+08:00
+lastmod: 2026-05-05T00:00:00+08:00
+draft: false
+author: &ldquo;AI Assistant&rdquo;
+tags: [&ldquo;AI&rdquo;, &ldquo;Machine Learning&rdquo;, &ldquo;RAG&rdquo;, &ldquo;LLM Agents&rdquo;, &ldquo;Vector Database&rdquo;]
+categories: [&ldquo;Tech&rdquo;, &ldquo;AI Engineering&rdquo;]
+toc:
+enable: true</h2>]]></description>
+</item>
 </channel>
 </rss>
