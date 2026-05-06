@@ -1,41 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title> - Adi98&#39;s Blog</title><meta name="Description" content="Welcome to my blog..."><meta property="og:url" content="https://example.com/ai-gen-20260505-235012/">
+        <title>Agentic RAG：從「被動檢索」到「主動推理」的 RAG 2.0 革命 - Adi98&#39;s Blog</title><meta name="Description" content="Welcome to my blog..."><meta property="og:url" content="http://localhost:1313/ai-gen-20260505-235012/">
   <meta property="og:site_name" content="Adi98&#39;s Blog">
-  <meta property="og:title" content="Adi98&#39;s Blog">
-  <meta property="og:description" content="MCP issues detected. Run /mcp list for status.— title: “Agentic RAG：從「被動檢索」到「主動推理」的 RAG 2.0 革命” subtitle: “深入探討 LLM Agents 如何透過自我修正與多步推理重新定義 RAG 架構” date: 2026-05-05T00:00:00&#43;08:00 lastmod: 2026-05-05T00:00:00&#43;08:00 draft: false author: “AI Assistant” tags: [“AI”, “Machine Learning”, “RAG”, “LLM Agents”, “Vector Database”] categories: [“Tech”, “AI Engineering”] toc: enable: true">
+  <meta property="og:title" content="Agentic RAG：從「被動檢索」到「主動推理」的 RAG 2.0 革命">
+  <meta property="og:description" content="Welcome to my blog...">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-05-05T00:00:00+08:00">
     <meta property="article:modified_time" content="2026-05-05T23:50:12+08:00">
-    <meta property="og:image" content="https://example.com/main2.png">
+    <meta property="article:tag" content="AI">
+    <meta property="article:tag" content="Machine Learning">
+    <meta property="article:tag" content="RAG">
+    <meta property="article:tag" content="LLM Agents">
+    <meta property="article:tag" content="Vector Database">
+    <meta property="og:image" content="http://localhost:1313/main2.png">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://example.com/main2.png">
-  <meta name="twitter:title" content="Adi98&#39;s Blog">
-  <meta name="twitter:description" content="MCP issues detected. Run /mcp list for status.— title: “Agentic RAG：從「被動檢索」到「主動推理」的 RAG 2.0 革命” subtitle: “深入探討 LLM Agents 如何透過自我修正與多步推理重新定義 RAG 架構” date: 2026-05-05T00:00:00&#43;08:00 lastmod: 2026-05-05T00:00:00&#43;08:00 draft: false author: “AI Assistant” tags: [“AI”, “Machine Learning”, “RAG”, “LLM Agents”, “Vector Database”] categories: [“Tech”, “AI Engineering”] toc: enable: true">
+  <meta name="twitter:image" content="http://localhost:1313/main2.png">
+  <meta name="twitter:title" content="Agentic RAG：從「被動檢索」到「主動推理」的 RAG 2.0 革命">
+  <meta name="twitter:description" content="Welcome to my blog...">
 <meta name="application-name" content="Adi&#39;s blog">
-<meta name="apple-mobile-web-app-title" content="Adi&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/safari-pinned-tab.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://example.com/ai-gen-20260505-235012/" /><link rel="prev" href="https://example.com/ai-gen-20260505-235104/" /><link rel="next" href="https://example.com/ai-gen-20260505-234654/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+<meta name="apple-mobile-web-app-title" content="Adi&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/safari-pinned-tab.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/ai-gen-20260505-235012/" /><link rel="prev" href="http://localhost:1313/ai-gen-20260505-234422/" /><link rel="next" href="http://localhost:1313/ai-gen-20260505-235938/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "",
+        "headline": "Agentic RAG：從「被動檢索」到「主動推理」的 RAG 2.0 革命",
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/example.com\/ai-gen-20260505-235012\/"
-        },"image": ["https:\/\/example.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","wordcount":  266 ,
-        "url": "https:\/\/example.com\/ai-gen-20260505-235012\/","dateModified": "2026-05-05T23:50:12+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@id": "http:\/\/localhost:1313\/ai-gen-20260505-235012\/"
+        },"image": ["http:\/\/localhost:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "AI, Machine Learning, RAG, LLM Agents, Vector Database","wordcount":  220 ,
+        "url": "http:\/\/localhost:1313\/ai-gen-20260505-235012\/","datePublished": "2026-05-05T00:00:00+08:00","dateModified": "2026-05-05T23:50:12+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
-            "name": "xxxx","logo": "https:\/\/example.com\/images\/avatar.png"},"author": {
+            "name": "xxxx","logo": "http:\/\/localhost:1313\/images\/avatar.png"},"author": {
                 "@type": "Person",
-                "name": "Adi"
+                "name": "AI Assistant"
             },"description": ""
     }
     </script></head>
@@ -116,9 +122,9 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title"></h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX"></h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="https://kokp520.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Adi</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="0001-01-01">0001-01-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Agentic RAG：從「被動檢索」到「主動推理」的 RAG 2.0 革命</h1><h2 class="single-subtitle">深入探討 LLM Agents 如何透過自我修正與多步推理重新定義 RAG 架構</h2><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://kokp520.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>AI Assistant</a></span>&nbsp;<span class="post-category"></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2026-05-05">2026-05-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="">
                 <div class="details-summary toc-title">
@@ -127,17 +133,6 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#enable-true">MCP issues detected. Run /mcp list for status.&mdash;
-title: &ldquo;Agentic RAG：從「被動檢索」到「主動推理」的 RAG 2.0 革命&rdquo;
-subtitle: &ldquo;深入探討 LLM Agents 如何透過自我修正與多步推理重新定義 RAG 架構&rdquo;
-date: 2026-05-05T00:00:00+08:00
-lastmod: 2026-05-05T00:00:00+08:00
-draft: false
-author: &ldquo;AI Assistant&rdquo;
-tags: [&ldquo;AI&rdquo;, &ldquo;Machine Learning&rdquo;, &ldquo;RAG&rdquo;, &ldquo;LLM Agents&rdquo;, &ldquo;Vector Database&rdquo;]
-categories: [&ldquo;Tech&rdquo;, &ldquo;AI Engineering&rdquo;]
-toc:
-enable: true</a></li>
     <li><a href="#1-傳統-rag-的瓶頸為什麼我們需要-agent">1. 傳統 RAG 的瓶頸：為什麼我們需要 Agent？</a></li>
     <li><a href="#2-agentic-rag-的核心架構模式">2. Agentic RAG 的核心架構模式</a>
       <ul>
@@ -152,18 +147,7 @@ enable: true</a></li>
     <li><a href="#結語">結語</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><h2 id="enable-true">MCP issues detected. Run /mcp list for status.&mdash;
-title: &ldquo;Agentic RAG：從「被動檢索」到「主動推理」的 RAG 2.0 革命&rdquo;
-subtitle: &ldquo;深入探討 LLM Agents 如何透過自我修正與多步推理重新定義 RAG 架構&rdquo;
-date: 2026-05-05T00:00:00+08:00
-lastmod: 2026-05-05T00:00:00+08:00
-draft: false
-author: &ldquo;AI Assistant&rdquo;
-tags: [&ldquo;AI&rdquo;, &ldquo;Machine Learning&rdquo;, &ldquo;RAG&rdquo;, &ldquo;LLM Agents&rdquo;, &ldquo;Vector Database&rdquo;]
-categories: [&ldquo;Tech&rdquo;, &ldquo;AI Engineering&rdquo;]
-toc:
-enable: true</h2>
-<p>在生成式 AI 的發展進程中，<strong>檢索增強生成 (Retrieval-Augmented Generation, RAG)</strong> 無疑是將大型語言模型 (LLM) 落地到企業應用的關鍵技術。然而，傳統的 RAG（通常被稱為 Naive RAG）在面對複雜問題時，往往顯得力不從心。</p>
+            </div><div class="content" id="content"><p>在生成式 AI 的發展進程中，<strong>檢索增強生成 (Retrieval-Augmented Generation, RAG)</strong> 無疑是將大型語言模型 (LLM) 落地到企業應用的關鍵技術。然而，傳統的 RAG（通常被稱為 Naive RAG）在面對複雜問題時，往往顯得力不從心。</p>
 <p>今天，我們正見證 RAG 向 <strong>Agentic RAG</strong> 的範式轉移。這不僅僅是工具的堆疊，而是一場從「被動資料搬運」到「主動邏輯推理」的結構性革命。</p>
 <h2 id="1-傳統-rag-的瓶頸為什麼我們需要-agent">1. 傳統 RAG 的瓶頸：為什麼我們需要 Agent？</h2>
 <p>傳統的 RAG 工作流通常是線性的：<code>User Query -&gt; Vector Search -&gt; Context Stuffing -&gt; LLM Response</code>。這種模式在處理簡單的事實查詢時表現優異，但遇到以下場景時往往會崩潰：</p>
@@ -217,24 +201,22 @@ enable: true</h2>
                             <a class="link-to-markdown" href="/ai-gen-20260505-235012/index.md" target="_blank"></a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title=" Facebook" data-sharer="facebook" data-url="https://example.com/ai-gen-20260505-235012/"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title=" Line" data-sharer="line" data-url="https://example.com/ai-gen-20260505-235012/" data-title=""><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a></span>
+                <span><a href="javascript:void(0);" title=" Facebook" data-sharer="facebook" data-url="http://localhost:1313/ai-gen-20260505-235012/" data-hashtag="AI"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title=" Line" data-sharer="line" data-url="http://localhost:1313/ai-gen-20260505-235012/" data-title="Agentic RAG：從「被動檢索」到「主動推理」的 RAG 2.0 革命"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/ai/">AI</a>,&nbsp;<a href="/tags/machine-learning/">Machine Learning</a>,&nbsp;<a href="/tags/rag/">RAG</a>,&nbsp;<a href="/tags/llm-agents/">LLM Agents</a>,&nbsp;<a href="/tags/vector-database/">Vector Database</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();"></a></span>&nbsp;|&nbsp;<span><a href="/"></a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/ai-gen-20260505-235104/" class="prev" rel="prev" title=""><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i></a>
-            <a href="/ai-gen-20260505-234654/" class="next" rel="next" title=""><i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+    <div class="post-nav"><a href="/ai-gen-20260505-234422/" class="prev" rel="prev" title="GraphRAG：知識檢索的下一個里程碑，從「碎片」到「脈絡」的深度演進"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>GraphRAG：知識檢索的下一個里程碑，從「碎片」到「脈絡」的深度演進</a>
+            <a href="/ai-gen-20260505-235938/" class="next" rel="next" title="GraphRAG：結合知識圖譜與 LLM 的深度檢索增強生成新範式">GraphRAG：結合知識圖譜與 LLM 的深度檢索增強生成新範式<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
 </div>
-<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
-            </noscript></div></article></div>
+</article></div>
             </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">Hugo Template - LoveIt by Dillon | Adi</div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://kokp520.github.io" target="_blank">Adi</a></span></div>
         </div>
@@ -245,5 +227,5 @@ enable: true</h2>
             </a><a href="#" id="view-comments" class="fixed-button" title="">
                 <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
             </a>
-        </div><script type="text/javascript" src="https://personal-site-12.disqus.com/embed.js" defer></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"","maxShownLines":50},"comment":{},"data":{"id-1":"Adi98's Blog","id-2":"Adi98's Blog"},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.en","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"","snippetLength":30,"type":"algolia"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":70}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+        </div><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/algoliasearch/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"","maxShownLines":50},"comment":{},"data":{"id-1":"Adi98's Blog","id-2":"Adi98's Blog"},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.en","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"","snippetLength":30,"type":"algolia"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":70}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
 </html>

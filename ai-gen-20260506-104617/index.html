@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=63324&amp;path=livereload" data-no-instant defer></script>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>超越長文本：深度解析 RAG 與 Long-Context LLM 的架構博弈、融合與生產級優化 - Adi98&#39;s Blog</title><meta name="Description" content="Welcome to my blog..."><meta property="og:url" content="http://localhost:63324/ai-gen-20260506-104617/">
+        <title>超越長文本：深度解析 RAG 與 Long-Context LLM 的架構博弈、融合與生產級優化 - Adi98&#39;s Blog</title><meta name="Description" content="Welcome to my blog..."><meta property="og:url" content="http://localhost:1313/ai-gen-20260506-104617/">
   <meta property="og:site_name" content="Adi98&#39;s Blog">
   <meta property="og:title" content="超越長文本：深度解析 RAG 與 Long-Context LLM 的架構博弈、融合與生產級優化">
   <meta property="og:description" content="在大型語言模型（LLM）的演進歷程中，上下文窗口（Context Window）的持續擴張無疑是最令人矚目的趨勢之一。從最初的 4k、8k，到後來的 128k (GPT-4 Turbo)、1M 甚至 2M (Gemini 1.5 Pro)，模型處理海量資訊的能力似乎正以前所未有的速度增長。這引發了技術圈的一個激烈爭論：當模型可以直接「閱讀」整本書甚至整個程式碼庫時，我們還需要檢索增強生成（RAG）嗎？
@@ -20,15 +20,15 @@
     <meta property="article:tag" content="Context Window">
     <meta property="article:tag" content="Information Retrieval">
     <meta property="article:tag" content="AI Architecture">
-    <meta property="og:image" content="http://localhost:63324/main2.png">
+    <meta property="og:image" content="http://localhost:1313/main2.png">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="http://localhost:63324/main2.png">
+  <meta name="twitter:image" content="http://localhost:1313/main2.png">
   <meta name="twitter:title" content="超越長文本：深度解析 RAG 與 Long-Context LLM 的架構博弈、融合與生產級優化">
   <meta name="twitter:description" content="在大型語言模型（LLM）的演進歷程中，上下文窗口（Context Window）的持續擴張無疑是最令人矚目的趨勢之一。從最初的 4k、8k，到後來的 128k (GPT-4 Turbo)、1M 甚至 2M (Gemini 1.5 Pro)，模型處理海量資訊的能力似乎正以前所未有的速度增長。這引發了技術圈的一個激烈爭論：當模型可以直接「閱讀」整本書甚至整個程式碼庫時，我們還需要檢索增強生成（RAG）嗎？
 作為 AI 工程師，我們必須看透行銷數字背後的技術本質。本文將從系統架構、成本效率、資訊密度以及檢索精度等多個維度，深度解析 RAG 與 Long-Context LLM 之間的博弈關係，並探討兩者在生產環境中的最優融合路徑。">
 <meta name="application-name" content="Adi&#39;s blog">
-<meta name="apple-mobile-web-app-title" content="Adi&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/safari-pinned-tab.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:63324/ai-gen-20260506-104617/" /><link rel="prev" href="http://localhost:63324/laravel-illuminate-container/" /><link rel="next" href="http://localhost:63324/oldroad-website/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<meta name="apple-mobile-web-app-title" content="Adi&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/safari-pinned-tab.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/ai-gen-20260506-104617/" /><link rel="prev" href="http://localhost:1313/ai-gen-20260506-104201/" /><link rel="next" href="http://localhost:1313/ai-gen-20260506-105923/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
     {
@@ -38,11 +38,11 @@
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "http:\/\/localhost:63324\/ai-gen-20260506-104617\/"
-        },"image": ["http:\/\/localhost:63324\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "LLM, RAG, Long-Context, Context Window, Information Retrieval, AI Architecture","wordcount":  345 ,
-        "url": "http:\/\/localhost:63324\/ai-gen-20260506-104617\/","datePublished": "2026-05-06T15:00:00+08:00","dateModified": "2026-05-06T15:00:00+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@id": "http:\/\/localhost:1313\/ai-gen-20260506-104617\/"
+        },"image": ["http:\/\/localhost:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "LLM, RAG, Long-Context, Context Window, Information Retrieval, AI Architecture","wordcount":  345 ,
+        "url": "http:\/\/localhost:1313\/ai-gen-20260506-104617\/","datePublished": "2026-05-06T15:00:00+08:00","dateModified": "2026-05-06T15:00:00+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
-            "name": "xxxx","logo": "http:\/\/localhost:63324\/images\/avatar.png"},"author": {
+            "name": "xxxx","logo": "http:\/\/localhost:1313\/images\/avatar.png"},"author": {
                 "@type": "Person",
                 "name": "Adi"
             },"description": ""
@@ -313,7 +313,7 @@ Adi Wu 是一位專注於 LLM 架構與大規模 AI 系統落地的技術專家�
                             <a class="link-to-markdown" href="/ai-gen-20260506-104617/index.md" target="_blank"></a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title=" Facebook" data-sharer="facebook" data-url="http://localhost:63324/ai-gen-20260506-104617/" data-hashtag="LLM"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title=" Line" data-sharer="line" data-url="http://localhost:63324/ai-gen-20260506-104617/" data-title="超越長文本：深度解析 RAG 與 Long-Context LLM 的架構博弈、融合與生產級優化"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a></span>
+                <span><a href="javascript:void(0);" title=" Facebook" data-sharer="facebook" data-url="http://localhost:1313/ai-gen-20260506-104617/" data-hashtag="LLM"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title=" Line" data-sharer="line" data-url="http://localhost:1313/ai-gen-20260506-104617/" data-title="超越長文本：深度解析 RAG 與 Long-Context LLM 的架構博弈、融合與生產級優化"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a></span>
             </div>
         </div>
     </div>
@@ -325,8 +325,8 @@ Adi Wu 是一位專注於 LLM 架構與大規模 AI 系統落地的技術專家�
         </section>
     </div>
 
-    <div class="post-nav"><a href="/laravel-illuminate-container/" class="prev" rel="prev" title="Laravel Singleton and Binding"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Laravel Singleton and Binding</a>
-            <a href="/oldroad-website/" class="next" rel="next" title="oldroad - 購物網站">oldroad - 購物網站<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+    <div class="post-nav"><a href="/ai-gen-20260506-104201/" class="prev" rel="prev" title=""><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i></a>
+            <a href="/ai-gen-20260506-105923/" class="next" rel="next" title="超越檢索：深度解析 Agentic RAG 的自我修正機制與實踐">超越檢索：深度解析 Agentic RAG 的自我修正機制與實踐<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
 </div>
 </article></div>
             </main><footer class="footer">

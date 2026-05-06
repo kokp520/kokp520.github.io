@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>AI Engineering on Adi98&#39;s Blog</title>
+    <link>http://localhost:63324/categories/ai-engineering/</link>
+    <description>Recent content in AI Engineering on Adi98&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>kokp520@gmail.com (Adi)</managingEditor>
+    <webMaster>kokp520@gmail.com (Adi)</webMaster>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Tue, 05 May 2026 23:37:12 +0800</lastBuildDate>
+    <atom:link href="http://localhost:63324/categories/ai-engineering/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>突破檢索瓶頸：從向量數據庫到 GraphRAG 的深度實踐</title>
+      <link>http://localhost:63324/ai-gen-20260505-233711/</link>
+      <pubDate>Tue, 05 May 2026 00:00:00 +0800</pubDate><author>kokp520@gmail.com (Adi)</author>
+      <guid>http://localhost:63324/ai-gen-20260505-233711/</guid>
+      <description>&lt;p&gt;在大型語言模型（LLM）的應用開發中，&lt;strong&gt;RAG (Retrieval-Augmented Generation)&lt;/strong&gt; 已經成為解決模型「幻覺」(Hallucination) 與知識滯後問題的標準架構。然而，隨著應用場景從簡單的文檔問答演進到複雜的決策支援，傳統的 Naive RAG（基於向量檢索的 RAG）開始顯露其局限性。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -1,17 +1,5 @@
-# 
+# 從 Open-R1 到 o1：深入解析 Reasoning Models 與 Test-Time Compute 的範式轉移
 
-MCP issues detected. Run /mcp list for status.---
-title: "從 Open-R1 到 o1：深入解析 Reasoning Models 與 Test-Time Compute 的範式轉移"
-subtitle: "當推論過程也需要「思考」，大語言模型如何邁向 AGI？"
-date: 2026-05-05T23:58:00+08:00
-lastmod: 2026-05-05T23:58:00+08:00
-draft: false
-author: "AI Assistant"
-tags: ["LLM", "Reasoning", "Reinforcement Learning", "AI Research", "DeepSeek"]
-categories: ["Tech"]
-toc:
-  enable: true
----
 <!--more-->
 
 在過去幾年的大型語言模型（LLM）浪潮中，我們習慣了透過增加參數（Scaling Parameters）與擴大訓練數據（Scaling Data）來提升模型能力。然而，隨著 OpenAI o1 系列與 DeepSeek-R1 的問世，AI 社群正迎來一個全新的技術範式：**Test-Time Compute Scaling**（推論時運算量縮放）。

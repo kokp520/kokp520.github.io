@@ -1,39 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title> - Adi98&#39;s Blog</title><meta name="Description" content="Welcome to my blog..."><meta property="og:url" content="https://example.com/ai-gen-20260506-104340/">
+        <title>從檢索到決策：深度解析 Agentic RAG 的架構演進、自我修正機制與生產級實踐 - Adi98&#39;s Blog</title><meta name="Description" content="Welcome to my blog..."><meta property="og:url" content="http://localhost:1313/ai-gen-20260506-104340/">
   <meta property="og:site_name" content="Adi98&#39;s Blog">
-  <meta property="og:title" content="Adi98&#39;s Blog">
-  <meta property="og:description" content="MCP issues detected. Run /mcp list for status.— title: “從檢索到決策：深度解析 Agentic RAG 的架構演進、自我修正機制與生產級實踐” date: 2026-05-06T14:00:00&#43;08:00 lastmod: 2026-05-06T14:00:00&#43;08:00 draft: false weight: 2 categories: [“Tech”, “AI”] tags: [“LLM”, “Agentic RAG”, “LangGraph”, “Machine Learning”, “NLP”, “Information Retrieval”] toc: enable: true 在生成式 AI (Generative AI) 的應用浪潮中，檢索增強生成 (Retrieval-Augmented Generation, RAG) 已成為企業解決大型語言模型 (LLM) 幻覺問題、引入私域知識的標準範式。然而，隨著應用場景從簡單的問答延伸至複雜的邏輯推理與跨文件整合，傳統的「一站式」檢索架構（Naive RAG）逐漸顯露出其侷限性。為了應對低檢索品質、資訊碎片化以及模型無法自我修正等挑戰，Agentic RAG 應運而生。這不僅僅是技術上的微調，更是一場從「線性檢索」向「循環決策」的範式轉移。">
+  <meta property="og:title" content="從檢索到決策：深度解析 Agentic RAG 的架構演進、自我修正機制與生產級實踐">
+  <meta property="og:description" content="在生成式 AI (Generative AI) 的應用浪潮中，檢索增強生成 (Retrieval-Augmented Generation, RAG) 已成為企業解決大型語言模型 (LLM) 幻覺問題、引入私域知識的標準範式。然而，隨著應用場景從簡單的問答延伸至複雜的邏輯推理與跨文件整合，傳統的「一站式」檢索架構（Naive RAG）逐漸顯露出其侷限性。為了應對低檢索品質、資訊碎片化以及模型無法自我修正等挑戰，Agentic RAG 應運而生。這不僅僅是技術上的微調，更是一場從「線性檢索」向「循環決策」的範式轉移。">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
-    <meta property="article:modified_time" content="2026-05-06T10:43:41+08:00">
-    <meta property="og:image" content="https://example.com/main2.png">
+    <meta property="article:published_time" content="2026-05-06T14:00:00+08:00">
+    <meta property="article:modified_time" content="2026-05-06T14:00:00+08:00">
+    <meta property="article:tag" content="LLM">
+    <meta property="article:tag" content="Agentic RAG">
+    <meta property="article:tag" content="LangGraph">
+    <meta property="article:tag" content="Machine Learning">
+    <meta property="article:tag" content="NLP">
+    <meta property="article:tag" content="Information Retrieval">
+    <meta property="og:image" content="http://localhost:1313/main2.png">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://example.com/main2.png">
-  <meta name="twitter:title" content="Adi98&#39;s Blog">
-  <meta name="twitter:description" content="MCP issues detected. Run /mcp list for status.— title: “從檢索到決策：深度解析 Agentic RAG 的架構演進、自我修正機制與生產級實踐” date: 2026-05-06T14:00:00&#43;08:00 lastmod: 2026-05-06T14:00:00&#43;08:00 draft: false weight: 2 categories: [“Tech”, “AI”] tags: [“LLM”, “Agentic RAG”, “LangGraph”, “Machine Learning”, “NLP”, “Information Retrieval”] toc: enable: true 在生成式 AI (Generative AI) 的應用浪潮中，檢索增強生成 (Retrieval-Augmented Generation, RAG) 已成為企業解決大型語言模型 (LLM) 幻覺問題、引入私域知識的標準範式。然而，隨著應用場景從簡單的問答延伸至複雜的邏輯推理與跨文件整合，傳統的「一站式」檢索架構（Naive RAG）逐漸顯露出其侷限性。為了應對低檢索品質、資訊碎片化以及模型無法自我修正等挑戰，Agentic RAG 應運而生。這不僅僅是技術上的微調，更是一場從「線性檢索」向「循環決策」的範式轉移。">
+  <meta name="twitter:image" content="http://localhost:1313/main2.png">
+  <meta name="twitter:title" content="從檢索到決策：深度解析 Agentic RAG 的架構演進、自我修正機制與生產級實踐">
+  <meta name="twitter:description" content="在生成式 AI (Generative AI) 的應用浪潮中，檢索增強生成 (Retrieval-Augmented Generation, RAG) 已成為企業解決大型語言模型 (LLM) 幻覺問題、引入私域知識的標準範式。然而，隨著應用場景從簡單的問答延伸至複雜的邏輯推理與跨文件整合，傳統的「一站式」檢索架構（Naive RAG）逐漸顯露出其侷限性。為了應對低檢索品質、資訊碎片化以及模型無法自我修正等挑戰，Agentic RAG 應運而生。這不僅僅是技術上的微調，更是一場從「線性檢索」向「循環決策」的範式轉移。">
 <meta name="application-name" content="Adi&#39;s blog">
-<meta name="apple-mobile-web-app-title" content="Adi&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/safari-pinned-tab.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://example.com/ai-gen-20260506-104340/" /><link rel="next" href="https://example.com/ai-gen-20260506-104201/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+<meta name="apple-mobile-web-app-title" content="Adi&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/safari-pinned-tab.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/ai-gen-20260506-104340/" /><link rel="prev" href="http://localhost:1313/laravel-illuminate-container/" /><link rel="next" href="http://localhost:1313/ai-gen-20260506-104201/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "",
+        "headline": "從檢索到決策：深度解析 Agentic RAG 的架構演進、自我修正機制與生產級實踐",
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/example.com\/ai-gen-20260506-104340\/"
-        },"image": ["https:\/\/example.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","wordcount":  525 ,
-        "url": "https:\/\/example.com\/ai-gen-20260506-104340\/","dateModified": "2026-05-06T10:43:41+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@id": "http:\/\/localhost:1313\/ai-gen-20260506-104340\/"
+        },"image": ["http:\/\/localhost:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "LLM, Agentic RAG, LangGraph, Machine Learning, NLP, Information Retrieval","wordcount":  488 ,
+        "url": "http:\/\/localhost:1313\/ai-gen-20260506-104340\/","datePublished": "2026-05-06T14:00:00+08:00","dateModified": "2026-05-06T14:00:00+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
-            "name": "xxxx","logo": "https:\/\/example.com\/images\/avatar.png"},"author": {
+            "name": "xxxx","logo": "http:\/\/localhost:1313\/images\/avatar.png"},"author": {
                 "@type": "Person",
                 "name": "Adi"
             },"description": ""
@@ -116,9 +123,9 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title"></h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX"></h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="https://kokp520.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Adi</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="0001-01-01">0001-01-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">從檢索到決策：深度解析 Agentic RAG 的架構演進、自我修正機制與生產級實踐</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://kokp520.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Adi</a></span>&nbsp;<span class="post-category"></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2026-05-06">2026-05-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="">
                 <div class="details-summary toc-title">
@@ -127,16 +134,6 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#enable-true">MCP issues detected. Run /mcp list for status.&mdash;
-title: &ldquo;從檢索到決策：深度解析 Agentic RAG 的架構演進、自我修正機制與生產級實踐&rdquo;
-date: 2026-05-06T14:00:00+08:00
-lastmod: 2026-05-06T14:00:00+08:00
-draft: false
-weight: 2
-categories: [&ldquo;Tech&rdquo;, &ldquo;AI&rdquo;]
-tags: [&ldquo;LLM&rdquo;, &ldquo;Agentic RAG&rdquo;, &ldquo;LangGraph&rdquo;, &ldquo;Machine Learning&rdquo;, &ldquo;NLP&rdquo;, &ldquo;Information Retrieval&rdquo;]
-toc:
-enable: true</a></li>
     <li><a href="#1-為什麼我們需要-agentic-rag傳統-rag-的瓶頸">1. 為什麼我們需要 Agentic RAG？傳統 RAG 的瓶頸</a></li>
     <li><a href="#2-agentic-rag-的核心架構設計">2. Agentic RAG 的核心架構設計</a>
       <ul>
@@ -166,17 +163,7 @@ enable: true</a></li>
     <li><a href="#6-總結邁向自適應-ai-系統">6. 總結：邁向自適應 AI 系統</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><h2 id="enable-true">MCP issues detected. Run /mcp list for status.&mdash;
-title: &ldquo;從檢索到決策：深度解析 Agentic RAG 的架構演進、自我修正機制與生產級實踐&rdquo;
-date: 2026-05-06T14:00:00+08:00
-lastmod: 2026-05-06T14:00:00+08:00
-draft: false
-weight: 2
-categories: [&ldquo;Tech&rdquo;, &ldquo;AI&rdquo;]
-tags: [&ldquo;LLM&rdquo;, &ldquo;Agentic RAG&rdquo;, &ldquo;LangGraph&rdquo;, &ldquo;Machine Learning&rdquo;, &ldquo;NLP&rdquo;, &ldquo;Information Retrieval&rdquo;]
-toc:
-enable: true</h2>
-<p>在生成式 AI (Generative AI) 的應用浪潮中，檢索增強生成 (Retrieval-Augmented Generation, RAG) 已成為企業解決大型語言模型 (LLM) 幻覺問題、引入私域知識的標準範式。然而，隨著應用場景從簡單的問答延伸至複雜的邏輯推理與跨文件整合，傳統的「一站式」檢索架構（Naive RAG）逐漸顯露出其侷限性。為了應對低檢索品質、資訊碎片化以及模型無法自我修正等挑戰，<strong>Agentic RAG</strong> 應運而生。這不僅僅是技術上的微調，更是一場從「線性檢索」向「循環決策」的範式轉移。</p>
+            </div><div class="content" id="content"><p>在生成式 AI (Generative AI) 的應用浪潮中，檢索增強生成 (Retrieval-Augmented Generation, RAG) 已成為企業解決大型語言模型 (LLM) 幻覺問題、引入私域知識的標準範式。然而，隨著應用場景從簡單的問答延伸至複雜的邏輯推理與跨文件整合，傳統的「一站式」檢索架構（Naive RAG）逐漸顯露出其侷限性。為了應對低檢索品質、資訊碎片化以及模型無法自我修正等挑戰，<strong>Agentic RAG</strong> 應運而生。這不僅僅是技術上的微調，更是一場從「線性檢索」向「循環決策」的範式轉移。</p>
 <h2 id="1-為什麼我們需要-agentic-rag傳統-rag-的瓶頸">1. 為什麼我們需要 Agentic RAG？傳統 RAG 的瓶頸</h2>
 <p>傳統的 Naive RAG 流程通常是線性的：用戶提問 -&gt; 向量搜索 -&gt; 填入 Prompt -&gt; 生成回答。這種模式在處理簡單事實查詢時表現良好，但在面對以下場景時往往會失效：</p>
 <ol>
@@ -415,32 +402,29 @@ enable: true</h2>
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>&nbsp;<a class="git-hash" href="https://github.com/kokp520/commit/578bd402b3bb8acca3ef8a17a6144e80c5f39b1d" target="_blank" title="commit by kokp520(kokp520@gmail.com) 578bd402b3bb8acca3ef8a17a6144e80c5f39b1d: update new post">
-                                    <i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>578bd40</a></span>
+                <span></span>
             </div></div>
         <div class="post-info-line">
             <div class="post-info-md"><span>
                             <a class="link-to-markdown" href="/ai-gen-20260506-104340/index.md" target="_blank"></a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title=" Facebook" data-sharer="facebook" data-url="https://example.com/ai-gen-20260506-104340/"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title=" Line" data-sharer="line" data-url="https://example.com/ai-gen-20260506-104340/" data-title=""><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a></span>
+                <span><a href="javascript:void(0);" title=" Facebook" data-sharer="facebook" data-url="http://localhost:1313/ai-gen-20260506-104340/" data-hashtag="LLM"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title=" Line" data-sharer="line" data-url="http://localhost:1313/ai-gen-20260506-104340/" data-title="從檢索到決策：深度解析 Agentic RAG 的架構演進、自我修正機制與生產級實踐"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/llm/">LLM</a>,&nbsp;<a href="/tags/agentic-rag/">Agentic RAG</a>,&nbsp;<a href="/tags/langgraph/">LangGraph</a>,&nbsp;<a href="/tags/machine-learning/">Machine Learning</a>,&nbsp;<a href="/tags/nlp/">NLP</a>,&nbsp;<a href="/tags/information-retrieval/">Information Retrieval</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();"></a></span>&nbsp;|&nbsp;<span><a href="/"></a></span>
         </section>
     </div>
 
-    <div class="post-nav">
+    <div class="post-nav"><a href="/laravel-illuminate-container/" class="prev" rel="prev" title="Laravel Singleton and Binding"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Laravel Singleton and Binding</a>
             <a href="/ai-gen-20260506-104201/" class="next" rel="next" title=""><i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
 </div>
-<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
-            </noscript></div></article></div>
+</article></div>
             </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">Hugo Template - LoveIt by Dillon | Adi</div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://kokp520.github.io" target="_blank">Adi</a></span></div>
         </div>
@@ -451,5 +435,5 @@ enable: true</h2>
             </a><a href="#" id="view-comments" class="fixed-button" title="">
                 <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
             </a>
-        </div><script type="text/javascript" src="https://personal-site-12.disqus.com/embed.js" defer></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"","maxShownLines":50},"comment":{},"data":{"id-1":"Adi98's Blog","id-2":"Adi98's Blog"},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.en","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"","snippetLength":30,"type":"algolia"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":70}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+        </div><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/algoliasearch/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"","maxShownLines":50},"comment":{},"data":{"id-1":"Adi98's Blog","id-2":"Adi98's Blog"},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.en","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"","snippetLength":30,"type":"algolia"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":70}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
 </html>

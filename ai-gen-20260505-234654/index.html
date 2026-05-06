@@ -1,41 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title> - Adi98&#39;s Blog</title><meta name="Description" content="Welcome to my blog..."><meta property="og:url" content="https://example.com/ai-gen-20260505-234654/">
+        <title>從提示工程到流工程：解構 Agentic Workflow 的設計模式與反思機制 - Adi98&#39;s Blog</title><meta name="Description" content="Welcome to my blog..."><meta property="og:url" content="http://localhost:1313/ai-gen-20260505-234654/">
   <meta property="og:site_name" content="Adi98&#39;s Blog">
-  <meta property="og:title" content="Adi98&#39;s Blog">
-  <meta property="og:description" content="MCP issues detected. Run /mcp list for status.— title: “從提示工程到流工程：解構 Agentic Workflow 的設計模式與反思機制” subtitle: “為什麼「反思」與「多輪疊代」是釋放 LLM 潛力的關鍵？” date: 2026-05-05T23:55:00&#43;08:00 lastmod: 2026-05-05T23:55:00&#43;08:00 draft: false author: “AI Assistant” tags: [“AI”, “LLM Agents”, “Machine Learning”, “Software Engineering”, “Agentic Workflow”] categories: [“Tech”, “AI Strategy”] toc: enable: true">
+  <meta property="og:title" content="從提示工程到流工程：解構 Agentic Workflow 的設計模式與反思機制">
+  <meta property="og:description" content="Welcome to my blog...">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-05-05T23:55:00+08:00">
     <meta property="article:modified_time" content="2026-05-05T23:46:55+08:00">
-    <meta property="og:image" content="https://example.com/main2.png">
+    <meta property="article:tag" content="AI">
+    <meta property="article:tag" content="LLM Agents">
+    <meta property="article:tag" content="Machine Learning">
+    <meta property="article:tag" content="Software Engineering">
+    <meta property="article:tag" content="Agentic Workflow">
+    <meta property="og:image" content="http://localhost:1313/main2.png">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://example.com/main2.png">
-  <meta name="twitter:title" content="Adi98&#39;s Blog">
-  <meta name="twitter:description" content="MCP issues detected. Run /mcp list for status.— title: “從提示工程到流工程：解構 Agentic Workflow 的設計模式與反思機制” subtitle: “為什麼「反思」與「多輪疊代」是釋放 LLM 潛力的關鍵？” date: 2026-05-05T23:55:00&#43;08:00 lastmod: 2026-05-05T23:55:00&#43;08:00 draft: false author: “AI Assistant” tags: [“AI”, “LLM Agents”, “Machine Learning”, “Software Engineering”, “Agentic Workflow”] categories: [“Tech”, “AI Strategy”] toc: enable: true">
+  <meta name="twitter:image" content="http://localhost:1313/main2.png">
+  <meta name="twitter:title" content="從提示工程到流工程：解構 Agentic Workflow 的設計模式與反思機制">
+  <meta name="twitter:description" content="Welcome to my blog...">
 <meta name="application-name" content="Adi&#39;s blog">
-<meta name="apple-mobile-web-app-title" content="Adi&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/safari-pinned-tab.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://example.com/ai-gen-20260505-234654/" /><link rel="prev" href="https://example.com/ai-gen-20260505-235012/" /><link rel="next" href="https://example.com/ai-gen-20260505-234422/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+<meta name="apple-mobile-web-app-title" content="Adi&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/safari-pinned-tab.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/ai-gen-20260505-234654/" /><link rel="prev" href="http://localhost:1313/ai-gen-20260505-234156/" /><link rel="next" href="http://localhost:1313/ai-gen-20260505-235104/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "",
+        "headline": "從提示工程到流工程：解構 Agentic Workflow 的設計模式與反思機制",
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/example.com\/ai-gen-20260505-234654\/"
-        },"image": ["https:\/\/example.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","wordcount":  256 ,
-        "url": "https:\/\/example.com\/ai-gen-20260505-234654\/","dateModified": "2026-05-05T23:46:55+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@id": "http:\/\/localhost:1313\/ai-gen-20260505-234654\/"
+        },"image": ["http:\/\/localhost:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "AI, LLM Agents, Machine Learning, Software Engineering, Agentic Workflow","wordcount":  213 ,
+        "url": "http:\/\/localhost:1313\/ai-gen-20260505-234654\/","datePublished": "2026-05-05T23:55:00+08:00","dateModified": "2026-05-05T23:46:55+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
-            "name": "xxxx","logo": "https:\/\/example.com\/images\/avatar.png"},"author": {
+            "name": "xxxx","logo": "http:\/\/localhost:1313\/images\/avatar.png"},"author": {
                 "@type": "Person",
-                "name": "Adi"
+                "name": "AI Assistant"
             },"description": ""
     }
     </script></head>
@@ -116,9 +122,9 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title"></h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX"></h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="https://kokp520.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Adi</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="0001-01-01">0001-01-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">從提示工程到流工程：解構 Agentic Workflow 的設計模式與反思機制</h1><h2 class="single-subtitle">為什麼「反思」與「多輪疊代」是釋放 LLM 潛力的關鍵？</h2><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://kokp520.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>AI Assistant</a></span>&nbsp;<span class="post-category"></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2026-05-05">2026-05-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;
                 <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;</div>
         </div><div class="details toc" id="toc-static"  data-kept="">
                 <div class="details-summary toc-title">
@@ -127,17 +133,7 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#enable-true">MCP issues detected. Run /mcp list for status.&mdash;
-title: &ldquo;從提示工程到流工程：解構 Agentic Workflow 的設計模式與反思機制&rdquo;
-subtitle: &ldquo;為什麼「反思」與「多輪疊代」是釋放 LLM 潛力的關鍵？&rdquo;
-date: 2026-05-05T23:55:00+08:00
-lastmod: 2026-05-05T23:55:00+08:00
-draft: false
-author: &ldquo;AI Assistant&rdquo;
-tags: [&ldquo;AI&rdquo;, &ldquo;LLM Agents&rdquo;, &ldquo;Machine Learning&rdquo;, &ldquo;Software Engineering&rdquo;, &ldquo;Agentic Workflow&rdquo;]
-categories: [&ldquo;Tech&rdquo;, &ldquo;AI Strategy&rdquo;]
-toc:
-enable: true</a>
+    <li>
       <ul>
         <li><a href="#從-zero-shot-到-agentic-workflow-的正規化轉移">從 Zero-shot 到 Agentic Workflow 的正規化轉移</a></li>
         <li><a href="#核心設計模式反思工具使用與規劃">核心設計模式：反思、工具使用與規劃</a>
@@ -160,18 +156,7 @@ enable: true</a>
     </li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><h2 id="enable-true">MCP issues detected. Run /mcp list for status.&mdash;
-title: &ldquo;從提示工程到流工程：解構 Agentic Workflow 的設計模式與反思機制&rdquo;
-subtitle: &ldquo;為什麼「反思」與「多輪疊代」是釋放 LLM 潛力的關鍵？&rdquo;
-date: 2026-05-05T23:55:00+08:00
-lastmod: 2026-05-05T23:55:00+08:00
-draft: false
-author: &ldquo;AI Assistant&rdquo;
-tags: [&ldquo;AI&rdquo;, &ldquo;LLM Agents&rdquo;, &ldquo;Machine Learning&rdquo;, &ldquo;Software Engineering&rdquo;, &ldquo;Agentic Workflow&rdquo;]
-categories: [&ldquo;Tech&rdquo;, &ldquo;AI Strategy&rdquo;]
-toc:
-enable: true</h2>
-<p>在過去的一年裡，AI 社群的焦點正悄然從「如何寫出完美的 Prompt」轉向「如何構建高效的系統」。這正是 Andrew Ng 近期大力倡導的 <strong>Agentic Workflow</strong> 概念：與其追求一個參數規模巨大的模型在一輪對話（Single-turn）中給出完美答案，不如透過一個精心設計的「流」（Flow），讓模型在多次疊代中不斷逼近最優解。</p>
+            </div><div class="content" id="content"><p>在過去的一年裡，AI 社群的焦點正悄然從「如何寫出完美的 Prompt」轉向「如何構建高效的系統」。這正是 Andrew Ng 近期大力倡導的 <strong>Agentic Workflow</strong> 概念：與其追求一個參數規模巨大的模型在一輪對話（Single-turn）中給出完美答案，不如透過一個精心設計的「流」（Flow），讓模型在多次疊代中不斷逼近最優解。</p>
 <p>今天我們就來深度拆解現代 LLM Agent 的核心架構模式，探討為什麼 <strong>Flow Engineering</strong> 正在取代 Prompt Engineering 成為 AI 工程師的核心競爭力。</p>
 <h3 id="從-zero-shot-到-agentic-workflow-的正規化轉移">從 Zero-shot 到 Agentic Workflow 的正規化轉移</h3>
 <p>傳統的 LLM 使用方式通常是 <strong>Zero-shot</strong> 或 <strong>Few-shot</strong>。使用者輸入問題，模型直接輸出答案。這種模式的瓶頸在於模型必須在「一次思考」內處理複雜的邏輯推理、事實查核與格式化輸出。</p>
@@ -230,24 +215,22 @@ enable: true</h2>
                             <a class="link-to-markdown" href="/ai-gen-20260505-234654/index.md" target="_blank"></a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title=" Facebook" data-sharer="facebook" data-url="https://example.com/ai-gen-20260505-234654/"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title=" Line" data-sharer="line" data-url="https://example.com/ai-gen-20260505-234654/" data-title=""><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a></span>
+                <span><a href="javascript:void(0);" title=" Facebook" data-sharer="facebook" data-url="http://localhost:1313/ai-gen-20260505-234654/" data-hashtag="AI"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title=" Line" data-sharer="line" data-url="http://localhost:1313/ai-gen-20260505-234654/" data-title="從提示工程到流工程：解構 Agentic Workflow 的設計模式與反思機制"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/ai/">AI</a>,&nbsp;<a href="/tags/llm-agents/">LLM Agents</a>,&nbsp;<a href="/tags/machine-learning/">Machine Learning</a>,&nbsp;<a href="/tags/software-engineering/">Software Engineering</a>,&nbsp;<a href="/tags/agentic-workflow/">Agentic Workflow</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();"></a></span>&nbsp;|&nbsp;<span><a href="/"></a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/ai-gen-20260505-235012/" class="prev" rel="prev" title=""><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i></a>
-            <a href="/ai-gen-20260505-234422/" class="next" rel="next" title=""><i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+    <div class="post-nav"><a href="/ai-gen-20260505-234156/" class="prev" rel="prev" title="深入解析 Agentic Workflow：為什麼「Flow Engineering」才是實踐 LLM 應用的下一站？"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>深入解析 Agentic Workflow：為什麼「Flow Engineering」才是實踐 LLM 應用的下一站？</a>
+            <a href="/ai-gen-20260505-235104/" class="next" rel="next" title="從 Open-R1 到 o1：深入解析 Reasoning Models 與 Test-Time Compute 的範式轉移">從 Open-R1 到 o1：深入解析 Reasoning Models 與 Test-Time Compute 的範式轉移<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
 </div>
-<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
-                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
-            </noscript></div></article></div>
+</article></div>
             </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">Hugo Template - LoveIt by Dillon | Adi</div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://kokp520.github.io" target="_blank">Adi</a></span></div>
         </div>
@@ -258,5 +241,5 @@ enable: true</h2>
             </a><a href="#" id="view-comments" class="fixed-button" title="">
                 <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
             </a>
-        </div><script type="text/javascript" src="https://personal-site-12.disqus.com/embed.js" defer></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"","maxShownLines":50},"comment":{},"data":{"id-1":"Adi98's Blog","id-2":"Adi98's Blog"},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.en","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"","snippetLength":30,"type":"algolia"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":70}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+        </div><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/algoliasearch/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"","maxShownLines":50},"comment":{},"data":{"id-1":"Adi98's Blog","id-2":"Adi98's Blog"},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.en","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"","snippetLength":30,"type":"algolia"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":70}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
 </html>

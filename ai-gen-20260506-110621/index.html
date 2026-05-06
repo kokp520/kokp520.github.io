@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>自動化研究的新境界：深度解析多代理協作架構 (Multi-Agent Workflows) 與 LangGraph 實作 - Adi98&#39;s Blog</title><meta name="Description" content="Welcome to my blog..."><meta property="og:url" content="http://localhost:1313/ai-gen-20260506-110621/">
+  <meta property="og:site_name" content="Adi98&#39;s Blog">
+  <meta property="og:title" content="自動化研究的新境界：深度解析多代理協作架構 (Multi-Agent Workflows) 與 LangGraph 實作">
+  <meta property="og:description" content="在過去的一年中，生成式 AI 的應用範式正在經歷一場深刻的變革。我們從最初的「提示工程 (Prompt Engineering)」過渡到了「檢索增強生成 (RAG)」，而現在，我們正站在「代理式工作流 (Agentic Workflows)」的浪尖。單一的 LLM 調用已經無法滿足複雜的業務邏輯，未來的 AI 應用將是由多個具備專門技能的 AI 代理 (Agents) 組成的協作網絡。
+本文將深度探討多代理協作架構的設計哲學，並以 LangGraph 為例，展示如何構建一個具備規劃、執行、反思與自我修正能力的自動化研究系統。">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2026-05-06T18:00:00+08:00">
+    <meta property="article:modified_time" content="2026-05-06T18:00:00+08:00">
+    <meta property="article:tag" content="AI Agent">
+    <meta property="article:tag" content="Multi-Agent System">
+    <meta property="article:tag" content="LangGraph">
+    <meta property="article:tag" content="LLM Orchestration">
+    <meta property="article:tag" content="Python">
+    <meta property="article:tag" content="State Machine">
+    <meta property="og:image" content="http://localhost:1313/main2.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/main2.png">
+  <meta name="twitter:title" content="自動化研究的新境界：深度解析多代理協作架構 (Multi-Agent Workflows) 與 LangGraph 實作">
+  <meta name="twitter:description" content="在過去的一年中，生成式 AI 的應用範式正在經歷一場深刻的變革。我們從最初的「提示工程 (Prompt Engineering)」過渡到了「檢索增強生成 (RAG)」，而現在，我們正站在「代理式工作流 (Agentic Workflows)」的浪尖。單一的 LLM 調用已經無法滿足複雜的業務邏輯，未來的 AI 應用將是由多個具備專門技能的 AI 代理 (Agents) 組成的協作網絡。
+本文將深度探討多代理協作架構的設計哲學，並以 LangGraph 為例，展示如何構建一個具備規劃、執行、反思與自我修正能力的自動化研究系統。">
+<meta name="application-name" content="Adi&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="Adi&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/safari-pinned-tab.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/ai-gen-20260506-110621/" /><link rel="prev" href="http://localhost:1313/ai-gen-20260506-105923/" /><link rel="next" href="http://localhost:1313/oldroad-website/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "自動化研究的新境界：深度解析多代理協作架構 (Multi-Agent Workflows) 與 LangGraph 實作",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/ai-gen-20260506-110621\/"
+        },"image": ["http:\/\/localhost:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "AI Agent, Multi-Agent System, LangGraph, LLM Orchestration, Python, State Machine, AI Workflow","wordcount":  556 ,
+        "url": "http:\/\/localhost:1313\/ai-gen-20260506-110621\/","datePublished": "2026-05-06T18:00:00+08:00","dateModified": "2026-05-06T18:00:00+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": "http:\/\/localhost:1313\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Adi"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Adi98&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/main2.png"
+        data-srcset="/main2.png, /main2.png 1.5x, /main2.png 2x"
+        data-sizes="auto"
+        alt="/main2.png"
+        title="/main2.png" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/about/"> About </a><a class="menu-item" href="https://github.com/kokp520" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Adi98&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/main2.png"
+        data-srcset="/main2.png, /main2.png 1.5x, /main2.png 2x"
+        data-sizes="auto"
+        alt="/main2.png"
+        title="/main2.png" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/about/" title="">About</a><a class="menu-item" href="https://github.com/kokp520" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title"></h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">自動化研究的新境界：深度解析多代理協作架構 (Multi-Agent Workflows) 與 LangGraph 實作</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://kokp520.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Adi</a></span>&nbsp;<span class="post-category"></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2026-05-06">2026-05-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span></span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-為什麼單一-agent-不夠代理式工作流的興起">1. 為什麼單一 Agent 不夠？代理式工作流的興起</a>
+      <ul>
+        <li><a href="#11-系統一與系統二思維">1.1 系統一與系統二思維</a></li>
+        <li><a href="#12-多代理協作的必要性">1.2 多代理協作的必要性</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-多代理協作的核心模式">2. 多代理協作的核心模式</a>
+      <ul>
+        <li><a href="#21-協調者模式-orchestrator-workers">2.1 協調者模式 (Orchestrator-Workers)</a></li>
+        <li><a href="#22-同儕協作模式-peer-to-peer">2.2 同儕協作模式 (Peer-to-Peer)</a></li>
+        <li><a href="#23-分層架構模式-hierarchical">2.3 分層架構模式 (Hierarchical)</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-langgraph為-ai-代理注入圖的靈魂">3. LangGraph：為 AI 代理注入「圖」的靈魂</a>
+      <ul>
+        <li><a href="#31-langgraph-的核心優勢">3.1 LangGraph 的核心優勢</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-實踐構建一個自動化深度研究系統">4. 實踐：構建一個「自動化深度研究系統」</a>
+      <ul>
+        <li><a href="#41-系統架構圖-mermaid">4.1 系統架構圖 (Mermaid)</a></li>
+        <li><a href="#42-python-程式碼實作">4.2 Python 程式碼實作</a></li>
+        <li><a href="#43-核心技術點解析">4.3 核心技術點解析</a></li>
+      </ul>
+    </li>
+    <li><a href="#5-生產環境中的挑戰與解決方案">5. 生產環境中的挑戰與解決方案</a>
+      <ul>
+        <li><a href="#51-無限循環的風險-infinite-loops">5.1 無限循環的風險 (Infinite Loops)</a></li>
+        <li><a href="#52-延遲與成本-latency--cost">5.2 延遲與成本 (Latency &amp; Cost)</a></li>
+        <li><a href="#53-狀態漂移-state-drift">5.3 狀態漂移 (State Drift)</a></li>
+      </ul>
+    </li>
+    <li><a href="#6-未來趨勢邁向自主進化的-agent">6. 未來趨勢：邁向「自主進化的 Agent」</a></li>
+    <li><a href="#7-總結-summary">7. 總結 (Summary)</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>在過去的一年中，生成式 AI 的應用範式正在經歷一場深刻的變革。我們從最初的「提示工程 (Prompt Engineering)」過渡到了「檢索增強生成 (RAG)」，而現在，我們正站在「代理式工作流 (Agentic Workflows)」的浪尖。單一的 LLM 調用已經無法滿足複雜的業務邏輯，未來的 AI 應用將是由多個具備專門技能的 AI 代理 (Agents) 組成的協作網絡。</p>
+<p>本文將深度探討多代理協作架構的設計哲學，並以 <strong>LangGraph</strong> 為例，展示如何構建一個具備規劃、執行、反思與自我修正能力的自動化研究系統。</p>
+<h2 id="1-為什麼單一-agent-不夠代理式工作流的興起">1. 為什麼單一 Agent 不夠？代理式工作流的興起</h2>
+<p>當我們向一個全能的大型語言模型（如 GPT-4 或 Claude 3.5）提出複雜任務時，模型往往需要在一個單次的推理過程中完成理解、檢索、分析、生成與校對。這種「一步到位」的方式雖然快速，但在面對精確度要求高或步驟繁瑣的任務時，極易出現邏輯斷裂或事實幻覺。</p>
+<h3 id="11-系統一與系統二思維">1.1 系統一與系統二思維</h3>
+<p>根據諾貝爾獎得主 Daniel Kahneman 的理論，人類思維分為直覺式的「系統一」與邏輯推理式的「系統二」。傳統的單次 Prompt 觸發更像系統一，而 <strong>Agentic Workflows</strong> 則是試圖在 LLM 之上構建系統二。透過將任務拆解，讓模型在每一步都有機會進行觀察、思考與行動 (ReAct)，大幅提升了複雜任務的成功率。</p>
+<h3 id="12-多代理協作的必要性">1.2 多代理協作的必要性</h3>
+<p>在軟體工程中，我們講求「單一職責原則 (Single Responsibility Principle)」。同樣地，在 AI 系統設計中，一個專門負責「網頁檢索」的 Agent 與一個專門負責「邏輯檢核」的 Agent 協作，其效果遠好於一個試圖完成所有事情的巨大 Agent。多代理架構不僅提高了模組化程度，更讓系統具備了更強的容錯性與可觀測性。</p>
+<hr>
+<h2 id="2-多代理協作的核心模式">2. 多代理協作的核心模式</h2>
+<p>在設計多代理系統時，我們通常會根據任務結構選擇以下幾種模式：</p>
+<h3 id="21-協調者模式-orchestrator-workers">2.1 協調者模式 (Orchestrator-Workers)</h3>
+<p>這是一個典型的中央集權架構。一個 <strong>Router</strong> 或 <strong>Planner</strong> Agent 負責接收用戶需求，並將其分發給不同的專門 Worker。Worker 完成後將結果回傳給協調者進行整合。</p>
+<ul>
+<li><strong>優點</strong>：結構清晰，容易控制流程。</li>
+<li><strong>適用場景</strong>：任務路徑相對固定，需要強一致性輸出的場景。</li>
+</ul>
+<h3 id="22-同儕協作模式-peer-to-peer">2.2 同儕協作模式 (Peer-to-Peer)</h3>
+<p>Agent 之間沒有明確的從屬關係，而是透過共享狀態空間進行協作。例如，一個寫作 Agent 寫完草稿後，直接將控制權移交給審核 Agent，審核 Agent 若不滿意則再移回寫作 Agent。</p>
+<ul>
+<li><strong>優點</strong>：靈活性極高，適合需要多次迭代、反覆修正的任務。</li>
+<li><strong>適用場景</strong>：創意寫作、程式碼開發與 Debug。</li>
+</ul>
+<h3 id="23-分層架構模式-hierarchical">2.3 分層架構模式 (Hierarchical)</h3>
+<p>這是最複雜的架構，模仿企業組織圖。頂層 Agent 負責戰略規劃，中層 Agent 負責子專案管理，底層 Agent 負責具體執行。</p>
+<ul>
+<li><strong>優點</strong>：能夠處理極大規模、跨領域的複雜任務。</li>
+<li><strong>適用場景</strong>：自動化企業營運報告、跨學科科學研究。</li>
+</ul>
+<hr>
+<h2 id="3-langgraph為-ai-代理注入圖的靈魂">3. LangGraph：為 AI 代理注入「圖」的靈魂</h2>
+<p>在實現這些協作模式時，傳統的線性框架（如 LangChain 的早期 Chains）顯得力不從心。因為現實中的 AI 工作流往往包含 <strong>循環 (Cycles)</strong>：當檢索結果不佳時需要重新檢索，當生成的程式碼錯誤時需要自我修正。</p>
+<p><strong>LangGraph</strong> 的出現填補了這個空白。它將 AI 工作流定義為一個 <strong>有向圖 (Graph)</strong>，其中：</p>
+<ul>
+<li><strong>Nodes (節點)</strong>：代表具體的操作或 Agent 的思考過程（Python 函數）。</li>
+<li><strong>Edges (邊)</strong>：定義了節點之間的轉向。</li>
+<li><strong>Conditional Edges (條件邊)</strong>：根據上一步的輸出動態決定下一步去哪。</li>
+<li><strong>State (狀態)</strong>：在圖中流轉的全域變數，所有節點共享此上下文。</li>
+</ul>
+<h3 id="31-langgraph-的核心優勢">3.1 LangGraph 的核心優勢</h3>
+<ol>
+<li><strong>原生支持循環</strong>：解決了 RAG 自我修正或 Agent 自我迭代的核心難題。</li>
+<li><strong>細粒度控制</strong>：開發者可以精確定義何時停止、何時分支。</li>
+<li><strong>持久化與斷點 (Checkpointing)</strong>：支持工作流的掛起與恢復，這對於「人機協作 (Human-in-the-loop)」至關重要。</li>
+<li><strong>可觀測性</strong>：內建的狀態追蹤讓 Debug 變得直觀，你可以清楚看到 Agent 在哪個環節「走偏了」。</li>
+</ol>
+<hr>
+<h2 id="4-實踐構建一個自動化深度研究系統">4. 實踐：構建一個「自動化深度研究系統」</h2>
+<p>讓我們設計一個具備自我反思能力的研究系統。該系統包含三個角色：</p>
+<ol>
+<li><strong>Planner (規劃者)</strong>：拆解問題。</li>
+<li><strong>Researcher (研究員)</strong>：執行搜索與數據收集。</li>
+<li><strong>Reviewer (審查員)</strong>：評估數據質量，不合格則要求重新研究。</li>
+</ol>
+<h3 id="41-系統架構圖-mermaid">4.1 系統架構圖 (Mermaid)</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">graph LR
+</span></span><span class="line"><span class="cl">    Start((開始)) --&gt; Planner[任務規劃]
+</span></span><span class="line"><span class="cl">    Planner --&gt; Researcher[資訊檢索]
+</span></span><span class="line"><span class="cl">    Researcher --&gt; Reviewer{品質審核}
+</span></span><span class="line"><span class="cl">    Reviewer -- 不及格 --&gt; Rewriter[查詢重寫]
+</span></span><span class="line"><span class="cl">    Rewriter --&gt; Researcher
+</span></span><span class="line"><span class="cl">    Reviewer -- 及格 --&gt; Writer[撰寫報告]
+</span></span><span class="line"><span class="cl">    Writer --&gt; End((結束))
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="42-python-程式碼實作">4.2 Python 程式碼實作</h3>
+<p>以下展示如何使用 <code>langgraph</code> 與 <code>langchain</code> 實作上述邏輯：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span><span class="lnt">60
+</span><span class="lnt">61
+</span><span class="lnt">62
+</span><span class="lnt">63
+</span><span class="lnt">64
+</span><span class="lnt">65
+</span><span class="lnt">66
+</span><span class="lnt">67
+</span><span class="lnt">68
+</span><span class="lnt">69
+</span><span class="lnt">70
+</span><span class="lnt">71
+</span><span class="lnt">72
+</span><span class="lnt">73
+</span><span class="lnt">74
+</span><span class="lnt">75
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">operator</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Annotated</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">TypedDict</span><span class="p">,</span> <span class="n">Literal</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">langchain_openai</span> <span class="kn">import</span> <span class="n">ChatOpenAI</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">langgraph.graph</span> <span class="kn">import</span> <span class="n">StateGraph</span><span class="p">,</span> <span class="n">END</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 1. 定義系統狀態 (State)</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ResearchState</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">topic</span><span class="p">:</span> <span class="nb">str</span>
+</span></span><span class="line"><span class="cl">    <span class="n">plan</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">context</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">operator</span><span class="o">.</span><span class="n">add</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">report</span><span class="p">:</span> <span class="nb">str</span>
+</span></span><span class="line"><span class="cl">    <span class="n">is_satisfactory</span><span class="p">:</span> <span class="nb">bool</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 2. 定義節點 (Nodes)</span>
+</span></span><span class="line"><span class="cl"><span class="n">llm</span> <span class="o">=</span> <span class="n">ChatOpenAI</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&#34;gpt-4o&#34;</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">planner</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">ResearchState</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;---PLANNING---&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">res</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;請針對主題 &#39;</span><span class="si">{</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;topic&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&#39; 拆解出 3 個研究方向。&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">{</span><span class="s2">&#34;plan&#34;</span><span class="p">:</span> <span class="p">[</span><span class="n">res</span><span class="o">.</span><span class="n">content</span><span class="p">]}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">researcher</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">ResearchState</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;---RESEARCHING---&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 這裡實務上會呼叫 Tavily 或 Google Search API</span>
+</span></span><span class="line"><span class="cl">    <span class="n">mock_info</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&#34;找到關於 </span><span class="si">{</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;plan&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> 的相關數據...&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">{</span><span class="s2">&#34;context&#34;</span><span class="p">:</span> <span class="p">[</span><span class="n">mock_info</span><span class="p">]}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">reviewer</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">ResearchState</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;---REVIEWING---&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 邏輯判斷是否需要重新研究</span>
+</span></span><span class="line"><span class="cl">    <span class="n">content_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="s2">&#34;&#34;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;context&#39;</span><span class="p">]))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">content_len</span> <span class="o">&lt;</span> <span class="mi">50</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="p">{</span><span class="s2">&#34;is_satisfactory&#34;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">{</span><span class="s2">&#34;is_satisfactory&#34;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">writer</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">ResearchState</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;---WRITING---&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">res</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="sa">f</span><span class="s2">&#34;根據以下資訊撰寫研究報告: </span><span class="si">{</span><span class="n">state</span><span class="p">[</span><span class="s1">&#39;context&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">{</span><span class="s2">&#34;report&#34;</span><span class="p">:</span> <span class="n">res</span><span class="o">.</span><span class="n">content</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 3. 定義邊界邏輯 (Conditional Edge)</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">decide_to_research</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">ResearchState</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">&#34;researcher&#34;</span><span class="p">,</span> <span class="s2">&#34;writer&#34;</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="s2">&#34;is_satisfactory&#34;</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;writer&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="s2">&#34;researcher&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 4. 構建圖 (Building the Graph)</span>
+</span></span><span class="line"><span class="cl"><span class="n">workflow</span> <span class="o">=</span> <span class="n">StateGraph</span><span class="p">(</span><span class="n">ResearchState</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">workflow</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&#34;planner&#34;</span><span class="p">,</span> <span class="n">planner</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">workflow</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&#34;researcher&#34;</span><span class="p">,</span> <span class="n">researcher</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">workflow</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&#34;reviewer&#34;</span><span class="p">,</span> <span class="n">reviewer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">workflow</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&#34;writer&#34;</span><span class="p">,</span> <span class="n">writer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">workflow</span><span class="o">.</span><span class="n">set_entry_point</span><span class="p">(</span><span class="s2">&#34;planner&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">workflow</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&#34;planner&#34;</span><span class="p">,</span> <span class="s2">&#34;researcher&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">workflow</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&#34;researcher&#34;</span><span class="p">,</span> <span class="s2">&#34;reviewer&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">workflow</span><span class="o">.</span><span class="n">add_conditional_edges</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;reviewer&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">decide_to_research</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;researcher&#34;</span><span class="p">:</span> <span class="s2">&#34;researcher&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;writer&#34;</span><span class="p">:</span> <span class="s2">&#34;writer&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">workflow</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&#34;writer&#34;</span><span class="p">,</span> <span class="n">END</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 編譯並運行</span>
+</span></span><span class="line"><span class="cl"><span class="n">app</span> <span class="o">=</span> <span class="n">workflow</span><span class="o">.</span><span class="n">compile</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">config</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;configurable&#34;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&#34;thread_id&#34;</span><span class="p">:</span> <span class="s2">&#34;1&#34;</span><span class="p">}}</span>
+</span></span><span class="line"><span class="cl"><span class="n">inputs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&#34;topic&#34;</span><span class="p">:</span> <span class="s2">&#34;2026 年邊緣運算 (Edge AI) 的發展趨勢&#34;</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="n">output</span> <span class="ow">in</span> <span class="n">app</span><span class="o">.</span><span class="n">stream</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="43-核心技術點解析">4.3 核心技術點解析</h3>
+<ul>
+<li><strong><code>Annotated[List[str], operator.add]</code></strong>：這是 LangGraph 狀態管理的精髓。它告訴系統當多個節點返回 <code>context</code> 時，不要覆蓋，而是將其「累加」。這對於收集多個來源的資訊至關重要。</li>
+<li><strong><code>add_conditional_edges</code></strong>：這是實現「反思機制」的關鍵。我們在這裡根據 <code>is_satisfactory</code> 狀態動態決定是回到搜索還是前進到撰寫階段。</li>
+<li><strong><code>thread_id</code></strong>：這允許系統保存對話歷史，即使程式中斷重啟，Agent 也能記住之前發生了什麼。</li>
+</ul>
+<hr>
+<h2 id="5-生產環境中的挑戰與解決方案">5. 生產環境中的挑戰與解決方案</h2>
+<p>雖然多代理系統功能強大，但在實際落地時會面臨許多棘手問題：</p>
+<h3 id="51-無限循環的風險-infinite-loops">5.1 無限循環的風險 (Infinite Loops)</h3>
+<p>如果 Agent A 總是對 Agent B 的結果不滿意，系統可能會陷入無窮迴圈，導致 Token 消耗劇增。</p>
+<ul>
+<li><strong>解決方案</strong>：在 <code>State</code> 中加入 <code>max_iterations</code> 計數器，當達到上限時強制終止並回報錯誤。</li>
+</ul>
+<h3 id="52-延遲與成本-latency--cost">5.2 延遲與成本 (Latency &amp; Cost)</h3>
+<p>多代理協作意味著更多的 LLM 調用。一次複雜的研究任務可能需要 10-20 次 LLM 調用，延遲通常以分鐘計。</p>
+<ul>
+<li><strong>解決方案</strong>：
+<ul>
+<li><strong>非對稱負載</strong>：評估節點使用較小的模型（如 GPT-4o-mini 或 Llama-3-8B），核心生成使用大模型。</li>
+<li><strong>並行執行</strong>：利用 LangGraph 的 <code>Send</code> API，讓多個研究節點並行運行。</li>
+</ul>
+</li>
+</ul>
+<h3 id="53-狀態漂移-state-drift">5.3 狀態漂移 (State Drift)</h3>
+<p>隨著圖的運行，Context 會越來越長，包含許多無關的中間步驟，導致模型注意力分散。</p>
+<ul>
+<li><strong>解決方案</strong>：實施「狀態清理機制」，每經過一個重要階段就進行一次「資訊摘要 (Summarization)」，移除冗餘資訊。</li>
+</ul>
+<hr>
+<h2 id="6-未來趨勢邁向自主進化的-agent">6. 未來趨勢：邁向「自主進化的 Agent」</h2>
+<p>多代理架構的終極目標是 <strong>Self-Evolving Agents</strong>。目前的圖結構仍需人類開發者定義，但未來的 Agent 將具備以下能力：</p>
+<ol>
+<li><strong>動態圖構建</strong>：Agent 根據任務難度，自主決定需要召喚哪些專家 Agent。</li>
+<li><strong>自我優化提示詞</strong>：Agent 在協作過程中學會如何給其他 Agent 下達更清晰的指令。</li>
+<li><strong>長效記憶優化</strong>：不僅記住當前任務，還能從過去數千次協作中總結出最佳實踐路徑。</li>
+</ol>
+<hr>
+<h2 id="7-總結-summary">7. 總結 (Summary)</h2>
+<p>從「單一 Prompt」到「代理式工作流」，我們正在見證 AI 從工具向夥伴的轉變。LangGraph 等框架的出現，讓開發者能夠像設計狀態機一樣設計 AI 邏輯，賦予了 AI 系統真正的推理與糾錯能力。</p>
+<p>雖然這套架構在成本與延遲上仍有挑戰，但其帶來的魯棒性與解決複雜問題的能力，無疑是未來 AI 應用開發的主戰場。對於技術團隊而言，現在就應該開始嘗試將簡單的 RAG 升級為具備反思機制的 Agentic RAG，並在多代理協作中尋找業務價值的新增量。</p>
+<p>AI 的未來不在於它能回答什麼，而在於它能為我們「完成」什麼。</p></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span></span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/ai-gen-20260506-110621/index.md" target="_blank"></a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title=" Facebook" data-sharer="facebook" data-url="http://localhost:1313/ai-gen-20260506-110621/" data-hashtag="AI Agent"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title=" Line" data-sharer="line" data-url="http://localhost:1313/ai-gen-20260506-110621/" data-title="自動化研究的新境界：深度解析多代理協作架構 (Multi-Agent Workflows) 與 LangGraph 實作"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/ai-agent/">AI Agent</a>,&nbsp;<a href="/tags/multi-agent-system/">Multi-Agent System</a>,&nbsp;<a href="/tags/langgraph/">LangGraph</a>,&nbsp;<a href="/tags/llm-orchestration/">LLM Orchestration</a>,&nbsp;<a href="/tags/python/">Python</a>,&nbsp;<a href="/tags/state-machine/">State Machine</a>,&nbsp;<a href="/tags/ai-workflow/">AI Workflow</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();"></a></span>&nbsp;|&nbsp;<span><a href="/"></a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/ai-gen-20260506-105923/" class="prev" rel="prev" title="超越檢索：深度解析 Agentic RAG 的自我修正機制與實踐"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>超越檢索：深度解析 Agentic RAG 的自我修正機制與實踐</a>
+            <a href="/oldroad-website/" class="next" rel="next" title="oldroad - 購物網站">oldroad - 購物網站<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Hugo Template - LoveIt by Dillon | Adi</div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://kokp520.github.io" target="_blank">Adi</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/autocomplete/autocomplete.min.js"></script><script type="text/javascript" src="/lib/algoliasearch/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript" src="/lib/typeit/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"","maxShownLines":50},"comment":{},"data":{"id-1":"Adi98's Blog","id-2":"Adi98's Blog"},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.en","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"","snippetLength":30,"type":"algolia"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":70}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

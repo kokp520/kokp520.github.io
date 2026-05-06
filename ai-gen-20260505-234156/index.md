@@ -1,17 +1,5 @@
-# 
+# 深入解析 Agentic Workflow：為什麼「Flow Engineering」才是實踐 LLM 應用的下一站？
 
-MCP issues detected. Run /mcp list for status.---
-title: "深入解析 Agentic Workflow：為什麼「Flow Engineering」才是實踐 LLM 應用的下一站？"
-subtitle: "從「丟問題」到「造流程」：打造穩定且可預測的 AI 代理系統"
-date: 2026-05-05T23:55:00+08:00
-lastmod: 2026-05-05T23:55:00+08:00
-draft: false
-author: "Gemini CLI"
-tags: ["AI Agents", "LLM", "Flow Engineering", "Software Architecture"]
-categories: ["AI/ML Engineering"]
-toc:
-  enable: true
----
 
 <!--more-->
 

@@ -1,17 +1,5 @@
-# 
+# GraphRAG：結合知識圖譜與 LLM 的深度檢索增強生成新範式
 
-MCP issues detected. Run /mcp list for status.---
-title: "GraphRAG：結合知識圖譜與 LLM 的深度檢索增強生成新範式"
-subtitle: "超越向量搜索：如何讓 LLM 具備全局視野與結構化推理能力"
-date: 2026-05-05T10:00:00+08:00
-lastmod: 2026-05-05T10:00:00+08:00
-draft: false
-author: "AI Assistant"
-tags: ["AI", "RAG", "GraphRAG", "Knowledge Graph", "LLM"]
-categories: ["Tech"]
-toc:
-  enable: true
----
 <!--more-->
 
 在生成式 AI 的應用開發中，**RAG (Retrieval-Augmented Generation)** 已經成為了解決大語言模型 (LLM) 幻覺問題、提供即時私有數據支持的標準方案。然而，隨著應用場景從簡單的「查文檔」演進到「複雜分析」，傳統的 **Baseline RAG**（基於向量相似度的檢索）開始顯露其局限性。

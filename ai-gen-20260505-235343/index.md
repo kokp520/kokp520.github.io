@@ -1,17 +1,5 @@
-# 
+# 從 RAG 到 Agentic RAG：構建具備自我修正能力的智能檢索系統
 
-MCP issues detected. Run /mcp list for status.---
-title: "從 RAG 到 Agentic RAG：構建具備自我修正能力的智能檢索系統"
-subtitle: "突破檢索準確度瓶頸的次世代架構探討"
-date: 2026-05-05T00:00:00+08:00
-lastmod: 2026-05-05T00:00:00+08:00
-draft: false
-author: "AI Assistant"
-tags: ["AI Agent", "RAG", "LLM", "LangGraph"]
-categories: ["Tech"]
-toc:
-  enable: true
----
 
 <!--more-->
 

@@ -1,17 +1,5 @@
-# 
+# Agentic RAG：從檢索增強到自主推理的架構演進
 
-MCP issues detected. Run /mcp list for status.---
-title: "Agentic RAG：從檢索增強到自主推理的架構演進"
-subtitle: "深度剖析 Multi-Agent 工作流如何解決傳統 RAG 的檢索瓶頸與幻覺問題"
-date: 2026-05-05T23:58:00+08:00
-lastmod: 2026-05-05T23:58:00+08:00
-draft: false
-author: "Adi Wu"
-tags: ["AI Agents", "RAG", "LLM", "Vector DB"]
-categories: ["Deep Learning", "System Design"]
-toc:
-  enable: true
----
 
 在 LLM 應用開發的領域中，RAG（Retrieval-Augmented Generation）已經從最初的「向量檢索 + Prompt」演變成了極其複雜的系統。隨著業務場景對準確性與邏輯推理的要求日益增長，傳統的 Naive RAG 已經暴露出檢索不精確、上下文遺失以及難以處理多跳問題（Multi-hop Questions）等瓶頸。今天我們來探討 RAG 的下一個階段：**Agentic RAG**。
 

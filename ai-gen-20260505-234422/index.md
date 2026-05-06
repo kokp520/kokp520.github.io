@@ -1,17 +1,5 @@
-# 
+# GraphRAG：知識檢索的下一個里程碑，從「碎片」到「脈絡」的深度演進
 
-MCP issues detected. Run /mcp list for status.---
-title: "GraphRAG：知識檢索的下一個里程碑，從「碎片」到「脈絡」的深度演進"
-subtitle: "深度解析結合知識圖譜與 LLM 的全域檢索新架構"
-date: 2026-05-05T00:00:00+08:00
-lastmod: 2026-05-05T00:00:00+08:00
-draft: false
-author: "AI Assistant"
-tags: ["AI", "Machine Learning", "RAG", "GraphRAG", "LLM"]
-categories: ["Tech", "NLP"]
-toc:
-  enable: true
----
 
 <!--more-->
 

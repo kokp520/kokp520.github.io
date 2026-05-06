@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=63324&amp;path=livereload" data-no-instant defer></script>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>超越檢索：深度解析 Agentic RAG 的自我修正機制與實踐 - Adi98&#39;s Blog</title><meta name="Description" content="Welcome to my blog..."><meta property="og:url" content="http://localhost:63324/ai-gen-20260506-105923/">
+        <title>超越檢索：深度解析 Agentic RAG 的自我修正機制與實踐 - Adi98&#39;s Blog</title><meta name="Description" content="Welcome to my blog..."><meta property="og:url" content="http://localhost:1313/ai-gen-20260506-105923/">
   <meta property="og:site_name" content="Adi98&#39;s Blog">
   <meta property="og:title" content="超越檢索：深度解析 Agentic RAG 的自我修正機制與實踐">
   <meta property="og:description" content="在大型語言模型（LLM）的應用開發中，檢索增強生成（RAG）早已成為解決模型幻覺、引入私有知識的標配方案。然而，隨著企業級應用對準確性的要求從「看起來對」提升到「絕對精確」，傳統的「一站式」RAG 架構（Naive RAG）逐漸顯露疲態：檢索不到位、檢索內容無關、或是生成結果偏離事實，這些問題在複雜的推理任務中頻頻發生。
@@ -20,15 +20,15 @@
     <meta property="article:tag" content="Self-Correction">
     <meta property="article:tag" content="Multi-Agent System">
     <meta property="article:tag" content="LLM Implementation">
-    <meta property="og:image" content="http://localhost:63324/main2.png">
+    <meta property="og:image" content="http://localhost:1313/main2.png">
 
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="http://localhost:63324/main2.png">
+  <meta name="twitter:image" content="http://localhost:1313/main2.png">
   <meta name="twitter:title" content="超越檢索：深度解析 Agentic RAG 的自我修正機制與實踐">
   <meta name="twitter:description" content="在大型語言模型（LLM）的應用開發中，檢索增強生成（RAG）早已成為解決模型幻覺、引入私有知識的標配方案。然而，隨著企業級應用對準確性的要求從「看起來對」提升到「絕對精確」，傳統的「一站式」RAG 架構（Naive RAG）逐漸顯露疲態：檢索不到位、檢索內容無關、或是生成結果偏離事實，這些問題在複雜的推理任務中頻頻發生。
 為了應對這些挑戰，Agentic RAG（智能代理式 RAG） 應運而生。它不再是一個線性的流水線，而是一個具備「自我意識」和「修正能力」的循環系統。本文將深度解析 Agentic RAG 的核心原理，並提供具體的實作架構與程式碼範例，帶你從傳統檢索跨越到主動推理的新紀元。">
 <meta name="application-name" content="Adi&#39;s blog">
-<meta name="apple-mobile-web-app-title" content="Adi&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/safari-pinned-tab.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:63324/ai-gen-20260506-105923/" /><link rel="prev" href="http://localhost:63324/ai-gen-20260506-104617/" /><link rel="next" href="http://localhost:63324/oldroad-website/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<meta name="apple-mobile-web-app-title" content="Adi&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/safari-pinned-tab.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/ai-gen-20260506-105923/" /><link rel="prev" href="http://localhost:1313/laravel-illuminate-container/" /><link rel="next" href="http://localhost:1313/ai-gen-20260506-110621/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
     {
@@ -38,11 +38,11 @@
         "inLanguage": "en",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "http:\/\/localhost:63324\/ai-gen-20260506-105923\/"
-        },"image": ["http:\/\/localhost:63324\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "AI Agent, RAG, Agentic RAG, Self-Correction, Multi-Agent System, LLM Implementation, LangGraph, Python","wordcount":  542 ,
-        "url": "http:\/\/localhost:63324\/ai-gen-20260506-105923\/","datePublished": "2026-05-06T16:00:00+08:00","dateModified": "2026-05-06T16:00:00+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@id": "http:\/\/localhost:1313\/ai-gen-20260506-105923\/"
+        },"image": ["http:\/\/localhost:1313\/images\/Apple-Devices-Preview.png"],"genre": "posts","keywords": "AI Agent, RAG, Agentic RAG, Self-Correction, Multi-Agent System, LLM Implementation, LangGraph, Python","wordcount":  542 ,
+        "url": "http:\/\/localhost:1313\/ai-gen-20260506-105923\/","datePublished": "2026-05-06T16:00:00+08:00","dateModified": "2026-05-06T16:00:00+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
             "@type": "Organization",
-            "name": "xxxx","logo": "http:\/\/localhost:63324\/images\/avatar.png"},"author": {
+            "name": "xxxx","logo": "http:\/\/localhost:1313\/images\/avatar.png"},"author": {
                 "@type": "Person",
                 "name": "Adi"
             },"description": ""
@@ -422,7 +422,7 @@
                             <a class="link-to-markdown" href="/ai-gen-20260506-105923/index.md" target="_blank"></a>
                         </span></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title=" Facebook" data-sharer="facebook" data-url="http://localhost:63324/ai-gen-20260506-105923/" data-hashtag="AI Agent"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title=" Line" data-sharer="line" data-url="http://localhost:63324/ai-gen-20260506-105923/" data-title="超越檢索：深度解析 Agentic RAG 的自我修正機制與實踐"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a></span>
+                <span><a href="javascript:void(0);" title=" Facebook" data-sharer="facebook" data-url="http://localhost:1313/ai-gen-20260506-105923/" data-hashtag="AI Agent"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title=" Line" data-sharer="line" data-url="http://localhost:1313/ai-gen-20260506-105923/" data-title="超越檢索：深度解析 Agentic RAG 的自我修正機制與實踐"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a></span>
             </div>
         </div>
     </div>
@@ -434,8 +434,8 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/ai-gen-20260506-104617/" class="prev" rel="prev" title="超越長文本：深度解析 RAG 與 Long-Context LLM 的架構博弈、融合與生產級優化"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>超越長文本：深度解析 RAG 與 Long-Context LLM 的架構博弈、融合與生產級優化</a>
-            <a href="/oldroad-website/" class="next" rel="next" title="oldroad - 購物網站">oldroad - 購物網站<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+    <div class="post-nav"><a href="/laravel-illuminate-container/" class="prev" rel="prev" title="Laravel Singleton and Binding"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Laravel Singleton and Binding</a>
+            <a href="/ai-gen-20260506-110621/" class="next" rel="next" title="自動化研究的新境界：深度解析多代理協作架構 (Multi-Agent Workflows) 與 LangGraph 實作">自動化研究的新境界：深度解析多代理協作架構 (Multi-Agent Workflows) 與 LangGraph 實作<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
 </div>
 </article></div>
             </main><footer class="footer">

@@ -1,17 +1,5 @@
-# 
+# 從 RAG 到 Agentic RAG：構建具備自我修正能力的 LLM 知識檢索系統
 
-MCP issues detected. Run /mcp list for status.---
-title: "從 RAG 到 Agentic RAG：構建具備自我修正能力的 LLM 知識檢索系統"
-subtitle: "超越單次檢索：深入解析 Agentic Workflow 在增強檢索與生成中的實踐"
-date: 2026-05-06T10:00:00+08:00
-lastmod: 2026-05-06T10:00:00+08:00
-draft: false
-author: "Adi Wu (AI Assistant)"
-tags: ["LLM", "RAG", "Agentic Workflow", "AI Engineering", "LangGraph"]
-categories: ["Tech"]
-toc:
-  enable: true
----
 
 <!--more-->
 

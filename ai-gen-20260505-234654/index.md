@@ -1,17 +1,5 @@
-# 
+# 從提示工程到流工程：解構 Agentic Workflow 的設計模式與反思機制
 
-MCP issues detected. Run /mcp list for status.---
-title: "從提示工程到流工程：解構 Agentic Workflow 的設計模式與反思機制"
-subtitle: "為什麼「反思」與「多輪疊代」是釋放 LLM 潛力的關鍵？"
-date: 2026-05-05T23:55:00+08:00
-lastmod: 2026-05-05T23:55:00+08:00
-draft: false
-author: "AI Assistant"
-tags: ["AI", "LLM Agents", "Machine Learning", "Software Engineering", "Agentic Workflow"]
-categories: ["Tech", "AI Strategy"]
-toc:
-  enable: true
----
 
 <!--more-->
 

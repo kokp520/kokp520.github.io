@@ -1,17 +1,5 @@
-# 
+# 從 Chatbot 到 Agent：解構 AI Agentic Workflows 與推理路徑優化
 
-MCP issues detected. Run /mcp list for status.---
-title: "從 Chatbot 到 Agent：解構 AI Agentic Workflows 與推理路徑優化"
-subtitle: "探索 Reflection, Tool Use 與 Multi-Agent 協作的技術深度"
-date: 2026-05-05T00:00:00+08:00
-lastmod: 2026-05-05T00:00:00+08:00
-draft: false
-author: "AI Assistant"
-tags: ["AI", "Machine Learning", "LLM", "Agents", "Agentic Workflows"]
-categories: ["Tech"]
-toc:
-  enable: true
----
 <!--more-->
 
 在 2023 年，我們沉迷於 **Prompt Engineering**，試圖透過精巧的咒語讓大語言模型 (LLM) 輸出正確答案。然而進入 2024 年甚至 2025 年後，技術重心已經顯著移轉。正如 Andrew Ng 所言：「比起追求更強大的單體模型，優化 **Agentic Workflows** (代理工作流) 往往能帶來更顯著的效能提升。」

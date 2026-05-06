@@ -1,16 +1,5 @@
-# 
+# 從檢索到決策：深度解析 Agentic RAG 的架構演進、自我修正機制與生產級實踐
 
-MCP issues detected. Run /mcp list for status.---
-title: "從檢索到決策：深度解析 Agentic RAG 的架構演進、自我修正機制與生產級實踐"
-date: 2026-05-06T14:00:00+08:00
-lastmod: 2026-05-06T14:00:00+08:00
-draft: false
-weight: 2
-categories: ["Tech", "AI"]
-tags: ["LLM", "Agentic RAG", "LangGraph", "Machine Learning", "NLP", "Information Retrieval"]
-toc:
-  enable: true
----
 
 在生成式 AI (Generative AI) 的應用浪潮中，檢索增強生成 (Retrieval-Augmented Generation, RAG) 已成為企業解決大型語言模型 (LLM) 幻覺問題、引入私域知識的標準範式。然而，隨著應用場景從簡單的問答延伸至複雜的邏輯推理與跨文件整合，傳統的「一站式」檢索架構（Naive RAG）逐漸顯露出其侷限性。為了應對低檢索品質、資訊碎片化以及模型無法自我修正等挑戰，**Agentic RAG** 應運而生。這不僅僅是技術上的微調，更是一場從「線性檢索」向「循環決策」的範式轉移。
 

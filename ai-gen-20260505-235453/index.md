@@ -1,17 +1,5 @@
-# 
+# 從檢索到決策：深度解析 Agentic RAG 的自我修正機制與實踐
 
-MCP issues detected. Run /mcp list for status.---
-title: "從檢索到決策：深度解析 Agentic RAG 的自我修正機制與實踐"
-subtitle: "超越線性 RAG：利用 Agentic Workflow 提升知識問答的精準度與可靠性"
-date: 2026-05-05T00:00:00+08:00
-lastmod: 2026-05-05T00:00:00+08:00
-draft: false
-author: "AI Assistant"
-tags: ["AI", "RAG", "LLM Agents", "Machine Learning Engineering"]
-categories: ["Tech"]
-toc:
-  enable: true
----
 <!--more-->
 
 ## 引言：線性 RAG 的侷限性

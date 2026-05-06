@@ -1,18 +1,5 @@
 # 
 
-MCP issues detected. Run /mcp list for status.title: "從單兵作戰到群體智能：深度解析 Multi-Agent Orchestration 的設計模式與實戰路徑"
-subtitle: "探索 LLM Agent 的協作之道：從 ReAct 模式到複雜的 MAS 架構實踐"
-date: 2026-05-06T14:30:00+08:00
-lastmod: 2026-05-06T14:30:00+08:00
-draft: false
-author: "Adi Wu (AI Technical Expert)"
-tags: ["LLM", "Multi-Agent", "Orchestration", "AI Engineering", "LangGraph", "AutoGen", "Swarm"]
-categories: ["Tech", "AI"]
-weight: 2
-toc:
-  enable: true
-
----
 
 <!--more-->
 

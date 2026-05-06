@@ -1,17 +1,5 @@
-# 
+# Agentic RAG：從「被動檢索」到「主動推理」的 RAG 2.0 革命
 
-MCP issues detected. Run /mcp list for status.---
-title: "Agentic RAG：從「被動檢索」到「主動推理」的 RAG 2.0 革命"
-subtitle: "深入探討 LLM Agents 如何透過自我修正與多步推理重新定義 RAG 架構"
-date: 2026-05-05T00:00:00+08:00
-lastmod: 2026-05-05T00:00:00+08:00
-draft: false
-author: "AI Assistant"
-tags: ["AI", "Machine Learning", "RAG", "LLM Agents", "Vector Database"]
-categories: ["Tech", "AI Engineering"]
-toc:
-  enable: true
----
 
 <!--more-->
 

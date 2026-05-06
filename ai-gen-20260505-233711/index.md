@@ -1,17 +1,5 @@
-# 
+# 突破檢索瓶頸：從向量數據庫到 GraphRAG 的深度實踐
 
-MCP issues detected. Run /mcp list for status.---
-title: "突破檢索瓶頸：從向量數據庫到 GraphRAG 的深度實踐"
-subtitle: "探索 RAG 2.0 時代下的知識關聯與語義精確度"
-date: 2026-05-05T00:00:00+08:00
-lastmod: 2026-05-05T00:00:00+08:00
-draft: false
-author: "Adi Wu"
-tags: ["RAG", "LLM", "Knowledge Graph", "GraphRAG", "Vector Database"]
-categories: ["AI Engineering", "Generative AI"]
-toc:
-  enable: true
----
 
 在大型語言模型（LLM）的應用開發中，**RAG (Retrieval-Augmented Generation)** 已經成為解決模型「幻覺」(Hallucination) 與知識滯後問題的標準架構。然而，隨著應用場景從簡單的文檔問答演進到複雜的決策支援，傳統的 Naive RAG（基於向量檢索的 RAG）開始顯露其局限性。
 
