@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title> - Adi98&#39;s Blog</title><meta name="Description" content="Welcome to my blog..."><meta property="og:url" content="https://example.com/ai-gen-20260506-104340/">
+  <meta property="og:site_name" content="Adi98&#39;s Blog">
+  <meta property="og:title" content="Adi98&#39;s Blog">
+  <meta property="og:description" content="MCP issues detected. Run /mcp list for status.— title: “從檢索到決策：深度解析 Agentic RAG 的架構演進、自我修正機制與生產級實踐” date: 2026-05-06T14:00:00&#43;08:00 lastmod: 2026-05-06T14:00:00&#43;08:00 draft: false weight: 2 categories: [“Tech”, “AI”] tags: [“LLM”, “Agentic RAG”, “LangGraph”, “Machine Learning”, “NLP”, “Information Retrieval”] toc: enable: true 在生成式 AI (Generative AI) 的應用浪潮中，檢索增強生成 (Retrieval-Augmented Generation, RAG) 已成為企業解決大型語言模型 (LLM) 幻覺問題、引入私域知識的標準範式。然而，隨著應用場景從簡單的問答延伸至複雜的邏輯推理與跨文件整合，傳統的「一站式」檢索架構（Naive RAG）逐漸顯露出其侷限性。為了應對低檢索品質、資訊碎片化以及模型無法自我修正等挑戰，Agentic RAG 應運而生。這不僅僅是技術上的微調，更是一場從「線性檢索」向「循環決策」的範式轉移。">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:modified_time" content="2026-05-06T10:43:41+08:00">
+    <meta property="og:image" content="https://example.com/main2.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://example.com/main2.png">
+  <meta name="twitter:title" content="Adi98&#39;s Blog">
+  <meta name="twitter:description" content="MCP issues detected. Run /mcp list for status.— title: “從檢索到決策：深度解析 Agentic RAG 的架構演進、自我修正機制與生產級實踐” date: 2026-05-06T14:00:00&#43;08:00 lastmod: 2026-05-06T14:00:00&#43;08:00 draft: false weight: 2 categories: [“Tech”, “AI”] tags: [“LLM”, “Agentic RAG”, “LangGraph”, “Machine Learning”, “NLP”, “Information Retrieval”] toc: enable: true 在生成式 AI (Generative AI) 的應用浪潮中，檢索增強生成 (Retrieval-Augmented Generation, RAG) 已成為企業解決大型語言模型 (LLM) 幻覺問題、引入私域知識的標準範式。然而，隨著應用場景從簡單的問答延伸至複雜的邏輯推理與跨文件整合，傳統的「一站式」檢索架構（Naive RAG）逐漸顯露出其侷限性。為了應對低檢索品質、資訊碎片化以及模型無法自我修正等挑戰，Agentic RAG 應運而生。這不僅僅是技術上的微調，更是一場從「線性檢索」向「循環決策」的範式轉移。">
+<meta name="application-name" content="Adi&#39;s blog">
+<meta name="apple-mobile-web-app-title" content="Adi&#39;s blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="icon" href="/safari-pinned-tab.svg"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://example.com/ai-gen-20260506-104340/" /><link rel="next" href="https://example.com/ai-gen-20260506-104201/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "",
+        "inLanguage": "en",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/example.com\/ai-gen-20260506-104340\/"
+        },"image": ["https:\/\/example.com\/images\/Apple-Devices-Preview.png"],"genre": "posts","wordcount":  525 ,
+        "url": "https:\/\/example.com\/ai-gen-20260506-104340\/","dateModified": "2026-05-06T10:43:41+08:00","license": "This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.","publisher": {
+            "@type": "Organization",
+            "name": "xxxx","logo": "https:\/\/example.com\/images\/avatar.png"},"author": {
+                "@type": "Person",
+                "name": "Adi"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Adi98&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/main2.png"
+        data-srcset="/main2.png, /main2.png 1.5x, /main2.png 2x"
+        data-sizes="auto"
+        alt="/main2.png"
+        title="/main2.png" /><span id="id-1" class="typeit"></span></a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> Posts </a><a class="menu-item" href="/categories/"> Categories </a><a class="menu-item" href="/about/"> About </a><a class="menu-item" href="https://github.com/kokp520" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i>  </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="" id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Adi98&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/main2.png"
+        data-srcset="/main2.png, /main2.png 1.5x, /main2.png 2x"
+        data-sizes="auto"
+        alt="/main2.png"
+        title="/main2.png" /><span id="id-2" class="typeit"></span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="" id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">Posts</a><a class="menu-item" href="/categories/" title="">Categories</a><a class="menu-item" href="/about/" title="">About</a><a class="menu-item" href="https://github.com/kokp520" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw' aria-hidden='true'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title"></h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX"></h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://kokp520.github.io" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Adi</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="0001-01-01">0001-01-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span></span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#enable-true">MCP issues detected. Run /mcp list for status.&mdash;
+title: &ldquo;從檢索到決策：深度解析 Agentic RAG 的架構演進、自我修正機制與生產級實踐&rdquo;
+date: 2026-05-06T14:00:00+08:00
+lastmod: 2026-05-06T14:00:00+08:00
+draft: false
+weight: 2
+categories: [&ldquo;Tech&rdquo;, &ldquo;AI&rdquo;]
+tags: [&ldquo;LLM&rdquo;, &ldquo;Agentic RAG&rdquo;, &ldquo;LangGraph&rdquo;, &ldquo;Machine Learning&rdquo;, &ldquo;NLP&rdquo;, &ldquo;Information Retrieval&rdquo;]
+toc:
+enable: true</a></li>
+    <li><a href="#1-為什麼我們需要-agentic-rag傳統-rag-的瓶頸">1. 為什麼我們需要 Agentic RAG？傳統 RAG 的瓶頸</a></li>
+    <li><a href="#2-agentic-rag-的核心架構設計">2. Agentic RAG 的核心架構設計</a>
+      <ul>
+        <li><a href="#21-規劃器-planner">2.1 規劃器 (Planner)</a></li>
+        <li><a href="#22-多樣化工具箱-tooling">2.2 多樣化工具箱 (Tooling)</a></li>
+        <li><a href="#23-評估器與反射機制-evaluator--reflection">2.3 評估器與反射機制 (Evaluator &amp; Reflection)</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-實作方向基於-langgraph-的循環架構">3. 實作方向：基於 LangGraph 的循環架構</a>
+      <ul>
+        <li><a href="#31-python-範例程式碼構建簡單的-agent-決策邏輯">3.1 Python 範例程式碼：構建簡單的 Agent 決策邏輯</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-進階策略self-rag-與多-agent-協作">4. 進階策略：Self-RAG 與多 Agent 協作</a>
+      <ul>
+        <li><a href="#41-self-rag">4.1 Self-RAG</a></li>
+        <li><a href="#42-多-agent-辯論-multi-agent-debate">4.2 多 Agent 辯論 (Multi-Agent Debate)</a></li>
+      </ul>
+    </li>
+    <li><a href="#5-生產級實踐中的挑戰與解決方案">5. 生產級實踐中的挑戰與解決方案</a>
+      <ul>
+        <li><a href="#51-延遲-latency-的噩夢">5.1 延遲 (Latency) 的噩夢</a></li>
+        <li><a href="#52-狀態爆炸與死循環">5.2 狀態爆炸與死循環</a></li>
+        <li><a href="#53-評估難題">5.3 評估難題</a></li>
+      </ul>
+    </li>
+    <li><a href="#6-總結邁向自適應-ai-系統">6. 總結：邁向自適應 AI 系統</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="enable-true">MCP issues detected. Run /mcp list for status.&mdash;
+title: &ldquo;從檢索到決策：深度解析 Agentic RAG 的架構演進、自我修正機制與生產級實踐&rdquo;
+date: 2026-05-06T14:00:00+08:00
+lastmod: 2026-05-06T14:00:00+08:00
+draft: false
+weight: 2
+categories: [&ldquo;Tech&rdquo;, &ldquo;AI&rdquo;]
+tags: [&ldquo;LLM&rdquo;, &ldquo;Agentic RAG&rdquo;, &ldquo;LangGraph&rdquo;, &ldquo;Machine Learning&rdquo;, &ldquo;NLP&rdquo;, &ldquo;Information Retrieval&rdquo;]
+toc:
+enable: true</h2>
+<p>在生成式 AI (Generative AI) 的應用浪潮中，檢索增強生成 (Retrieval-Augmented Generation, RAG) 已成為企業解決大型語言模型 (LLM) 幻覺問題、引入私域知識的標準範式。然而，隨著應用場景從簡單的問答延伸至複雜的邏輯推理與跨文件整合，傳統的「一站式」檢索架構（Naive RAG）逐漸顯露出其侷限性。為了應對低檢索品質、資訊碎片化以及模型無法自我修正等挑戰，<strong>Agentic RAG</strong> 應運而生。這不僅僅是技術上的微調，更是一場從「線性檢索」向「循環決策」的範式轉移。</p>
+<h2 id="1-為什麼我們需要-agentic-rag傳統-rag-的瓶頸">1. 為什麼我們需要 Agentic RAG？傳統 RAG 的瓶頸</h2>
+<p>傳統的 Naive RAG 流程通常是線性的：用戶提問 -&gt; 向量搜索 -&gt; 填入 Prompt -&gt; 生成回答。這種模式在處理簡單事實查詢時表現良好，但在面對以下場景時往往會失效：</p>
+<ol>
+<li><strong>檢索噪聲 (Retrieval Noise)</strong>：當向量數據庫返回的 Top-K 文檔與問題不相關或存在干擾資訊時，模型容易被誤導。</li>
+<li><strong>查詢歧義 (Query Ambiguity)</strong>：用戶的問題可能模糊不清，線性流程缺乏反向提問或意圖澄清的機制。</li>
+<li><strong>多跳推理需求 (Multi-hop Reasoning)</strong>：回答一個複雜問題可能需要先檢索 A，根據 A 的結果再去檢索 B。</li>
+<li><strong>缺乏自我審核 (Lack of Self-Correction)</strong>：一旦檢索結果錯誤，模型會基於錯誤事實「一本正經地胡說八道」，無法判斷生成的答案是否符合檢索內容。</li>
+</ol>
+<p>Agentic RAG 通過引入「代理 (Agent)」的概念，將 LLM 作為大腦，賦予其決策、規劃與工具調用的能力，使 RAG 流程具備了適應性與智慧。</p>
+<h2 id="2-agentic-rag-的核心架構設計">2. Agentic RAG 的核心架構設計</h2>
+<p>Agentic RAG 的核心在於將靜態的流程轉化為動態的狀態機 (State Machine)。一個完整的 Agentic RAG 架構通常包含以下幾個關鍵組件：</p>
+<h3 id="21-規劃器-planner">2.1 規劃器 (Planner)</h3>
+<p>規劃器負責解析用戶的複雜意圖，將其分解為多個可執行的子任務。例如，面對「對比 A 產品與 B 產品的性能優缺點」這類問題，規劃器會將其拆解為「檢索 A 性能」、「檢索 B 性能」以及「進行比較」三個步驟。</p>
+<h3 id="22-多樣化工具箱-tooling">2.2 多樣化工具箱 (Tooling)</h3>
+<p>Agent 不再僅限於向量檢索。它可以根據需要調用不同的工具：</p>
+<ul>
+<li><strong>Vector DB Tool</strong>：用於語義搜索。</li>
+<li><strong>Web Search Tool</strong>：用於獲取實時資訊。</li>
+<li><strong>SQL/Code Tool</strong>：用於結構化數據運算。</li>
+<li><strong>Document Summarizer</strong>：用於處理超長文檔。</li>
+</ul>
+<h3 id="23-評估器與反射機制-evaluator--reflection">2.3 評估器與反射機制 (Evaluator &amp; Reflection)</h3>
+<p>這是 Agentic RAG 的靈魂。每一步生成的結果都會經過評估：</p>
+<ul>
+<li><strong>相關性評估</strong>：檢索到的內容是否真的能回答問題？</li>
+<li><strong>忠實度評估 (Faithfulness)</strong>：生成的答案是否嚴格遵循檢索內容？</li>
+<li><strong>完備性評估</strong>：是否已經收集到了足夠的資訊？</li>
+</ul>
+<h2 id="3-實作方向基於-langgraph-的循環架構">3. 實作方向：基於 LangGraph 的循環架構</h2>
+<p>在實作層面，LangChain 的 LangGraph 提供了一個強大的框架來構建這種有狀態的循環系統。以下是一個典型的 <strong>Corrective RAG (CRAG)</strong> 模式的架構流程：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">graph TD
+</span></span><span class="line"><span class="cl">    Start((開始)) --&gt; Question[用戶提問]
+</span></span><span class="line"><span class="cl">    Question --&gt; Retrieve[檢索文檔]
+</span></span><span class="line"><span class="cl">    Retrieve --&gt; Grade{評估相關性}
+</span></span><span class="line"><span class="cl">    Grade -- 相關 --&gt; Generate[生成初步回答]
+</span></span><span class="line"><span class="cl">    Grade -- 不相關/模糊 --&gt; ReSearch[觸發網絡搜索/重寫查詢]
+</span></span><span class="line"><span class="cl">    ReSearch --&gt; Retrieve
+</span></span><span class="line"><span class="cl">    Generate --&gt; HallucinationCheck{幻覺檢查}
+</span></span><span class="line"><span class="cl">    HallucinationCheck -- 存在幻覺 --&gt; Generate
+</span></span><span class="line"><span class="cl">    HallucinationCheck -- 無幻覺 --&gt; FinalAnswer[最終輸出]
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h3 id="31-python-範例程式碼構建簡單的-agent-決策邏輯">3.1 Python 範例程式碼：構建簡單的 Agent 決策邏輯</h3>
+<p>以下展示如何使用擬代碼構建一個具備自我修正能力的檢索節點：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">TypedDict</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">langgraph.graph</span> <span class="kn">import</span> <span class="n">StateGraph</span><span class="p">,</span> <span class="n">END</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 定義狀態</span>
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">GraphState</span><span class="p">(</span><span class="n">TypedDict</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">question</span><span class="p">:</span> <span class="nb">str</span>
+</span></span><span class="line"><span class="cl">    <span class="n">documents</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">generation</span><span class="p">:</span> <span class="nb">str</span>
+</span></span><span class="line"><span class="cl">    <span class="n">retry_count</span><span class="p">:</span> <span class="nb">int</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">retrieve</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">GraphState</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;--- 執行檢索 ---&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">question</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&#34;question&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># 假設這是調用向量數據庫</span>
+</span></span><span class="line"><span class="cl">    <span class="n">docs</span> <span class="o">=</span> <span class="n">vector_store</span><span class="o">.</span><span class="n">similarity_search</span><span class="p">(</span><span class="n">question</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">{</span><span class="s2">&#34;documents&#34;</span><span class="p">:</span> <span class="n">docs</span><span class="p">,</span> <span class="s2">&#34;question&#34;</span><span class="p">:</span> <span class="n">question</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">grade_documents</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">GraphState</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;--- 評估文檔相關性 ---&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">question</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&#34;question&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">docs</span> <span class="o">=</span> <span class="n">state</span><span class="p">[</span><span class="s2">&#34;documents&#34;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># 這裡會調用一個輕量級 LLM 來評估每份文檔</span>
+</span></span><span class="line"><span class="cl">    <span class="n">filtered_docs</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="n">search_needed</span> <span class="o">=</span> <span class="kc">False</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">docs</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">score</span> <span class="o">=</span> <span class="n">relevance_scorer</span><span class="o">.</span><span class="n">invoke</span><span class="p">({</span><span class="s2">&#34;question&#34;</span><span class="p">:</span> <span class="n">question</span><span class="p">,</span> <span class="s2">&#34;context&#34;</span><span class="p">:</span> <span class="n">d</span><span class="o">.</span><span class="n">page_content</span><span class="p">})</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">score</span> <span class="o">==</span> <span class="s2">&#34;relevant&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">filtered_docs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">            <span class="n">search_needed</span> <span class="o">=</span> <span class="kc">True</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">{</span><span class="s2">&#34;documents&#34;</span><span class="p">:</span> <span class="n">filtered_docs</span><span class="p">,</span> <span class="s2">&#34;question&#34;</span><span class="p">:</span> <span class="n">question</span><span class="p">,</span> <span class="s2">&#34;search_needed&#34;</span><span class="p">:</span> <span class="n">search_needed</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">decide_to_generate</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">GraphState</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="s2">&#34;search_needed&#34;</span><span class="p">]:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;web_search&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s2">&#34;generate&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># 構建圖</span>
+</span></span><span class="line"><span class="cl"><span class="n">workflow</span> <span class="o">=</span> <span class="n">StateGraph</span><span class="p">(</span><span class="n">GraphState</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">workflow</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&#34;retrieve&#34;</span><span class="p">,</span> <span class="n">retrieve</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">workflow</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="s2">&#34;grade_documents&#34;</span><span class="p">,</span> <span class="n">grade_documents</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ... 添加其他節點 ...</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">workflow</span><span class="o">.</span><span class="n">set_entry_point</span><span class="p">(</span><span class="s2">&#34;retrieve&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">workflow</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="s2">&#34;retrieve&#34;</span><span class="p">,</span> <span class="s2">&#34;grade_documents&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">workflow</span><span class="o">.</span><span class="n">add_conditional_edges</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;grade_documents&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">decide_to_generate</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;web_search&#34;</span><span class="p">:</span> <span class="s2">&#34;web_search_node&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;generate&#34;</span><span class="p">:</span> <span class="s2">&#34;generate_node&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="4-進階策略self-rag-與多-agent-協作">4. 進階策略：Self-RAG 與多 Agent 協作</h2>
+<p>當場景更加複雜時，單個 Agent 的壓力會過大。此時我們可以引入更進階的策略：</p>
+<h3 id="41-self-rag">4.1 Self-RAG</h3>
+<p>Self-RAG 引入了特殊的「反思標記 (Reflection Tokens)」。模型在生成過程中會輸出標記來判斷：</p>
+<ul>
+<li><code>IS_REL</code>：檢索到的內容是否相關？</li>
+<li><code>IS_SUP</code>：生成的句子是否得到檢索內容的支持？</li>
+<li><code>IS_USE</code>：生成的內容是否對用戶有用？</li>
+</ul>
+<p>透過精細化的權重控制，Self-RAG 能在保持事實準確性的同時，極大提升語言的自然度。</p>
+<h3 id="42-多-agent-辯論-multi-agent-debate">4.2 多 Agent 辯論 (Multi-Agent Debate)</h3>
+<p>在法律或醫療等高準確性要求的領域，可以部署兩個不同的 Agent：</p>
+<ol>
+<li><strong>Proposer Agent</strong>：負責根據檢索內容生成答案。</li>
+<li><strong>Critic Agent</strong>：負責挑戰 Proposer 的觀點，尋找邏輯漏洞或檢索盲點。
+兩者通過多輪對話達成共識，這能有效過濾掉 90% 以上的幻覺內容。</li>
+</ol>
+<h2 id="5-生產級實踐中的挑戰與解決方案">5. 生產級實踐中的挑戰與解決方案</h2>
+<p>雖然 Agentic RAG 強大，但在落地過程中也會遇到不少硬傷：</p>
+<h3 id="51-延遲-latency-的噩夢">5.1 延遲 (Latency) 的噩夢</h3>
+<p>多次 LLM 調用和循環檢索會導致首字生成時間 (TTFT) 大幅增加。</p>
+<ul>
+<li><strong>解決方案</strong>：
+<ul>
+<li><strong>並行化 (Parallelism)</strong>：在規劃階段，同時進行多個子查詢的檢索。</li>
+<li><strong>模型路由 (Model Routing)</strong>：使用輕量級模型（如 GPT-4o-mini 或 Llama-3-8B）進行「評估相關性」等中間步驟，僅在最終生成時使用旗艦級模型。</li>
+</ul>
+</li>
+</ul>
+<h3 id="52-狀態爆炸與死循環">5.2 狀態爆炸與死循環</h3>
+<p>如果 Agent 判斷檢索結果始終不相關，可能會陷入無限檢索的死循環。</p>
+<ul>
+<li><strong>解決方案</strong>：
+<ul>
+<li><strong>設置硬上限 (Hard Limits)</strong>：限制最大迭代次數（如 Max Loops = 3）。</li>
+<li><strong>降級策略</strong>：當多次檢索失敗時，主動告知用戶「目前資料庫中缺乏相關資訊」，而非持續嘗試。</li>
+</ul>
+</li>
+</ul>
+<h3 id="53-評估難題">5.3 評估難題</h3>
+<p>傳統的 ROUGE 或 BLEU 指標無法衡量 Agent 的決策好壞。</p>
+<ul>
+<li><strong>解決方案</strong>：
+<ul>
+<li>採用 <strong>RAGAS</strong> 或 <strong>TruLens</strong> 框架。</li>
+<li>重點監控「檢索命中率」、「幻覺率」以及「Agent 路徑成功率」。</li>
+</ul>
+</li>
+</ul>
+<h2 id="6-總結邁向自適應-ai-系統">6. 總結：邁向自適應 AI 系統</h2>
+<p>Agentic RAG 的興起，代表了我們對大語言模型運用方式的進化：從單純的「預測下一個 Token」轉變為「作為系統調度中樞」。透過自我反思、動態規劃與工具調用，Agentic RAG 為解決 AI 的可靠性問題提供了一套嚴謹的工程化框架。</p>
+<p>對於開發者而言，未來的核心競爭力將不在於如何微調模型，而在於如何設計一套精密的「狀態機」與「反射機制」。在即將到來的 Agentic Era，能理解業務邊界並將其轉化為 Agent 邏輯的工程師，將會是這場 AI 革命中真正的架構師。</p>
+<hr>
+<p><strong>參考文獻與推薦閱讀：</strong></p>
+<ul>
+<li><em>LangGraph Documentation - Adaptive RAG</em></li>
+<li><em>Self-RAG: Learning to Retrieve, Generate, and Critique through Self-Reflection (ICLR 2024)</em></li>
+<li><em>Corrective Retrieval-Augmented Generation (CRAG) Paper</em></li>
+</ul></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>&nbsp;<a class="git-hash" href="https://github.com/kokp520/commit/578bd402b3bb8acca3ef8a17a6144e80c5f39b1d" target="_blank" title="commit by kokp520(kokp520@gmail.com) 578bd402b3bb8acca3ef8a17a6144e80c5f39b1d: update new post">
+                                    <i class="fas fa-hashtag fa-fw" aria-hidden="true"></i>578bd40</a></span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/ai-gen-20260506-104340/index.md" target="_blank"></a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title=" Facebook" data-sharer="facebook" data-url="https://example.com/ai-gen-20260506-104340/"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title=" Line" data-sharer="line" data-url="https://example.com/ai-gen-20260506-104340/" data-title=""><i data-svg-src="https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();"></a></span>&nbsp;|&nbsp;<span><a href="/"></a></span>
+        </section>
+    </div>
+
+    <div class="post-nav">
+            <a href="/ai-gen-20260506-104201/" class="next" rel="next" title=""><i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+<div id="comments"><div id="disqus_thread" class="comment"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://disqus.com/?ref_noscript">Disqus</a>.
+            </noscript></div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Hugo Template - LoveIt by Dillon | Adi</div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023 - 2026</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://kokp520.github.io" target="_blank">Adi</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script type="text/javascript" src="https://personal-site-12.disqus.com/embed.js" defer></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/typeit@8.6.0/dist/index.umd.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"","maxShownLines":50},"comment":{},"data":{"id-1":"Adi98's Blog","id-2":"Adi98's Blog"},"search":{"algoliaAppID":"PASDMWALPK","algoliaIndex":"index.en","algoliaSearchKey":"b42948e51daaa93df92381c8e2ac0f93","highlightTag":"em","maxResultLength":10,"noResultsFound":"","snippetLength":30,"type":"algolia"},"typeit":{"cursorChar":"|","cursorSpeed":1000,"data":{"id-1":["id-1"],"id-2":["id-2"]},"duration":-1,"speed":70}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
