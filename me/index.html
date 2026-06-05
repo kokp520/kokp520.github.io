@@ -555,16 +555,19 @@
     lh: { x: -0.34, y: -0.34, z: 0.02 },
     rh: { x: 0.34,  y: -0.34, z: 0.02 }
   };
+  const eyeTarget = { x: 0, y: 0 };
 
   window.addEventListener('mousemove', (e) => {
     const x = (e.clientX / window.innerWidth) * 2 - 1;
     const y = (e.clientY / window.innerHeight) * 2 - 1;
-    targetRot.y = x * 0.7;
-    targetRot.x = -y * 0.28;
-    nowHand.lh.targetX = handBase.lh.x + x * 0.20;
-    nowHand.lh.targetY = handBase.lh.y + y * 0.14;
-    nowHand.rh.targetX = handBase.rh.x + x * 0.20;
-    nowHand.rh.targetY = handBase.rh.y + y * 0.14;
+    targetRot.y = x * 1.4;
+    targetRot.x = -y * 0.6;
+    eyeTarget.x = x * 0.028;
+    eyeTarget.y = -y * 0.028;
+    nowHand.lh.targetX = handBase.lh.x + x * 0.35;
+    nowHand.lh.targetY = handBase.lh.y + y * 0.22;
+    nowHand.rh.targetX = handBase.rh.x + x * 0.35;
+    nowHand.rh.targetY = handBase.rh.y + y * 0.22;
   });
 
   // drag to rotate
@@ -608,6 +611,13 @@
       m.position.y += ((x === 'lh' ? nowHand.lh.targetY : nowHand.rh.targetY) - m.position.y) * 0.10;
       m.position.z = 0.02 + Math.sin(t * 2 + (x === 'lh' ? 0 : 1)) * 0.01;
     });
+
+    leftPupil.position.x  = leftEye.position.x  + eyeTarget.x;
+    leftPupil.position.y  = leftEye.position.y  + eyeTarget.y;
+    leftPupil.position.z  = leftEye.position.z + 0.04;
+    rightPupil.position.x = rightEye.position.x + eyeTarget.x;
+    rightPupil.position.y = rightEye.position.y + eyeTarget.y;
+    rightPupil.position.z = rightEye.position.z + 0.04;
 
     renderer.render(scene, camera);
   })();
