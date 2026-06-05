@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>adi — me</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600;700&display=swap');
+
+  :root{
+    --ink:#0a0f1a;
+    --bg:#e9e3d8;
+    --paper:#f3ead8;
+    --dot:#d6c9b2;
+    --accent:#ff5e3a;
+    --muted:#6a5d4a;
+    --mono:"Space Mono", monospace;
+    --sans:"Inter", system-ui, sans-serif;
+  }
+  *{box-sizing:border-box; margin:0}
+  html,body{height:100%}
+  body{
+    font-family:var(--sans);
+    background:var(--bg);
+    color:var(--ink);
+    overflow-x:hidden;
+  }
+  a{color:var(--ink); text-decoration:none}
+  a:hover{text-decoration:underline; color:var(--accent)}
+
+  /* canvas BG */
+  #hero-canvas{
+    position:fixed; inset:0;
+    width:100%; height:100%;
+    z-index:0; pointer-events:none;
+    opacity:.85;
+  }
+
+  /* scroll progress */
+  .progress{
+    position:fixed; left:0; top:0; height:2px; width:0;
+    background:var(--accent);
+    box-shadow:0 0 10px var(--accent);
+    z-index:50;
+  }
+
+  /* layout */
+  .container{
+    position:relative; z-index:1;
+    max-width:880px; margin:0 auto;
+    padding:max(18px,4vw) 22px 60px;
+  }
+
+  /* fade-in */
+  .fade{opacity:0; transform:translateY(16px); transition:.6s cubic-bezier(.2,.8,.2,1)}
+  .fade.in{opacity:1; transform:none}
+
+  /* top nav */
+  nav{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:18px 0 14px;
+    border-bottom:2px dashed rgba(0,0,0,.12);
+    position:sticky; top:0; z-index:20;
+    background: rgba(233,227,216,.75);
+    backdrop-filter: blur(6px);
+  }
+  nav .brand{font-family:var(--mono); font-weight:700; font-size:20px; letter-spacing:-.5px}
+  nav .links{display:flex; gap:18px; font-size:13px; font-weight:500}
+
+  /* hero */
+  .hero{
+    display:grid; grid-template-columns:1.1fr .9fr; gap:28px;
+    align-items:center; padding:34px 0 10px;
+  }
+  .hero h1{
+    font-family:var(--mono); font-weight:700;
+    font-size:clamp(42px,7vw,76px); line-height:.95;
+    text-shadow:2px 2px 0 rgba(0,0,0,.06);
+  }
+  .hero h1 span{color:var(--accent)}
+  .hero .sub{
+    margin-top:12px; color:var(--muted);
+    font-size:14px; line-height:1.65; max-width:480px;
+  }
+  .hero .actions{margin-top:18px; display:flex; gap:10px; flex-wrap:wrap}
+
+  /* 3d viewer */
+  .viewer{
+    position:relative; aspect-ratio:1/1;
+    background:#fff; border-radius:22px;
+    box-shadow:0 24px 60px rgba(0,0,0,.14);
+    overflow:hidden; border:1px solid rgba(0,0,0,.06);
+  }
+  #three-canvas{width:100%!important; height:100%!important; display:block; cursor:grab}
+  .viewer .tag{
+    position:absolute; left:14px; bottom:14px;
+    background:rgba(0,0,0,.7); color:#fff;
+    font-family:var(--mono); font-size:10px;
+    padding:5px 9px; border-radius:999px;
+  }
+
+  /* pill */
+  .pill{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:6px 12px; border-radius:999px;
+    border:1px solid rgba(0,0,0,.1);
+    background:rgba(255,255,255,.45);
+    font-size:12px; font-weight:600; letter-spacing:.2px;
+  }
+
+  /* card */
+  .grid{display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-top:14px}
+  .card{
+    background:var(--paper); border:1px solid rgba(0,0,0,.08);
+    border-radius:16px; padding:16px;
+    transform:translateY(5px);
+    box-shadow:0 16px 0 #d7cbb6, 0 18px 28px rgba(0,0,0,.08);
+    transition:transform .18s ease;
+  }
+  .card:hover{transform:translateY(3px)}
+  .card h3{
+    font-family:var(--mono); font-size:18px; margin:0 0 5px;
+  }
+  .card p{margin:0; color:#3f3526; font-size:13px; line-height:1.6}
+
+  /* btn */
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--ink); color:var(--bg);
+    border:0; border-radius:999px; padding:10px 14px;
+    font-size:12px; font-weight:600; cursor:pointer;
+  }
+  .btn.ghost{
+    background:transparent; color:var(--ink);
+    border:1px solid rgba(0,0,0,.2);
+  }
+  .btn:hover{transform:translateY(-1px)}
+
+  /* list */
+  .list{display:grid; gap:10px; margin-top:14px}
+  .list-item{
+    display:flex; justify-content:space-between; align-items:center;
+    background:var(--paper); border:1px solid rgba(0,0,0,.08);
+    border-radius:14px; padding:14px 16px;
+  }
+  .list-item .meta{font-size:12px; color:var(--muted); font-family:var(--mono)}
+  .list-item .title{font-weight:600; font-size:14px}
+
+  /* timeline */
+  .timeline{display:grid; gap:0; margin-top:14px}
+  .timeline article{
+    display:grid; grid-template-columns:110px 1fr; gap:14px;
+    padding:16px 0;
+    border-bottom:1px dashed rgba(0,0,0,.14);
+  }
+  .timeline .date{font-family:var(--mono); font-size:14px; color:#8a7a5e}
+  .timeline h3{margin:0 0 4px; font-size:14px; font-weight:700}
+  .timeline p{margin:0; color:#4a3f2a; font-size:13px; line-height:1.6}
+
+  /* notes */
+  .masonry{column-count:2; column-gap:14px}
+  .note{
+    break-inside:avoid; margin:0 0 14px; padding:14px;
+    background:#fff; border-left:3px solid var(--accent);
+    border-radius:12px;
+    box-shadow:0 10px 24px rgba(0,0,0,.06);
+  }
+  .note h4{margin:0 0 5px; font-family:var(--mono); font-size:16px}
+  .note p{margin:0; font-size:12px; line-height:1.65; color:#3f3123}
+
+  /* contact */
+  .contact{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:14px;
+  }
+  .contact a{
+    display:block; text-align:center; background:var(--paper);
+    border:1px solid rgba(0,0,0,.08); padding:14px; border-radius:14px;
+  }
+  .contact .label{font-size:11px; color:#6b5637; font-family:var(--mono)}
+  .contact .value{font-weight:700; font-size:13px; margin-top:2px}
+
+  footer{
+    color:var(--muted); font-size:11px;
+    border-top:2px dashed rgba(0,0,0,.12);
+    padding-top:18px; margin-top:70px;
+    font-family:var(--mono);
+  }
+
+  @media (max-width: 720px){
+    .hero{grid-template-columns:1fr}
+    .grid{grid-template-columns:1fr}
+    .masonry{column-count:1}
+    .contact{grid-template-columns:1fr}
+    .timeline article{grid-template-columns:1fr}
+    nav .links{display:none}
+  }
+</style>
+</head>
+<body>
+
+<canvas id="hero-canvas"></canvas>
+<div class="progress" id="progress"></div>
+
+<div class="container">
+  <nav>
+    <div class="brand">adi98.dev</div>
+    <div class="links">
+      <a href="#work">work</a>
+      <a href="#articles">articles</a>
+      <a href="#journals">journals</a>
+      <a href="#contact">contact</a>
+    </div>
+  </nav>
+
+  <section class="hero fade">
+    <div>
+      <h1>adiolk<span>98</span></h1>
+      <p class="sub">
+        Designer / Developer / Maker.
+        Building small, playful systems on the web.
+        Currently messing with 3D, interactive typography, and retro hardware aesthetics.
+      </p>
+      <div class="actions">
+        <a class="btn" href="#work">explore ↓</a>
+        <a class="btn ghost" href="#contact">say hi</a>
+      </div>
+    </div>
+    <div class="viewer">
+      <canvas id="three-canvas"></canvas>
+      <div class="tag">drag to rotate</div>
+    </div>
+  </section>
+
+  <section id="work" class="fade" style="margin-top:60px">
+    <div class="pill">🧩 selected work</div>
+    <div class="grid" style="margin-top:14px">
+      <a class="card" href="#" target="_blank">
+        <h3>Retro OS</h3>
+        <p>Personal site as a desktop — windows, apps, games, all static.</p>
+      </a>
+      <a class="card" href="#" target="_blank">
+        <h3>CCD Cam</h3>
+        <p>Webcam meets Kodak DC50 — grainy, dreamy, analog.</p>
+      </a>
+      <a class="card" href="#" target="_blank">
+        <h3>Pixel UI</h3>
+        <p>Component set inspired by Windows 95, Game Boy, and pixel tools.</p>
+      </a>
+      <a class="card" href="#" target="_blank">
+        <h3>Microsites</h3>
+        <p>A collection of one-off HTML experiments. Hosted on GitHub Pages.</p>
+      </a>
+    </div>
+  </section>
+
+  <section id="articles" class="fade" style="margin-top:64px">
+    <div class="pill">✍️ articles</div>
+    <div class="list" style="margin-top:14px">
+      <a class="list-item" href="#">
+        <div>
+          <div class="title">Building a retro OS on GitHub Pages</div>
+          <div class="meta" style="margin-top:3px">2026 — web, design</div>
+        </div>
+        <div style="font-family:var(--mono);font-size:12px">→</div>
+      </a>
+      <a class="list-item" href="#">
+        <div>
+          <div class="title">Dithering and the aesthetics of noise</div>
+          <div class="meta" style="margin-top:3px">2026 — image, typography</div>
+        </div>
+        <div style="font-family:var(--mono);font-size:12px">→</div>
+      </a>
+      <a class="list-item" href="#">
+        <div>
+          <div class="title">Why your personal site should feel like an OS</div>
+          <div class="meta" style="margin-top:3px">2025 — opinion</div>
+        </div>
+        <div style="font-family:var(--mono);font-size:12px">→</div>
+      </a>
+      <a class="list-item" href="#">
+        <div>
+          <div class="title">Static-first workflow with React + Hugo</div>
+          <div class="meta" style="margin-top:3px">2025 — engineering</div>
+        </div>
+        <div style="font-family:var(--mono);font-size:12px">→</div>
+      </a>
+    </div>
+  </section>
+
+  <section id="journals" class="fade" style="margin-top:64px">
+    <div class="pill">📓 journals</div>
+    <div class="masonry" style="margin-top:14px">
+      <div class="note">
+        <h4>Game Boy as design tool</h4>
+        <p>Thinking about how 4 shades of gray can still carry emotion.
+           Pixel is not a limitation, it is a frame.</p>
+      </div>
+      <div class="note">
+        <h4>Camera notes</h4>
+        <p>Testing old CCD sensors with modern USB adapters.
+           The best results come from 8AM sun through kitchen curtains.</p>
+      </div>
+      <div class="note">
+        <h4>Reading list</h4>
+        <p>The Design of Everyday Things, Camera Lucida, and a stack of
+           papers on legacy file formats and digital preservation.</p>
+      </div>
+      <div class="note">
+        <h4>Now</h4>
+        <p>Rewriting the portfolio structure again, again.
+           Learning Three.js r160+. Drinking too much iced coffee.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="fade" style="margin-top:64px">
+    <div class="pill">📮 contact</div>
+    <p style="margin-top:12px;color:#3f3526;font-size:13px;max-width:520px">
+      Open to freelance, collaboration, and interesting ideas.
+      Drop a line and I’ll try to reply.
+    </p>
+    <div class="contact">
+      <a href="mailto:kokp520@gmail.com" target="_blank">
+        <div class="label">email</div>
+        <div class="value">kokp520@gmail.com</div>
+      </a>
+      <a href="https://github.com/kokp520" target="_blank">
+        <div class="label">github</div>
+        <div class="value">@kokp520</div>
+      </a>
+      <a href="#" target="_blank">
+        <div class="label">twitter / x</div>
+        <div class="value">@adiwu</div>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    © <span id="year"></span> adiolk98 — hand-built with static HTML & love
+  </footer>
+</div>
+
+<!-- Three.js -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+  }
+}
+</script>
+
+<script type="module">
+  import * as THREE from 'three';
+
+  // year
+  const y = document.getElementById('year'); if(y) y.textContent = new Date().getFullYear();
+
+  // ---------- 1) dot field canvas ----------
+  const cvs = document.getElementById('hero-canvas');
+  const c2d = cvs.getContext('2d');
+
+  function resizeField(){
+    cvs.width  = window.innerWidth;
+    cvs.height = window.innerHeight;
+  }
+  resizeField();
+  window.addEventListener('resize', resizeField);
+
+  const DENSITY = 0.00018;
+  const R = 1.1;
+
+  function drawField(){
+    const w = cvs.width, h = cvs.height;
+    c2d.clearRect(0,0,w,h);
+    c2d.fillStyle = '#d6c9b2';
+    const count = Math.floor(w * h * DENSITY);
+    for(let i=0;i<count;i++){
+      const x = Math.random()*w;
+      const y = Math.random()*h;
+      const r = Math.random()*R;
+      c2d.beginPath();
+      c2d.arc(x, y, r, 0, Math.PI*2);
+      c2d.fill();
+    }
+  }
+  drawField();
+
+  // ---------- 2) Three.js character ----------
+  const box = document.getElementById('three-canvas');
+  const width = box.clientWidth, height = box.clientHeight || width;
+
+  const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(width, height);
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  box.appendChild(renderer.domElement);
+
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.Fog('#e9e3d8', 2.2, 5.6);
+
+  const cam = new THREE.PerspectiveCamera(44, width/height, 0.1, 20);
+  cam.position.set(0, 0.35, 2.9);
+  cam.lookAt(0, 0.0, 0);
+
+  // Subtle directional light
+  const sun = new THREE.DirectionalLight('#ffffff', 3.2);
+  sun.position.set(2, 3, 1);
+  scene.add(sun);
+  scene.add(new THREE.AmbientLight('#ffffff', 0.9));
+
+  // Materials
+  const skin = new THREE.MeshStandardMaterial({ color:'#e8b270', roughness:0.8 });
+  const shirt = new THREE.MeshStandardMaterial({ color:'#1a1d27', roughness:0.6 });
+  const jeans = new THREE.MeshStandardMaterial({ color:'#1f3a5f', roughness:0.9 });
+  const hat = new THREE.MeshStandardMaterial({ color:'#0f0f0f', roughness:0.4 });
+  const shoe = new THREE.MeshStandardMaterial({ color:'#2a2218', roughness:0.7 });
+
+  const root = new THREE.Group();
+  scene.add(root);
+
+  // Body parts
+  const torso   = new THREE.Mesh(new THREE.BoxGeometry(0.44, 0.5, 0.26), shirt);
+  torso.position.y = -0.05;
+  root.add(torso);
+
+  // legs
+  const legGeo = new THREE.BoxGeometry(0.14, 0.52, 0.22);
+  const leftLeg  = new THREE.Mesh(legGeo, jeans);
+  leftLeg.position.set(-0.10, -0.44, 0.0);
+  root.add(leftLeg);
+  const rightLeg = new THREE.Mesh(legGeo, jeans);
+  rightLeg.position.set( 0.10, -0.44, 0.0);
+  root.add(rightLeg);
+
+  // shoes
+  const shoeGeo = new THREE.BoxGeometry(0.16, 0.10, 0.28);
+  const leftShoe  = new THREE.Mesh(shoeGeo, shoe);
+  leftShoe.position.set(-0.10, -0.72, 0.03);
+  root.add(leftShoe);
+  const rightShoe = new THREE.Mesh(shoeGeo, shoe);
+  rightShoe.position.set( 0.10, -0.72, 0.03);
+  root.add(rightShoe);
+
+  // Head
+  const head = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.36, 0.34), skin);
+  head.position.y = 0.30;
+  root.add(head);
+
+  // Old cap (visor + crown)
+  const crown = new THREE.Mesh(new THREE.BoxGeometry(0.38, 0.14, 0.38), hat);
+  crown.position.y = 0.46;
+  root.add(crown);
+  const visor = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.05, 0.18), hat);
+  visor.position.set(0, 0.38, 0.20);
+  root.add(visor);
+
+  // eyeballs
+  const eyeGeo = new THREE.SphereGeometry(0.04, 16, 16);
+  const eyeMat = new THREE.MeshBasicMaterial({ color:'#ffffff' });
+  const leftEye  = new THREE.Mesh(eyeGeo, eyeMat);
+  leftEye.position.set(-0.08, 0.33, 0.17);
+  root.add(leftEye);
+
+  const rightEye = new THREE.Mesh(eyeGeo, eyeMat);
+  rightEye.position.set( 0.08, 0.33, 0.17);
+  root.add(rightEye);
+
+  // pupils
+  const pupilGeo = new THREE.SphereGeometry(0.022, 12, 12);
+  const pupilMat = new THREE.MeshBasicMaterial({ color:'#0a0a0a' });
+  const leftPupil  = new THREE.Mesh(pupilGeo, pupilMat);
+  leftPupil.position.copy(leftEye.position).z += 0.035;
+  root.add(leftPupil);
+
+  const rightPupil = new THREE.Mesh(pupilGeo, pupilMat);
+  rightPupil.position.copy(rightEye.position).z += 0.035;
+  root.add(rightPupil);
+
+  // arms / hands
+  const armGeo = new THREE.BoxGeometry(0.10, 0.40, 0.16);
+  const leftArm  = new THREE.Mesh(armGeo, shirt);
+  leftArm.position.set(-0.30, -0.02, 0.0);
+  root.add(leftArm);
+
+  const rightArm = new THREE.Mesh(armGeo, shirt);
+  rightArm.position.set( 0.30, -0.02, 0.0);
+  root.add(rightArm);
+
+  const handGeo = new THREE.BoxGeometry(0.11, 0.14, 0.14);
+  const leftHand  = new THREE.Mesh(handGeo, skin);
+  leftHand.position.set(-0.30, -0.26, 0.0);
+  root.add(leftHand);
+
+  const rightHand = new THREE.Mesh(handGeo, skin);
+  rightHand.position.set( 0.30, -0.26, 0.0);
+  root.add(rightHand);
+
+  // small backpack
+  const bag = new THREE.Mesh(new THREE.BoxGeometry(0.26, 0.28, 0.14), jeans);
+  bag.position.set(0, -0.05, -0.22);
+  root.add(bag);
+
+  // ---------- mouse follow ----------
+  const targetRot = { x:0, y:0 };
+  const targetPos = { lh:{x:-0.30,y:-0.26}, rh:{x:0.30,y:-0.26} };
+  const currentPos = { lh:{x:-0.30,y:-0.26,z:0}, rh:{x:0.30,y:-0.26,z:0} };
+
+  window.addEventListener('mousemove', (e)=>{
+    const x = (e.clientX / window.innerWidth)  * 2 - 1;   // -1..1
+    const y = (e.clientY / window.innerHeight) * 2 - 1;   // -1..1 (1 = top)
+    targetRot.y =  x * 0.8;
+    targetRot.x = -y * 0.35;
+
+    targetPos.lh.x = -0.30 + x * 0.18;
+    targetPos.lh.y = -0.26 + y * 0.12;
+    targetPos.rh.x =  0.30 + x * 0.18;
+    targetPos.rh.y = -0.26 + y * 0.12;
+  });
+
+  // drag rotate
+  let dragging=false, last={x:0,y:0};
+  const canvas = renderer.domElement;
+  canvas.addEventListener('pointerdown', (e)=>{
+    dragging=true; last.x=e.clientX; last.y=e.clientY;
+  });
+  window.addEventListener('pointerup', ()=> dragging=false);
+  window.addEventListener('pointermove', (e)=>{
+    if(!dragging) return;
+    const dx = (e.clientX - last.x) * 0.01;
+    const dy = (e.clientY - last.y) * 0.01;
+    targetRot.y += dx;
+    targetRot.x += dy;
+    last.x = e.clientX; last.y = e.clientY;
+  });
+
+  // resize
+  const resize3 = ()=>{
+    const w = box.clientWidth, h = box.clientHeight || w;
+    renderer.setSize(w, h);
+    cam.aspect = w / h;
+    cam.updateProjectionMatrix();
+  };
+  window.addEventListener('resize', resize3);
+
+  // loop
+  function tick(){
+    requestAnimationFrame(tick);
+
+    // smooth
+    root.rotation.y += (targetRot.y - root.rotation.y) * 0.12;
+    root.rotation.x += (targetRot.x - root.rotation.x) * 0.12;
+
+    currentPos.lh.x += (targetPos.lh.x - currentPos.lh.x) * 0.10;
+    currentPos.lh.y += (targetPos.lh.y - currentPos.lh.y) * 0.10;
+    currentPos.rh.x += (targetPos.rh.x - currentPos.rh.x) * 0.10;
+    currentPos.rh.y += (targetPos.rh.y - currentPos.rh.y) * 0.10;
+
+    leftHand.position.set( currentPos.lh.x, currentPos.lh.y, 0.02 + Math.sin(Date.now()*0.002)*0.01);
+    rightHand.position.set(currentPos.rh.x, currentPos.rh.y, 0.02 + Math.cos(Date.now()*0.002)*0.01);
+
+    renderer.render(scene, cam);
+  }
+  tick();
+
+  // ---------- 3) scroll reveal + progress ----------
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in') });
+  }, {threshold:0.08});
+  document.querySelectorAll('.fade').forEach(el=>io.observe(el));
+
+  window.addEventListener('scroll', ()=>{
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const cur = window.scrollY;
+    document.getElementById('progress').style.width = max>0 ? (cur/max*100)+'%' : '0%';
+  }, {passive:true});
+</script>
+</body>
+</html>
