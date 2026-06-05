@@ -1,1 +1,271 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"/><link rel="icon" href="/adisite/assets/favicon.ico"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#008080"/><title>Adi wu</title><link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"><script defer="defer" src="/adisite/static/js/main.33eadd46.js"></script><link href="/adisite/static/css/main.108d0f43.css" rel="stylesheet"></head><body><div id="root"></div></body></html>
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>adi — blog</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=VT323&family=Noto+Sans+TC:wght@300;500;700&display=swap');
+  :root{
+    --ink:#0b1020;
+    --paper:#fff7e8;
+    --dot:#ffd9a6;
+    --accent:#ff5e3a;
+    --muted:#7a6f5e;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{
+    font-family:"Noto Sans TC","VT323",monospace;
+    background-color:var(--paper);
+    background-image:radial-gradient(var(--dot) 1px, transparent 0);
+    background-size:22px 22px;
+    color:var(--ink);
+    overflow-x:hidden;
+  }
+  a{color:var(--ink);text-decoration:none}
+  a:hover{text-decoration:underline;color:var(--accent)}
+  header,main,footer{max-width:860px;margin:0 auto;padding:max(18px,4vw) 18px}
+  .progress{
+    position:fixed;left:0;top:0;height:3px;width:0;
+    background:linear-gradient(90deg,#ffe7c4,#ff5e3a);
+    box-shadow:0 0 10px #ff5e3a;
+    transition:width .15s linear;
+  }
+  .fade{opacity:0;transform:translateY(14px);transition:.55s cubic-bezier(.2,.8,.2,1)}
+  .fade.in{opacity:1;transform:none}
+  nav{
+    display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;
+    padding:14px 0;border-bottom:2px dashed #e9d9b6;
+  }
+  nav b{font-family:"VT323",monospace;font-size:28px;letter-spacing:.5px}
+  nav .links{display:flex;gap:14px;font-size:14px}
+  .pill{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:7px 12px;border-radius:999px;border:1px solid #e8d5b0;
+    background:#fff0d6;font-size:13px;
+  }
+  .hero{
+    display:grid;grid-template-columns:1.1fr .9fr;gap:22px;align-items:center;
+    padding:36px 0 18px;
+  }
+  .hero h1{
+    font-family:"VT323",monospace;font-size:clamp(44px,7vw,86px);
+    line-height:.95;margin:0;
+    text-shadow:2px 2px 0 rgba(0,0,0,.06);
+  }
+  .hero p.lead{color:var(--muted);font-size:15px;line-height:1.6;margin-top:10px}
+  .polaroid{
+    background:#fff;padding:10px 10px 28px;transform:rotate(-2deg);
+    box-shadow:0 18px 40px rgba(0,0,0,.18);
+  }
+  .polaroid img{width:100%;display:block;filter:grayscale(.15) contrast(1.05)}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:18px}
+  .card{
+    background:#fff9ee;border:1px solid #ebd9b3;border-radius:14px;
+    padding:16px;transform:translateY(6px);
+    box-shadow:0 14px 0 #f6e3c8, 0 18px 30px rgba(0,0,0,.08);
+    transition:transform .18s ease;
+  }
+  .card:hover{transform:translateY(3px)}
+  .card h3{margin:0 0 6px;font-family:"VT323",monospace;font-size:22px}
+  .card p{margin:0;color:#4a3f30;font-size:14px;line-height:1.6}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    background:#0b1020;color:#fff7e8;border:0;border-radius:999px;
+    padding:10px 14px;font-size:13px;cursor:pointer;
+  }
+  .btn:hover{background:#1b1f32;transform:translateY(-1px)}
+  .timeline{margin-top:18px;display:grid;gap:0}
+  .timeline article{
+    display:grid;grid-template-columns:120px 1fr;gap:14px;padding:18px 0;
+    border-bottom:1px dashed #e6d4b3;
+  }
+  .timeline .date{font-family:"VT323",monospace;font-size:18px;color:#a0845c}
+  .timeline h3{margin:0 0 6px;font-size:16px;font-weight:700}
+  .timeline p{margin:0;color:#4f4433;font-size:14px;line-height:1.6}
+  .masonry{column-count:2;column-gap:14px}
+  .note{
+    break-inside:avoid;margin:0 0 14px;padding:14px;background:#fff;
+    border-left:4px solid var(--accent);
+    border-radius:12px;box-shadow:0 10px 24px rgba(0,0,0,.06);
+  }
+  .note h4{margin:0 0 6px;font-family:"VT323",monospace;font-size:20px}
+  .contact{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px;
+  }
+  .contact a{
+    display:block;text-align:center;background:#fff;border:1px solid #ebd9b3;
+    padding:14px;border-radius:14px;
+  }
+  .contact .label{font-size:12px;color:#6b5637}
+  footer{
+    color:#7a6f5e;font-size:12px;
+    border-top:2px dashed #e9d9b6;padding-top:18px;
+  }
+  @media (max-width: 720px){
+    .hero{grid-template-columns:1fr}
+    .grid{grid-template-columns:1fr}
+    .masonry{column-count:1}
+    .contact{grid-template-columns:1fr}
+    .timeline article{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<header>
+  <nav>
+    <b>adi.tw/</b>
+    <div class="links">
+      <a href="#works">works</a>
+      <a href="#writings">writings</a>
+      <a href="#notes">notes</a>
+      <a href="#contact">contact</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <section class="hero fade">
+    <div>
+      <h1>Adi Wu<br><span style="color:var(--accent)">—</span> 設計 / 開發 / 創作</h1>
+      <p class="lead">
+        寫一些關於創作、互動、影像與系統的內容。這裡是一頁式的個人頁，
+        以後可以慢慢擴充成真正的部落格。
+      </p>
+      <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+        <a class="btn" href="#writings">閱讀文章 ↓</a>
+        <a class="btn" href="#contact" style="background:#fff0d6;color:#0b1020;border:1px solid #e8d5b0">聯絡我</a>
+      </div>
+    </div>
+    <div class="polaroid">
+      <img src="https://kokp520.github.io/assets/photo/adi.jpg" alt="adi">
+      <div style="margin-top:10px;font-family:VT323,monospace;color:#5b4a26;font-size:18px">· 2026 ·</div>
+    </div>
+  </section>
+
+  <section id="works" class="fade" style="margin-top:50px">
+    <div class="pill">🧩 works</div>
+    <div class="grid" style="margin-top:14px">
+      <a class="card" href="https://github.com/kokp520" target="_blank">
+        <h3>github 專案</h3>
+        <p>包含 Retro PC、互動影像、自動化腳本等 side projects。</p>
+      </a>
+      <a class="card" href="#" target="_blank">
+        <h3>個人品牌 site</h3>
+        <p>將部落格與視覺風格統一成 retro / Kodak DC50 氛圍。</p>
+      </a>
+      <a class="card" href="#" target="_blank">
+        <h3>影像 app</h3>
+        <p>粉絲頁風格的相片檢視器，搭配 dither / CCD 效果。</p>
+      </a>
+      <a class="card" href="#" target="_blank">
+        <h3>open source lib</h3>
+        <p>可擴充元件庫，支援響應式與互動效果。</p>
+      </a>
+    </div>
+  </section>
+
+  <section id="writings" class="fade" style="margin-top:70px">
+    <div class="pill">✍️ writings</div>
+    <div class="timeline" style="margin-top:14px">
+      <article>
+        <div class="date">2026-06-05</div>
+        <div>
+          <h3>關於 retro UI 的設計哲學</h3>
+          <p>為什麼我仍然喜歡 Windows 95、Game Boy、Kodak DC50…
+            這些系統如何影響我對工具與介面的理解。</p>
+        </div>
+      </article>
+      <article>
+        <div class="date">2026-05-20</div>
+        <div>
+          <h3>互動影像：從 instagram CCD 到小畫家</h3>
+          <p>記錄把相片轉換成 dither 畫面的過程，與 analog 色彩的練習。</p>
+        </div>
+      </article>
+      <article>
+        <div class="date">2026-04-12</div>
+        <div>
+          <h3>把個人網站想成一種 OS</h3>
+          <p>為什麼把 homepage 做成作業系統風格？一個關於趣味、owner-ship 與長期維護的故事。</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="notes" class="fade" style="margin-top:70px">
+    <div class="pill">📓 notes</div>
+    <div class="masonry" style="margin-top:16px">
+      <div class="note">
+        <h4>GBA 小遊戲進度</h4>
+        <p style="font-size:13px;line-height:1.7;color:#3f3123">
+          目前 snake / opening 影片都已可跑。下一步要接真的有音樂的卡帶，
+          與存檔功能。
+        </p>
+      </div>
+      <div class="note">
+        <h4>最近看的書</h4>
+        <p style="font-size:13px;line-height:1.7;color:#3f3123">
+          《The Design of Everyday Things》、《Camera Lucida》，
+          還有一些關於 legacy format 的論文。
+        </p>
+      </div>
+      <div class="note">
+        <h4>攝影備忘</h4>
+        <p style="font-size:13px;line-height:1.7;color:#3f3123">
+          手持 Kodak DC50 走一天，最喜歡日落時段的 overexpose 效果。
+        </p>
+      </div>
+      <div class="note">
+        <h4>todo</h4>
+        <p style="font-size:13px;line-height:1.7;color:#3f3123">
+          把 blog 改成可以下註解；加入 markdown 支援；做真正投影片的頁面。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="fade" style="margin-top:70px">
+    <div class="pill">📮 contact</div>
+    <p style="margin-top:12px;color:#3f3123;font-size:14px">
+      有合作、委託、聊聊設計，都歡迎寫信：
+    </p>
+    <div class="contact">
+      <a href="mailto:kokp520@gmail.com" target="_blank">
+        <div class="label">email</div>
+        <div style="font-weight:700">kokp520@gmail.com</div>
+      </a>
+      <a href="https://github.com/kokp520" target="_blank">
+        <div class="label">github</div>
+        <div style="font-weight:700">@kokp520</div>
+      </a>
+      <a href="#" target="_blank">
+        <div class="label">instagram</div>
+        <div style="font-weight:700">@adiwu</div>
+      </a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  © <span id="year"></span> adi — handmade with ❤️ and VT323
+</footer>
+
+<script>
+  const y=document.getElementById('year'); if(y) y.textContent=new Date().getFullYear();
+  const io=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
+  },{threshold:.08});
+  document.querySelectorAll('.fade').forEach(el=>io.observe(el));
+  window.addEventListener('scroll',()=>{
+    const max=document.documentElement.scrollHeight-window.innerHeight;
+    const cur=window.scrollY;
+    document.getElementById('progress').style.width = max>0 ? (cur/max*100)+'%' : '0%';
+  },{passive:true});
+</script>
+</body>
+</html>
