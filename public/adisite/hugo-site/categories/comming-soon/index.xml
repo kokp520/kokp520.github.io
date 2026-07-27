@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>comming soon - Category - Adi98&#39;s Blog</title>
+        <link>https://example.com/categories/comming-soon/</link>
+        <description>comming soon - Category - Adi98&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>kokp520@gmail.com (Adi)</managingEditor>
+            <webMaster>kokp520@gmail.com (Adi)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Sat, 26 Aug 2023 18:11:09 &#43;0800</lastBuildDate><atom:link href="https://example.com/categories/comming-soon/" rel="self" type="application/rss+xml" /><item>
+    <title>comming soon...</title>
+    <link>https://example.com/world/</link>
+    <pubDate>Sat, 26 Aug 2023 18:11:09 &#43;0800</pubDate>
+    <author>Adi</author>
+    <guid>https://example.com/world/</guid>
+    <description><![CDATA[<p>第一篇文製作中&hellip;</p>]]></description>
+</item>
+</channel>
+</rss>

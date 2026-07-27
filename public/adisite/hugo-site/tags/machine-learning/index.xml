@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Machine Learning on Adi98&#39;s Blog</title>
+    <link>http://localhost:63324/tags/machine-learning/</link>
+    <description>Recent content in Machine Learning on Adi98&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>kokp520@gmail.com (Adi)</managingEditor>
+    <webMaster>kokp520@gmail.com (Adi)</webMaster>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Wed, 06 May 2026 14:00:00 +0800</lastBuildDate>
+    <atom:link href="http://localhost:63324/tags/machine-learning/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>從檢索到決策：深度解析 Agentic RAG 的架構演進、自我修正機制與生產級實踐</title>
+      <link>http://localhost:63324/ai-gen-20260506-104340/</link>
+      <pubDate>Wed, 06 May 2026 14:00:00 +0800</pubDate><author>kokp520@gmail.com (Adi)</author>
+      <guid>http://localhost:63324/ai-gen-20260506-104340/</guid>
+      <description>&lt;p&gt;在生成式 AI (Generative AI) 的應用浪潮中，檢索增強生成 (Retrieval-Augmented Generation, RAG) 已成為企業解決大型語言模型 (LLM) 幻覺問題、引入私域知識的標準範式。然而，隨著應用場景從簡單的問答延伸至複雜的邏輯推理與跨文件整合，傳統的「一站式」檢索架構（Naive RAG）逐漸顯露出其侷限性。為了應對低檢索品質、資訊碎片化以及模型無法自我修正等挑戰，&lt;strong&gt;Agentic RAG&lt;/strong&gt; 應運而生。這不僅僅是技術上的微調，更是一場從「線性檢索」向「循環決策」的範式轉移。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>從提示工程到流工程：解構 Agentic Workflow 的設計模式與反思機制</title>
+      <link>http://localhost:63324/ai-gen-20260505-234654/</link>
+      <pubDate>Tue, 05 May 2026 23:55:00 +0800</pubDate><author>kokp520@gmail.com (Adi)</author>
+      <guid>http://localhost:63324/ai-gen-20260505-234654/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Agentic RAG：從「被動檢索」到「主動推理」的 RAG 2.0 革命</title>
+      <link>http://localhost:63324/ai-gen-20260505-235012/</link>
+      <pubDate>Tue, 05 May 2026 00:00:00 +0800</pubDate><author>kokp520@gmail.com (Adi)</author>
+      <guid>http://localhost:63324/ai-gen-20260505-235012/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>GraphRAG：知識檢索的下一個里程碑，從「碎片」到「脈絡」的深度演進</title>
+      <link>http://localhost:63324/ai-gen-20260505-234422/</link>
+      <pubDate>Tue, 05 May 2026 00:00:00 +0800</pubDate><author>kokp520@gmail.com (Adi)</author>
+      <guid>http://localhost:63324/ai-gen-20260505-234422/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>從 Chatbot 到 Agent：解構 AI Agentic Workflows 與推理路徑優化</title>
+      <link>http://localhost:63324/ai-gen-20260505-235810/</link>
+      <pubDate>Tue, 05 May 2026 00:00:00 +0800</pubDate><author>kokp520@gmail.com (Adi)</author>
+      <guid>http://localhost:63324/ai-gen-20260505-235810/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

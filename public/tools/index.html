@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adi's Toolbox</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #0b0f19;
+      --card-bg: rgba(22, 27, 43, 0.65);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --primary: #8b5cf6;
+      --primary-hover: #7c3aed;
+      --secondary: #ec4899;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+      background: var(--bg-color);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.15) 0px, transparent 50%);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 40px 20px;
+      overflow-x: hidden;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #e879f9, #8b5cf6, #3b82f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      font-weight: 300;
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .tool-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 20px;
+      border: 1px solid var(--card-border);
+      padding: 28px;
+      text-decoration: none;
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+    }
+    
+    .tool-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(236, 72, 153, 0.1));
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: 0;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(139, 92, 246, 0.4);
+      box-shadow: 0 20px 40px -10px rgba(139, 92, 246, 0.2);
+    }
+
+    .tool-card:hover::before {
+      opacity: 1;
+    }
+
+    .tool-icon {
+      font-size: 2.5rem;
+      position: relative;
+      z-index: 1;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .tool-info {
+      position: relative;
+      z-index: 1;
+    }
+
+    .tool-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #e2e8f0;
+    }
+
+    .tool-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .tool-arrow {
+      position: absolute;
+      bottom: 28px;
+      right: 28px;
+      color: var(--primary);
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: all 0.3s ease;
+      z-index: 1;
+    }
+
+    .tool-card:hover .tool-arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Adi's Toolbox</h1>
+    <p class="subtitle">日常實用小工具集合</p>
+  </div>
+
+  <div class="tools-grid">
+    <!-- GIF to ZIP Tool -->
+    <a href="./gifToZip.html" class="tool-card">
+      <div class="tool-icon">🎬</div>
+      <div class="tool-info">
+        <div class="tool-title">GIF to ZIP</div>
+        <div class="tool-desc">將 GIF 動畫轉換為高品質的 PNG 序列，並打包成 ZIP 下載。純前端處理，確保隱私安全。</div>
+      </div>
+      <div class="tool-arrow">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      </div>
+    </a>
+
+    <!-- 未來可在此新增更多工具 -->
+    <!-- 
+    <a href="./new-tool.html" class="tool-card">
+      <div class="tool-icon">🛠️</div>
+      <div class="tool-info">
+        <div class="tool-title">Coming Soon</div>
+        <div class="tool-desc">更多實用工具正在開發中...</div>
+      </div>
+    </a> 
+    -->
+  </div>
+
+</body>
+</html>

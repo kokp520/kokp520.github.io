@@ -1,0 +1,16 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Share - Tag - Adi98&#39;s Blog</title>
+        <link>https://example.com/tags/share/</link>
+        <description>Share - Tag - Adi98&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>en</language><managingEditor>kokp520@gmail.com (Adi)</managingEditor>
+            <webMaster>kokp520@gmail.com (Adi)</webMaster><copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright><lastBuildDate>Thu, 31 Aug 2023 00:00:00 &#43;0000</lastBuildDate><atom:link href="https://example.com/tags/share/" rel="self" type="application/rss+xml" /><item>
+    <title>當Backend面試被問到RESTful API</title>
+    <link>https://example.com/temppost/restful-api/</link>
+    <pubDate>Thu, 31 Aug 2023 00:00:00 &#43;0000</pubDate>
+    <author>Adi</author>
+    <guid>https://example.com/temppost/restful-api/</guid>
+    <description><![CDATA[<p>Discussing the RESTful web design pattern, integrating APIs on the backend to enhance team <em>maintenance</em> and <em>consistency</em>.</p>]]></description>
+</item>
+</channel>
+</rss>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Self-Correction on Adi98&#39;s Blog</title>
+    <link>http://localhost:63324/tags/self-correction/</link>
+    <description>Recent content in Self-Correction on Adi98&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>en</language>
+    <managingEditor>kokp520@gmail.com (Adi)</managingEditor>
+    <webMaster>kokp520@gmail.com (Adi)</webMaster>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Wed, 06 May 2026 16:00:00 +0800</lastBuildDate>
+    <atom:link href="http://localhost:63324/tags/self-correction/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>超越檢索：深度解析 Agentic RAG 的自我修正機制與實踐</title>
+      <link>http://localhost:63324/ai-gen-20260506-105923/</link>
+      <pubDate>Wed, 06 May 2026 16:00:00 +0800</pubDate><author>kokp520@gmail.com (Adi)</author>
+      <guid>http://localhost:63324/ai-gen-20260506-105923/</guid>
+      <description>&lt;p&gt;在大型語言模型（LLM）的應用開發中，檢索增強生成（RAG）早已成為解決模型幻覺、引入私有知識的標配方案。然而，隨著企業級應用對準確性的要求從「看起來對」提升到「絕對精確」，傳統的「一站式」RAG 架構（Naive RAG）逐漸顯露疲態：檢索不到位、檢索內容無關、或是生成結果偏離事實，這些問題在複雜的推理任務中頻頻發生。&lt;/p&gt;&#xA;&lt;p&gt;為了應對這些挑戰，&lt;strong&gt;Agentic RAG（智能代理式 RAG）&lt;/strong&gt; 應運而生。它不再是一個線性的流水線，而是一個具備「自我意識」和「修正能力」的循環系統。本文將深度解析 Agentic RAG 的核心原理，並提供具體的實作架構與程式碼範例，帶你從傳統檢索跨越到主動推理的新紀元。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

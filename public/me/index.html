@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>adiolk98 — portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Instrument+Serif:ital@0;1&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #e8e8e8;
+    --bg: #050505;
+    --paper: #0b0b0b;
+    --dot: #1f1f1f;
+    --accent: #ffffff;
+    --muted: #888888;
+    --border: rgba(255,255,255,0.08);
+    --shadow: 0 24px 80px rgba(0,0,0,0.6);
+    --mono: "Space Mono", monospace;
+    --sans: "DM Sans", system-ui, sans-serif;
+    --serif: "Instrument Serif", Georgia, serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--sans);
+    background:var(--bg);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    line-height:1.5;
+  }
+  a{color:inherit;text-decoration:none}
+  a:hover{text-decoration:underline;color:var(--accent)}
+
+  /* grain / noise */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    opacity:.28;
+    background-image:
+      radial-gradient(rgba(255,255,255,0.12) 1px, transparent 0),
+      radial-gradient(rgba(255,255,255,0.06) 1px, transparent 0);
+    background-size: 22px 22px, 28px 28px;
+    pointer-events:none;
+    z-index:0;
+  }
+
+  /* progress */
+  .progress{
+    position:fixed;left:0;top:0;height:2px;width:0;
+    background:var(--accent);
+    box-shadow:0 0 14px var(--accent);
+    z-index:100;
+  }
+
+  .container{
+    position:relative; z-index:1;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 28px 80px;
+  }
+
+  /* nav */
+  header{
+    position:sticky;top:0;z-index:20;
+    background:rgba(5,5,5,0.82);
+    backdrop-filter: blur(12px);
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  header .wrap{
+    max-width:1120px;margin:0 auto;padding:14px 28px;
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .brand{font-family:var(--mono);font-weight:700;font-size:15px;letter-spacing:-.3px}
+  .brand span{color:var(--ink);opacity:.55}
+  nav{display:flex;gap:22px;font-size:13px;font-weight:500}
+  nav a{opacity:.6;transition:.2s}
+  nav a:hover{opacity:1;text-decoration:none;color:var(--accent)}
+
+  /* hero */
+  .hero{
+    display:grid;
+    grid-template-columns: 1.05fr .95fr;
+    gap: 48px;
+    align-items:center;
+    padding: 72px 0 44px;
+  }
+  .hero h1{
+    font-family:var(--sans);
+    font-weight: 500;
+    font-size: clamp(42px, 5.8vw, 78px);
+    line-height: 1.0;
+    letter-spacing: -1.5px;
+    margin:0;
+    color:#f0f0f0;
+  }
+  .hero h1 em{
+    font-family:var(--serif);
+    font-style: italic;
+    color:#9a9a9a;
+  }
+  .hero .sub{
+    margin-top:18px;
+    color:#aaaaaa;
+    font-size:15px;
+    line-height:1.65;
+    max-width: 440px;
+    font-weight:400;
+  }
+  .actions{
+    margin-top:24px;
+    display:flex;gap:10px;flex-wrap:wrap;
+  }
+
+  /* buttons */
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:11px 16px;
+    border-radius:999px;
+    font-size:12px;font-weight:600;
+    transition:.18s ease;
+    cursor:pointer;
+    border:1px solid transparent;
+  }
+  .btn.primary{
+    background:var(--accent);color:#000;
+  }
+  .btn.ghost{
+    background:transparent;
+    color:var(--ink);
+    border:1px solid rgba(255,255,255,.22);
+  }
+  .btn:hover{transform:translateY(-1px)}
+
+  /* viewer / 3D */
+  .viewer{
+    position:relative;
+    aspect-ratio: 1 / 1;
+    background: radial-gradient(circle at 50% 40%, #1e1e1e 0%, #080808 100%);
+    border-radius: 28px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+    border:1px solid rgba(255,255,255,0.06);
+  }
+  #three-canvas{width:100%!important;height:100%!important;display:block;cursor:grab}
+  .viewer .badge{
+    position:absolute;left:14px;bottom:14px;
+    background:rgba(255,255,255,0.08);
+    color:#fff;
+    font-family:var(--mono);
+    font-size:10px;
+    padding:5px 10px;
+    border-radius:999px;
+    backdrop-filter: blur(6px);
+    border:1px solid rgba(255,255,255,0.12);
+  }
+
+  /* pill */
+  .section-label{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:7px 12px;
+    border-radius:999px;
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.14);
+    font-size:12px;font-weight:600;
+    letter-spacing:.3px;
+    backdrop-filter: blur(4px);
+  }
+
+  .card{
+    background:#0c0c0c;
+    border:1px solid rgba(255,255,255,0.06);
+    border-radius:18px;
+    overflow:hidden;
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .card:hover{transform:translateY(-4px);box-shadow:0 22px 70px rgba(0,0,0,0.55)}
+  .card .thumb{
+    width:100%;aspect-ratio:16/10;object-fit:cover;display:block;
+    background:linear-gradient(120deg,#2a2a2a,#181818);
+    filter:grayscale(1);
+    opacity:.85;
+  }
+  .card .body{padding:16px 18px 20px}
+  .card h3{margin:0 0 6px;font-size:15px;font-weight:600;color:#f0f0f0}
+  .card p{margin:0;color:#9a9a9a;font-size:13px;line-height:1.55}
+
+  section{margin-top: 96px}
+  section:first-of-type{margin-top:0}
+
+  /* articles */
+  .article-row{
+    display:flex;align-items:center;justify-content:space-between;gap:18px;
+    padding:16px 0;
+    border-bottom:1px dashed rgba(255,255,255,.12);
+  }
+  .article-row:last-child{border-bottom:none}
+  .article-row .title{font-weight:600;font-size:14px;color:#f0f0f0}
+  .article-row .meta{
+    margin-top:3px;font-size:12px;color:#777;
+    font-family:var(--mono);
+  }
+  .arrow{font-family:var(--mono);font-size:12px;opacity:.75}
+
+  /* journals */
+  .masonry{column-count:2;column-gap:18px}
+  .note{
+    break-inside:avoid;
+    margin:0 0 18px;
+    padding:16px 18px;
+    background:#0c0c0c;
+    border:1px solid rgba(255,255,255,0.06);
+    border-radius:16px;
+    box-shadow: 0 18px 50px rgba(0,0,0,.45);
+  }
+  .note h4{margin:0 0 6px;font-family:var(--mono);font-size:14px;font-weight:700;color:#eaeaea}
+  .note p{margin:0;font-size:12px;line-height:1.7;color:#a0a0a0}
+
+  /* contact */
+  .contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .contact-card{
+    background:#0c0c0c;
+    border:1px solid rgba(255,255,255,0.06);
+    border-radius:16px;padding:18px;
+    text-align:center;
+  }
+  .contact-card .label{font-size:11px;color:#777;font-family:var(--mono);letter-spacing:.3px}
+  .contact-card .value{font-weight:700;font-size:14px;margin-top:3px}
+
+  footer{
+    margin-top:74px;
+    padding-top:22px;
+    border-top:1px solid rgba(255,255,255,0.08);
+    color:#888;
+    font-size:11px;
+    font-family:var(--mono);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  }
+
+  .fade{opacity:0;transform:translateY(18px);transition:.65s cubic-bezier(.2,.8,.2,1)}
+  .fade.in{opacity:1;transform:translateY(0)}
+
+  @media (max-width: 820px) {
+    .hero{grid-template-columns:1fr}
+    .grid-2,.grid-3,.contact-grid{grid-template-columns:1fr}
+    .masonry{column-count:1}
+    nav{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<header>
+  <div class="wrap">
+    <div class="brand">adiolk<span>98</span></div>
+    <nav>
+      <a href="#work">work</a>
+      <a href="#articles">articles</a>
+      <a href="#journals">journals</a>
+      <a href="#contact">contact</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <section class="hero fade">
+    <div>
+      <h1>Designing small systems<br>with <em>care</em> &amp; craft.</h1>
+      <p class="sub">
+        I’m adiolk98 — a designer, developer and maker.
+        I build thoughtful, play­ful digital
+        work across web, 3D, and typography.
+      </p>
+      <div class="actions">
+        <a class="btn primary" href="#work">explore</a>
+        <a class="btn ghost" href="#contact">say hi</a>
+      </div>
+    </div>
+    <div class="viewer">
+      <canvas id="three-canvas" aria-label="Interactive 3D character"></canvas>
+      <div class="badge">drag to rotate</div>
+    </div>
+  </section>
+
+  <section id="work" class="fade">
+    <div class="section-label">🧩 selected work</div>
+    <div class="grid-2" style="margin-top:14px">
+      <a class="card">
+        <img class="thumb" src="assets/adi_avatar.png" alt="Retro OS" onerror="this.style.background='linear-gradient(120deg,#2a2a2a,#181818)'">
+        <div class="body">
+          <h3>Retro OS</h3>
+          <p>A personal website reimagined as a desktop: windows, apps, and mini-games.</p>
+        </div>
+      </a>
+      <a class="card">
+        <img class="thumb" src="assets/main2.png" alt="CCD Cam" onerror="this.style.background='linear-gradient(120deg,#2a2a2a,#181818)'">
+        <div class="body">
+          <h3>CCD Cam</h3>
+          <p>Webcam meets Kodak DC50 — grain, glow, and analog imperfection.</p>
+        </div>
+      </a>
+      <a class="card">
+        <img class="thumb" src="assets/HEAD.png" alt="Pixel UI" onerror="this.style.background='linear-gradient(120deg,#2a2a2a,#181818)'">
+        <div class="body">
+          <h3>Pixel UI</h3>
+          <p>Retro-inspired component system — Windows 95, Game Boy, and Paint tools.</p>
+        </div>
+      </a>
+      <a class="card">
+        <img class="thumb" src="assets/1.png" alt="Microsites" onerror="this.style.background='linear-gradient(120deg,#2a2a2a,#181818)'">
+        <div class="body">
+          <h3>Microsites</h3>
+          <p>A set of one-off HTML experiments and client microsites.</p>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <section id="articles" class="fade">
+    <div class="section-label">✍️ articles</div>
+    <div style="margin-top:14px">
+      <a class="article-row">
+        <div>
+          <div class="title">Building a retro OS on GitHub Pages</div>
+          <div class="meta">2026 — web, design</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+      <a class="article-row">
+        <div>
+          <div class="title">Dithering and the aesthetics of noise</div>
+          <div class="meta">2026 — image, typography</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+      <a class="article-row">
+        <div>
+          <div class="title">Why your personal site should feel like an OS</div>
+          <div class="meta">2025 — opinion</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+      <a class="article-row">
+        <div>
+          <div class="title">Static-first workflow with React + Hugo</div>
+          <div class="meta">2025 — engineering</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+  </section>
+
+  <section id="journals" class="fade">
+    <div class="section-label">📓 journals</div>
+    <div class="masonry" style="margin-top:14px">
+      <div class="note">
+        <h4>Game Boy as design tool</h4>
+        <p>Thinking about how 4 shades of gray can still carry emotion. Pixel is not a limit — it’s a frame.</p>
+      </div>
+      <div class="note">
+        <h4>Camera notes</h4>
+        <p>Testing old CCD sensors with modern USB adapters. The best light comes from 8 AM sun through curtains.</p>
+      </div>
+      <div class="note">
+        <h4>Reading list</h4>
+        <p>The Design of Everyday Things, Camera Lucida, and legacy file format research.</p>
+      </div>
+      <div class="note">
+        <h4>Now</h4>
+        <p>Rewriting the portfolio — learning Three.js r160+, restructuring the archive, and planning a new article pipeline.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="fade">
+    <div class="section-label">📮 contact</div>
+    <p style="margin-top:12px;color:rgba(255,255,255,0.68);font-size:14px;max-width:520px">
+      Open to freelance, collaboration, and interesting ideas. Drop a line and I’ll try to reply.
+    </p>
+    <div class="contact-grid" style="margin-top:14px">
+      <a class="contact-card" href="mailto:kokp520@gmail.com" target="_blank">
+        <div class="label">email</div>
+        <div class="value">kokp520@gmail.com</div>
+      </a>
+      <a class="contact-card" href="https://github.com/kokp520" target="_blank">
+        <div class="label">github</div>
+        <div class="value">@kokp520</div>
+      </a>
+      <a class="contact-card" href="#" target="_blank">
+        <div class="label">twitter / x</div>
+        <div class="value">@adiwu</div>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <span>© <span id="year"></span> adiolk98</span>
+    <span>hand-built with care</span>
+  </footer>
+</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+  }
+}
+</script>
+<script type="module">
+  import * as THREE from 'three';
+
+  const y = document.getElementById('year');
+  if (y) y.textContent = new Date().getFullYear();
+
+  /* fade-in */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade').forEach((el) => io.observe(el));
+
+  window.addEventListener('scroll', () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const cur = window.scrollY;
+    document.getElementById('progress').style.width =
+      max > 0 ? (cur / max * 100).toFixed(2) + '%' : '0%';
+  }, { passive: true });
+
+  /* THREE */
+  const box = document.getElementById('three-canvas');
+  const W = box.clientWidth || 500;
+  const H = box.clientHeight || W;
+
+  const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(W, H);
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  box.appendChild(renderer.domElement);
+
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.Fog('#050505', 2.4, 6.4);
+
+  const camera = new THREE.PerspectiveCamera(40, W/H, 0.1, 20);
+  camera.position.set(0, 0.2, 2.8);
+  camera.lookAt(0, -0.05, 0);
+
+  scene.add(new THREE.AmbientLight('#fff', 2.0));
+  const sun = new THREE.DirectionalLight('#ffffff', 3.8);
+  sun.position.set(1.5, 3, 2);
+  scene.add(sun);
+  const rim = new THREE.DirectionalLight('#ffd7c4', 1.6);
+  rim.position.set(-2, -0.5, -1);
+  scene.add(rim);
+
+  const skinMat = new THREE.MeshStandardMaterial({ color: '#e7b376', roughness: 0.75, metalness: 0.05 });
+  const hatMat  = new THREE.MeshStandardMaterial({ color: '#0a0a0a', roughness: 0.35, metalness: 0.2 });
+  const pantsMat= new THREE.MeshStandardMaterial({ color: '#17263d', roughness: 0.9, metalness: 0.05 });
+  const shirtMat= new THREE.MeshStandardMaterial({ color: '#111111', roughness: 0.55, metalness: 0.1 });
+  const soleMat = new THREE.MeshStandardMaterial({ color: '#1a1510', roughness: 0.7 });
+  const eyeWhite= new THREE.MeshBasicMaterial({ color: '#ffffff' });
+  const pupilMat= new THREE.MeshBasicMaterial({ color: '#080808' });
+
+  const root = new THREE.Group();
+  scene.add(root);
+
+  const torso = new THREE.Mesh(new THREE.BoxGeometry(0.56, 0.58, 0.32), shirtMat);
+  torso.position.y = -0.08;
+  root.add(torso);
+
+  const pants = new THREE.Mesh(new THREE.BoxGeometry(0.56, 0.16, 0.32), pantsMat);
+  pants.position.y = -0.44;
+  root.add(pants);
+
+  const legGeo = new THREE.BoxGeometry(0.18, 0.56, 0.26);
+  const leftLeg = new THREE.Mesh(legGeo, pantsMat);
+  leftLeg.position.set(-0.12, -0.74, 0.0);
+  root.add(leftLeg);
+  const rightLeg = new THREE.Mesh(legGeo, pantsMat);
+  rightLeg.position.set(0.12, -0.74, 0.0);
+  root.add(rightLeg);
+
+  const shoeGeo = new THREE.BoxGeometry(0.20, 0.12, 0.30);
+  const leftShoe = new THREE.Mesh(shoeGeo, soleMat);
+  leftShoe.position.set(-0.12, -1.02, 0.04);
+  root.add(leftShoe);
+  const rightShoe = new THREE.Mesh(shoeGeo, soleMat);
+  rightShoe.position.set(0.12, -1.02, 0.04);
+  root.add(rightShoe);
+
+  const head = new THREE.Mesh(new THREE.BoxGeometry(0.40, 0.42, 0.40), skinMat);
+  head.position.y = 0.24;
+  root.add(head);
+
+  const crown = new THREE.Mesh(new THREE.BoxGeometry(0.46, 0.16, 0.46), hatMat);
+  crown.position.y = 0.50;
+  root.add(crown);
+  const visor = new THREE.Mesh(new THREE.BoxGeometry(0.50, 0.08, 0.22), hatMat);
+  visor.position.set(0, 0.40, 0.24);
+  root.add(visor);
+
+  const eyeGeo = new THREE.SphereGeometry(0.075, 24, 24);
+  const leftEye  = new THREE.Mesh(eyeGeo, eyeWhite);
+  leftEye.position.set(-0.10, 0.26, 0.20);
+  root.add(leftEye);
+  const rightEye = new THREE.Mesh(eyeGeo, eyeWhite);
+  rightEye.position.set(0.10, 0.26, 0.20);
+  root.add(rightEye);
+
+  const pupilGeo = new THREE.SphereGeometry(0.040, 20, 20);
+  const leftPupil  = new THREE.Mesh(pupilGeo, pupilMat);
+  const rightPupil = new THREE.Mesh(pupilGeo, pupilMat);
+  root.add(leftPupil);
+  root.add(rightPupil);
+
+  const armGeo = new THREE.BoxGeometry(0.14, 0.46, 0.20);
+  const leftArm  = new THREE.Mesh(armGeo, shirtMat);
+  leftArm.position.set(-0.34, -0.06, 0.02);
+  root.add(leftArm);
+  const rightArm = new THREE.Mesh(armGeo, shirtMat);
+  rightArm.position.set(0.34, -0.06, 0.02);
+  root.add(rightArm);
+
+  const handGeo = new THREE.BoxGeometry(0.16, 0.18, 0.18);
+  const leftHand  = new THREE.Mesh(handGeo, skinMat);
+  leftHand.position.set(-0.34, -0.34, 0.02);
+  root.add(leftHand);
+  const rightHand = new THREE.Mesh(handGeo, skinMat);
+  rightHand.position.set(0.34, -0.34, 0.02);
+  root.add(rightHand);
+
+  /* brain / outer ring */
+  const ringGeo = new THREE.TorusGeometry(0.58, 0.01, 32, 120);
+  const ringMat = new THREE.MeshBasicMaterial({ color:'#2a2a2a' });
+  const ring = new THREE.Mesh(ringGeo, ringMat);
+  ring.rotation.x = Math.PI / 2;
+  ring.position.y = -0.08;
+  root.add(ring);
+
+  /* ================= MOUSE FOLLOW ================= */
+  const targetRot = { x: 0, y: 0 };
+  const handBase = { lh: { x: -0.34, y: -0.34 }, rh: { x: 0.34, y: -0.34 } };
+  const nowHand = {
+    lh: { x: -0.34, y: -0.34, z: 0.02 },
+    rh: { x: 0.34,  y: -0.34, z: 0.02 }
+  };
+  const eyeTarget = { x: 0, y: 0 };
+
+  window.addEventListener('mousemove', (e) => {
+    const x = (e.clientX / window.innerWidth) * 2 - 1;
+    const y = (e.clientY / window.innerHeight) * 2 - 1;
+    targetRot.y = x * 1.4;
+    targetRot.x = -y * 0.6;
+    eyeTarget.x = x * 0.028;
+    eyeTarget.y = -y * 0.028;
+    nowHand.lh.targetX = handBase.lh.x + x * 0.35;
+    nowHand.lh.targetY = handBase.lh.y + y * 0.22;
+    nowHand.rh.targetX = handBase.rh.x + x * 0.35;
+    nowHand.rh.targetY = handBase.rh.y + y * 0.22;
+  });
+
+  let dragging = false, last = { x: 0, y: 0 };
+  const cvs = renderer.domElement;
+  cvs.addEventListener('pointerdown', (e) => {
+    dragging = true;
+    last.x = e.clientX; last.y = e.clientY;
+  });
+  window.addEventListener('pointerup', () => dragging = false);
+  window.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    targetRot.y += (e.clientX - last.x) * 0.008;
+    targetRot.x += (e.clientY - last.y) * 0.008;
+    last.x = e.clientX; last.y = e.clientY;
+  });
+
+  const size3 = () => {
+    const w = box.clientWidth, h = box.clientHeight || w;
+    renderer.setSize(w, h);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  };
+  window.addEventListener('resize', size3);
+  size3();
+
+  /* render */
+  const clock = new THREE.Clock();
+  (function tick() {
+    requestAnimationFrame(tick);
+    const t = clock.getElapsedTime();
+
+    root.rotation.y += (targetRot.y - root.rotation.y) * 0.12;
+    root.rotation.x += (targetRot.x - root.rotation.x) * 0.12;
+
+    [
+      { ref: leftHand,  x: 'lh', key: 'x' },
+      { ref: rightHand, x: 'rh', key: 'x' },
+    ].forEach(({ ref: m, x }) => {
+      m.position.x += ((x === 'lh' ? nowHand.lh.targetX : nowHand.rh.targetX) - m.position.x) * 0.10;
+      m.position.y += ((x === 'lh' ? nowHand.lh.targetY : nowHand.rh.targetY) - m.position.y) * 0.10;
+      m.position.z = 0.02 + Math.sin(t * 2 + (x === 'lh' ? 0 : 1)) * 0.01;
+    });
+
+    leftPupil.position.x  = leftEye.position.x  + eyeTarget.x;
+    leftPupil.position.y  = leftEye.position.y  + eyeTarget.y;
+    leftPupil.position.z  = leftEye.position.z + 0.04;
+    rightPupil.position.x = rightEye.position.x + eyeTarget.x;
+    rightPupil.position.y = rightEye.position.y + eyeTarget.y;
+    rightPupil.position.z = rightEye.position.z + 0.04;
+
+    ring.rotation.z = t * 0.1;
+
+    renderer.render(scene, camera);
+  })();
+</script>
+</body>
+</html>
