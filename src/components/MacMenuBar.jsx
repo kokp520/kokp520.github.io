@@ -139,7 +139,7 @@ export default function MacMenuBar({ onOpenApp }) {
             return (
               <img
                 key={itemKey}
-                src="/assets/gpt_banana_icon.png"
+                src="/assets/gpt_banana_icon.webp"
                 alt="banana"
                 style={{
                   ...appleStyle,
