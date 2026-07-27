@@ -66,13 +66,26 @@ const CustomWindowFrame = ({ icon, title, children, onClose, defaultSize = { x: 
   const playClick = useClickSound();
   const { playCancel } = useSound();
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+
+  const mobileSize = isMobile
+    ? {
+        x: 10,
+        y: 38,
+        width: Math.min(window.innerWidth - 20, 380),
+        height: Math.min(window.innerHeight - 80, 520)
+      }
+    : defaultSize;
+
   return (
     <Rnd
-      default={defaultSize}
+      default={mobileSize}
+      position={isMobile ? { x: 10, y: 38 } : undefined}
+      size={isMobile ? { width: Math.min(window.innerWidth - 20, 380), height: Math.min(window.innerHeight - 80, 520) } : undefined}
       minWidth={200}
       minHeight={100}
-      disableDragging={false}
-      enableResizing={false}
+      disableDragging={isMobile}
+      enableResizing={!isMobile}
     >
       <CustomWindow style={{ width: "100%", height: "100%" }}>
         <TitleBar onMouseDown={() => {

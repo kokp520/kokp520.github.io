@@ -62,6 +62,13 @@ function DesktopIcon({ icon, label, onDoubleClick, disabled = false }) {
       } catch (error) {
         console.warn('Click sound error (handled):', error.message);
       }
+      
+      // 在行動裝置觸控或小螢幕下，單擊即可直接開啟 App
+      if (typeof window !== 'undefined' && window.innerWidth <= 768) {
+        if (onDoubleClick) {
+          onDoubleClick();
+        }
+      }
     }
   };
 
