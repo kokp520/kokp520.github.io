@@ -154,7 +154,11 @@ export default function MacMenuBar({ onOpenApp }) {
           }
           return (
             <span
-              style={menuItemStyle(itemKey)}
+              className="mac-menu-item"
+              style={{
+                ...menuItemStyle(itemKey),
+                display: typeof window !== 'undefined' && window.innerWidth <= 768 && itemKey !== '檔案' ? 'none' : 'inline-block'
+              }}
               key={itemKey}
               onClick={(e) => handleMenuClick(itemKey, e)}
             >{itemKey}</span>

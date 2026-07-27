@@ -28,39 +28,40 @@ const SnakeGame = forwardRef(({ onExit }, ref) => {
     score
   }));
 
-  // 遊戲循環
+  // 遊戲與渲染循環 (使用 requestAnimationFrame 代替 setInterval)
   useEffect(() => {
-    let gameLoop;
-    
-    if (gameRunning) {
-      gameLoop = setInterval(() => {
-        snakeLogic.update();
-        setScore(snakeLogic.score);
-        
-        if (!snakeLogic.gameRunning) {
-          setGameRunning(false);
+    let animationFrameId;
+    let lastTime = performance.now();
+
+    const loop = (currentTime) => {
+      const speed = snakeLogic.getGameSpeed();
+      if (currentTime - lastTime >= speed) {
+        if (gameRunning) {
+          snakeLogic.update();
+          setScore(snakeLogic.score);
+
+          if (!snakeLogic.gameRunning) {
+            setGameRunning(false);
+          }
         }
-      }, snakeLogic.getGameSpeed());
-    }
-    
+        lastTime = currentTime;
+      }
+
+      if (canvasRef.current) {
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        snakeLogic.draw(ctx, canvas.width, canvas.height);
+      }
+
+      animationFrameId = requestAnimationFrame(loop);
+    };
+
+    animationFrameId = requestAnimationFrame(loop);
+
     return () => {
-      if (gameLoop) clearInterval(gameLoop);
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
     };
   }, [gameRunning, snakeLogic]);
-
-  // 渲染循環
-  useEffect(() => {
-    if (canvasRef.current) {
-      const canvas = canvasRef.current;
-      const ctx = canvas.getContext('2d');
-      snakeLogic.draw(ctx, canvas.width, canvas.height);
-    }
-  }, [snakeLogic, score]);
-
-  // 初始化遊戲
-  useEffect(() => {
-    resetGame();
-  }, []);
 
   return (
     <StyledSnakeGame>
