@@ -313,6 +313,108 @@ export const ToolsIndex: React.FC = () => {
             LAUNCH TOOL ►
           </div>
         </Link>
+
+        {/* YAML Formatter Tool */}
+        <Link 
+          to="/tools/yamlFormatter" 
+          style={{
+            background: '#16161A',
+            border: '4px solid #000000',
+            padding: '28px',
+            textDecoration: 'none',
+            color: '#FFFFFE',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '20px',
+            position: 'relative',
+            boxShadow: '6px 6px 0px #000000, inset -3px -3px 0px #242629, inset 3px 3px 0px #383A3F',
+            transition: 'all 0.1s step-end',
+            imageRendering: 'pixelated'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'translate(-2px, -2px)';
+            e.currentTarget.style.boxShadow = '8px 8px 0px #000000, inset -3px -3px 0px #FF8E3C, inset 3px 3px 0px #FFC0AD';
+            e.currentTarget.style.borderColor = '#FF8E3C';
+            const icon = e.currentTarget.querySelector('.pixel-icon-yaml') as HTMLElement;
+            if (icon) {
+              icon.style.background = '#FF8E3C';
+              icon.style.color = '#0F0E17';
+            }
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'translate(0px, 0px)';
+            e.currentTarget.style.boxShadow = '6px 6px 0px #000000, inset -3px -3px 0px #242629, inset 3px 3px 0px #383A3F';
+            e.currentTarget.style.borderColor = '#000000';
+            const icon = e.currentTarget.querySelector('.pixel-icon-yaml') as HTMLElement;
+            if (icon) {
+              icon.style.background = '#2A2A3B';
+              icon.style.color = '#FF8E3C';
+            }
+          }}
+          onMouseDown={(e) => {
+            e.currentTarget.style.transform = 'translate(4px, 4px)';
+            e.currentTarget.style.boxShadow = '2px 2px 0px #000000';
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+            <div 
+              className="pixel-icon-yaml"
+              style={{
+                fontFamily: "'Press Start 2P', monospace",
+                fontSize: '0.65rem',
+                fontWeight: 'bold',
+                width: '56px',
+                height: '56px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: '#2A2A3B',
+                color: '#FF8E3C',
+                border: '3px solid #000000',
+                boxShadow: '3px 3px 0px #000000',
+                flexShrink: 0
+            }}>
+              YAML
+            </div>
+            <div>
+              <div style={{ 
+                fontFamily: "'Press Start 2P', monospace",
+                fontSize: '1.1rem', 
+                color: '#FFFFFE',
+                lineHeight: 1.2
+              }}>
+                YAML FORMAT
+              </div>
+              <div style={{
+                fontSize: '1rem',
+                color: '#FF8E3C',
+                marginTop: '6px'
+              }}>
+                [ONLINE TOOL]
+              </div>
+            </div>
+          </div>
+
+          <div 
+            style={{ 
+              fontSize: '1.25rem', 
+              color: '#A7A9BE', 
+              lineHeight: 1.5,
+              fontFamily: "'VT323', 'DotGothic16', monospace"
+            }}>
+            Format, validate, repair, and convert YAML to JSON. Features VS Code floating find & replace widget and line jumping.
+          </div>
+
+          <div style={{
+            fontFamily: "'Press Start 2P', monospace",
+            fontSize: '0.65rem',
+            color: '#FF8E3C',
+            alignSelf: 'flex-end',
+            marginTop: 'auto'
+          }}>
+            LAUNCH TOOL ►
+          </div>
+        </Link>
       </div>
     </div>
   );
