@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+import { HashRouter, Routes, Route, Link } from 'react-router-dom'
 import { HeroShowcase } from './components/HeroShowcase'
 import { DocNavigation } from './components/DocNavigation'
 import { CommunityLinks } from './components/CommunityLinks'
@@ -47,14 +47,14 @@ function Home() {
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/tools" element={<ToolsIndex />} />
         <Route path="/tools/gifToZip" element={<GifToZip />} />
         <Route path="/me" element={<Me />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   )
 }
 
