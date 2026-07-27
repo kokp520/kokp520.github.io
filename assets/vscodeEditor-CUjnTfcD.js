@@ -1,4 +1,4 @@
-import{a as e,c as t,t as n}from"./index-B9Q3CghU.js";import{i as r}from"./styled-components.browser.esm-B3u3KVHh.js";var i=t(e(),1),a=n(),o=r.div`
+import{l as e,o as t,t as n}from"./index-B7b2cYI2.js";import{i as r}from"./styled-components.browser.esm-U4jgk3x9.js";var i=e(t(),1),a=n(),o=r.div`
   display: flex;
   flex-direction: column;
   height: 97%;
