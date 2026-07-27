@@ -1,4 +1,5 @@
 import React, { useState, lazy, Suspense } from "react";
+import { Helmet } from 'react-helmet-async';
 import {
   GlobalStyle,
   CRTFrame,
@@ -191,6 +192,10 @@ function AppContent() {
 
   return (
     <CRTFrame>
+      <Helmet>
+        <title>adi | Retro OS</title>
+        <meta name="description" content="A personal website reimagined as a retro desktop OS with windows, apps, and mini-games by adi." />
+      </Helmet>
       <CRTScreen>
         <DesktopBackground background={background} />
         <CRTReflection />

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 
 export const Me: React.FC = () => {
   return (
@@ -10,6 +11,10 @@ export const Me: React.FC = () => {
       padding: '0 28px 80px',
       boxSizing: 'border-box'
     }}>
+      <Helmet>
+        <title>adi | Designer & Developer</title>
+        <meta name="description" content="I’m adi — a designer, developer and maker. I build thoughtful, playful digital work across web, 3D, and typography." />
+      </Helmet>
       <header style={{
         position: 'sticky',
         top: 0,

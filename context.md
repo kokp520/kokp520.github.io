@@ -21,3 +21,10 @@
 
 * **Branch Strategy**: Development occurs on feature branches or `main`.
 * **Automated Publishing**: Never manually compile or copy `dist/` into the source tree. GitHub Actions (`.github/workflows/deploy.yml`) builds and deploys to the `gh-pages` branch upon pushing to `main`.
+
+## SEO Conventions
+
+* **Meta Tags Management**: We use `react-helmet-async` for dynamic SEO tags. Every new page component MUST include a `<Helmet>` block containing at least a `<title>` and `<meta name="description" content="..." />`.
+* **Headings**: Ensure each page has exactly one clear `<h1>` that describes its primary purpose.
+* **Sitemap**: When adding new public routes, make sure to add the new URL to `public/sitemap.xml`.
+* **Robots**: `public/robots.txt` is configured to allow crawling.

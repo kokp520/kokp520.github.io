@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 export const ToolsIndex: React.FC = () => {
   return (
@@ -16,6 +17,10 @@ export const ToolsIndex: React.FC = () => {
       position: 'relative',
       overflow: 'hidden'
     }}>
+      <Helmet>
+        <title>adi's Toolbox | Developer Utilities</title>
+        <meta name="description" content="A collection of web-based developer tools and utilities built by adi, including GIF to ZIP converters and more." />
+      </Helmet>
       {/* CRT Scanline Overlay Effect */}
       <div style={{
         position: 'fixed',

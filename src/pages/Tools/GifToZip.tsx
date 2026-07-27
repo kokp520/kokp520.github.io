@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import JSZip from 'jszip';
 import omggif from 'omggif';
 
@@ -159,6 +160,10 @@ export const GifToZip: React.FC = () => {
       position: 'relative',
       overflow: 'hidden'
     }}>
+      <Helmet>
+        <title>GIF to ZIP Converter | adi's Toolbox</title>
+        <meta name="description" content="Online tool to extract and convert GIF animations into individual PNG frame sequences, downloadable as a ZIP archive." />
+      </Helmet>
       {/* CRT Scanline Overlay Effect */}
       <div style={{
         position: 'fixed',
