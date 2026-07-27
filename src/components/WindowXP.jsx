@@ -37,6 +37,10 @@ const TitleBarControls = styled.div`
     &:hover {
       background: #ff2d1a;
     }
+    &:focus-visible {
+      outline: 2px solid #3b82f6;
+      outline-offset: 2px;
+    }
   }
 `;
 
@@ -47,7 +51,6 @@ const WindowBody = styled.div`
   overflow-y: hidden;
   overflow-x: hidden;
   background: #f8f8f8;
-  /* 自訂scrollbar */
   &::-webkit-scrollbar {
     width: 8px;
     background: #eee;
@@ -79,13 +82,21 @@ const CustomWindowFrame = ({ icon, title, children, onClose, defaultSize = { x: 
             console.warn('Title bar click sound error (handled):', error.message);
           }
         }}>
-        {/* <TitleBar> */}
           <TitleBarText>
-            {icon && <img src={icon} alt="" style={{ width: 18, height: 18, marginRight: 8, verticalAlign: 'middle' }} />}
+            {icon && (
+              <img 
+                src={icon} 
+                alt="" 
+                width="18" 
+                height="18" 
+                aria-hidden="true" 
+                style={{ marginRight: 8, verticalAlign: 'middle' }} 
+              />
+            )}
             {title}
           </TitleBarText>
           <TitleBarControls>
-            <button aria-label="Close" onClick={() => { 
+            <button aria-label={`Close ${title} window`} onClick={() => { 
               try {
                 playCancel();
               } catch (error) {
