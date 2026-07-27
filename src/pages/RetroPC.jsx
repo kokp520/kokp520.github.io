@@ -158,7 +158,7 @@ function AppContent() {
   // 建立背景狀態
   const [background, setBackground] = useState({
     type: 'video',
-    src: '/assets/wallpaper.mp4'
+    src: '/assets/wallpaper-compressed.mp4'
   });
 
   // 開啟 app 並聚焦

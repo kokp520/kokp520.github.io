@@ -453,9 +453,9 @@ const allImages = [
   { name: 'good-cat.png', path: '/assets/photo/good-cat.png' },
   { name: 'adi.jpg', path: '/assets/photo/adi.jpg' },
   { name: 'adi_logo_black.png', path: '/assets/photo/adi_logo_black.png' },
-  { name: 'gpt_banana_icon.png', path: '/assets/photo/gpt_banana_icon.png' },
-  { name: '20250402-gpt-1.png', path: '/assets/photo/20250402-gpt-1.png' },
-  { name: 'website.png', path: '/assets/photo/website.png' },
+  { name: 'gpt_banana_icon.webp', path: '/assets/photo/gpt_banana_icon.webp' },
+  { name: '20250402-gpt-1.webp', path: '/assets/photo/20250402-gpt-1.webp' },
+  { name: 'website.webp', path: '/assets/photo/website.webp' },
   { name: 'family.jpg', path: '/assets/photo/family.jpg' },
 ];
 
