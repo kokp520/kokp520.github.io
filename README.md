@@ -1,32 +1,53 @@
-# React + TypeScript + Vite
+# kokp520.github.io
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Personal website, portfolio, and utility toolbox built with **React**, **TypeScript**, **Vite**, and **React Router**. Automatically built and deployed via **GitHub Actions** to GitHub Pages.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Architectural Overview
 
-## React Compiler
+* **Framework**: React 19 + TypeScript + Vite
+* **Routing**: React Router (`react-router-dom`)
+  * `/` — Home / Showcase
+  * `/tools` — Toolbox portal
+  * `/tools/gifToZip` — Pure client-side GIF to PNG sequence converter & ZIP packager
+  * `/me` — Personal blog & portfolio
+* **CI/CD**: GitHub Actions (`.github/workflows/deploy.yml`) triggered on `main` branch pushes.
+* **Static Assets**: Managed in `public/` (e.g., `favicon.svg`, `icons.svg`).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the Oxlint configuration
+## 🛠️ Local Development & Scripts
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+### Prerequisites
+* Node.js >= 18
+* npm >= 9
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+### Commands
+
+| Command | Purpose |
+| :--- | :--- |
+| `npm run dev` | Start local Vite development server with Hot Module Replacement (HMR) |
+| `npm run build` | Perform TypeScript type-checking (`tsc -b`) and produce production bundle (`dist/`) |
+| `npm run preview` | Locally preview the production build in `dist/` |
+
+---
+
+## 📦 Project Structure
+
+```text
+kokp520.github.io/
+├── .github/
+│   └── workflows/
+│       └── deploy.yml      # Automated GitHub Pages CI/CD workflow
+├── public/                 # Raw static assets (favicon, icons, etc.)
+├── src/
+│   ├── components/         # Reusable React components
+│   ├── pages/              # Page views (Tools, GifToZip, Me)
+│   ├── App.tsx             # React Router entry point & route definitions
+│   ├── main.tsx            # React DOM mounting
+│   └── index.css           # Design tokens and global CSS
+├── package.json
+├── tsconfig.json
+└── vite.config.ts          # Vite configuration
 ```
-
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
