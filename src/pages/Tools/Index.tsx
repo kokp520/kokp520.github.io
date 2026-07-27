@@ -92,7 +92,7 @@ export const ToolsIndex: React.FC = () => {
           fontFamily: "'VT323', 'DotGothic16', monospace",
           letterSpacing: '1px'
         }}>
-          日常實用小工具集合 // UTILITY INVENTORY
+          UTILITY INVENTORY & DEVELOPER TOOLS
         </p>
       </div>
 
@@ -193,7 +193,7 @@ export const ToolsIndex: React.FC = () => {
               lineHeight: 1.5,
               fontFamily: "'VT323', 'DotGothic16', monospace"
             }}>
-            將 GIF 動畫分解並轉換為 PNG 圖片序列，打包成 ZIP 壓縮檔下載。純前端本機運算，隱私安全無保留。
+            Decompose GIF animations into PNG image sequences and package them into a downloadable ZIP archive. 100% client-side processing for privacy and security.
           </div>
 
           <div style={{

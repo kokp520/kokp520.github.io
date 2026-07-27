@@ -13,7 +13,7 @@ export const GifToZip: React.FC = () => {
 
   const handleFileChange = (file: File) => {
     if (file.type !== 'image/gif') {
-      alert('請選擇 GIF 檔案！');
+      alert('Please select a valid GIF file!');
       return;
     }
     setSelectedFile(file);
@@ -34,7 +34,7 @@ export const GifToZip: React.FC = () => {
 
     setIsProcessing(true);
     setResult(null);
-    setStatusText('讀取 GIF 中... (這可能需要幾秒鐘)');
+    setStatusText('Reading GIF file... (this may take a few seconds)');
 
     await new Promise((r) => setTimeout(r, 50));
 
@@ -47,7 +47,7 @@ export const GifToZip: React.FC = () => {
       const width = reader.width;
       const height = reader.height;
 
-      setStatusText(`解析成功！原始影格：${totalFrames} 幀，準備提取...`);
+      setStatusText(`Parsed successfully! Original frames: ${totalFrames}, preparing extraction...`);
       await new Promise((r) => setTimeout(r, 50));
 
       const extractedFrames: HTMLCanvasElement[] = [];
@@ -55,7 +55,7 @@ export const GifToZip: React.FC = () => {
       canvas.width = width;
       canvas.height = height;
       const ctx = canvas.getContext('2d');
-      if (!ctx) throw new Error('Canvas Context 未能建立');
+      if (!ctx) throw new Error('Failed to create Canvas context');
 
       const imageData = ctx.createImageData(width, height);
       let previousImageData: Uint8ClampedArray | null = null;
@@ -93,13 +93,13 @@ export const GifToZip: React.FC = () => {
         }
 
         if (i % 5 === 0) {
-          setStatusText(`正在提取影格... (${i + 1}/${totalFrames})`);
+          setStatusText(`Extracting frames... (${i + 1}/${totalFrames})`);
           await new Promise((r) => setTimeout(r, 10));
         }
       }
 
       const targetCount = frameCount || 100;
-      setStatusText(`打包中... 生成 ${targetCount} 張 PNG`);
+      setStatusText(`Packaging... Generating ${targetCount} PNG images`);
       await new Promise((r) => setTimeout(r, 50));
 
       const zip = new JSZip();
@@ -119,12 +119,12 @@ export const GifToZip: React.FC = () => {
         }
 
         if (i % 10 === 0) {
-          setStatusText(`加入壓縮包... (${i + 1}/${targetCount})`);
+          setStatusText(`Adding to archive... (${i + 1}/${targetCount})`);
           await new Promise((r) => setTimeout(r, 10));
         }
       }
 
-      setStatusText('正在壓縮成 ZIP 檔...');
+      setStatusText('Compressing into ZIP archive...');
       await new Promise((r) => setTimeout(r, 50));
 
       const zipBlob = await zip.generateAsync({ type: 'blob' });
@@ -139,7 +139,7 @@ export const GifToZip: React.FC = () => {
       setStatusText('');
     } catch (err: any) {
       console.error(err);
-      setStatusText('❌ 轉換失敗：' + (err.message || '未知錯誤'));
+      setStatusText('❌ Conversion failed: ' + (err.message || 'Unknown error'));
     } finally {
       setIsProcessing(false);
     }
@@ -239,7 +239,7 @@ export const GifToZip: React.FC = () => {
               GIF TO ZIP
             </h1>
             <p style={{ color: '#A7A9BE', fontSize: '1.2rem', margin: 0 }}>
-              將 GIF 動畫分解並轉換為 PNG 序列打包下載
+              Decompose GIF animations into PNG frame sequences and download as a ZIP package
             </p>
           </div>
 
@@ -288,7 +288,7 @@ export const GifToZip: React.FC = () => {
                 {selectedFile ? '✓' : '+'}
               </div>
               <span style={{ fontSize: '1.2rem', color: selectedFile ? '#2CB67D' : '#FFFFFE' }}>
-                {selectedFile ? `SELECTED: ${selectedFile.name}` : '拖曳 GIF 檔案至此，或點擊選擇'}
+                {selectedFile ? `SELECTED: ${selectedFile.name}` : 'Drag & drop GIF file here, or click to browse'}
               </span>
             </div>
             <input
