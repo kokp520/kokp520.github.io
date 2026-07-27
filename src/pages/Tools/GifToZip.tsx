@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import JSZip from 'jszip';
 import omggif from 'omggif';
 
@@ -146,180 +147,327 @@ export const GifToZip: React.FC = () => {
 
   return (
     <div style={{
-      fontFamily: "'Outfit', system-ui, -apple-system, sans-serif",
-      background: '#0b0f19',
-      backgroundImage: `
-        radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.15) 0px, transparent 50%)
-      `,
-      color: '#f8fafc',
+      fontFamily: "'VT323', 'DotGothic16', monospace",
+      background: '#0F0E17',
+      color: '#FFFFFE',
       display: 'flex',
-      justifyContent: 'center',
+      flexDirection: 'column',
       alignItems: 'center',
       minHeight: '100vh',
-      padding: '20px',
-      boxSizing: 'border-box'
+      padding: '60px 24px',
+      boxSizing: 'border-box',
+      position: 'relative',
+      overflow: 'hidden'
     }}>
+      {/* CRT Scanline Overlay Effect */}
       <div style={{
-        background: 'rgba(22, 27, 43, 0.65)',
-        backdropFilter: 'blur(20px)',
-        WebkitBackdropFilter: 'blur(20px)',
-        padding: '40px',
-        borderRadius: '24px',
-        border: '1px solid rgba(255, 255, 255, 0.08)',
-        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)',
-        maxWidth: '540px',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        background: 'linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.35) 50%)',
+        backgroundSize: '100% 4px',
+        pointerEvents: 'none',
+        zIndex: 99
+      }} />
+
+      {/* Main Container */}
+      <div style={{
+        maxWidth: '640px',
         width: '100%',
-        textAlign: 'center'
+        zIndex: 1
       }}>
-        <h1 style={{
-          fontSize: '2rem',
-          fontWeight: 700,
-          marginBottom: '8px',
-          background: 'linear-gradient(135deg, #e879f9, #8b5cf6, #3b82f6)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent'
-        }}>
-          GIF to ZIP
-        </h1>
-
-        <p style={{ color: '#94a3b8', fontSize: '1rem', fontWeight: 300, marginBottom: '32px' }}>
-          將 GIF 動畫轉換為高品質 PNG 序列並打包下載
-        </p>
-
-        <div
-          onDragOver={(e) => e.preventDefault()}
-          onDrop={handleDrop}
-          onClick={() => document.getElementById('fileInput')?.click()}
-          style={{
-            border: '2px dashed rgba(139, 92, 246, 0.4)',
-            borderRadius: '16px',
-            padding: '40px 20px',
-            cursor: 'pointer',
-            background: 'rgba(139, 92, 246, 0.03)',
-            marginBottom: '24px'
-          }}
-        >
-          <div style={{ fontWeight: 500, color: '#cbd5e1', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
-            <span style={{ fontSize: '2rem' }}>{selectedFile ? '📁' : '✨'}</span>
-            <span>{selectedFile ? `已選擇：${selectedFile.name}` : '點擊選擇或拖曳 GIF 檔案至此'}</span>
-          </div>
-          <input
-            type="file"
-            id="fileInput"
-            accept="image/gif"
-            style={{ display: 'none' }}
-            onChange={(e) => {
-              if (e.target.files && e.target.files.length > 0) {
-                handleFileChange(e.target.files[0]);
-              }
+        {/* Back Link */}
+        <div style={{ marginBottom: '24px' }}>
+          <Link 
+            to="/tools" 
+            style={{
+              fontFamily: "'Press Start 2P', monospace",
+              fontSize: '0.75rem',
+              color: '#FF8E3C',
+              textDecoration: 'none',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              background: '#2A2A3B',
+              padding: '8px 16px',
+              border: '3px solid #000000',
+              boxShadow: '3px 3px 0px #000000',
+              imageRendering: 'pixelated'
             }}
-          />
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = '#FF8E3C';
+              e.currentTarget.style.color = '#0F0E17';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = '#2A2A3B';
+              e.currentTarget.style.color = '#FF8E3C';
+            }}
+          >
+            ◄ BACK TO TOOLBOX
+          </Link>
         </div>
 
-        {previewUrl && (
-          <div style={{ margin: '24px 0', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
-            <label style={{ fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.1em', color: '#94a3b8', fontWeight: 600 }}>
-              GIF 預覽
-            </label>
-            <img src={previewUrl} alt="GIF 預覽" style={{ maxWidth: '100%', maxHeight: '220px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)' }} />
-          </div>
-        )}
-
+        {/* Retro Card */}
         <div style={{
-          margin: '28px 0',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          background: 'rgba(15, 23, 42, 0.5)',
-          padding: '16px 20px',
-          borderRadius: '12px',
-          border: '1px solid rgba(255,255,255,0.05)'
+          background: '#16161A',
+          padding: '40px 32px',
+          border: '4px solid #000000',
+          boxShadow: '8px 8px 0px #000000, inset -3px -3px 0px #242629, inset 3px 3px 0px #383A3F',
+          imageRendering: 'pixelated'
         }}>
-          <label style={{ fontSize: '1rem', color: '#cbd5e1' }}>目標影格數：</label>
-          <input
-            type="number"
-            value={frameCount}
-            min={1}
-            max={500}
-            onChange={(e) => setFrameCount(parseInt(e.target.value) || 100)}
+          {/* Header */}
+          <div style={{ marginBottom: '32px', borderBottom: '3px dashed #383A3F', paddingBottom: '20px' }}>
+            <div style={{
+              fontFamily: "'Press Start 2P', monospace",
+              fontSize: '0.65rem',
+              color: '#2CB67D',
+              letterSpacing: '1px',
+              marginBottom: '8px'
+            }}>
+              ★ SYSTEM UTILITY // CONVERTER ★
+            </div>
+            <h1 style={{
+              fontFamily: "'Press Start 2P', monospace",
+              fontSize: '1.8rem',
+              color: '#FFFFFE',
+              margin: '0 0 12px 0',
+              textShadow: '3px 3px 0px #FF8E3C, 5px 5px 0px #000000',
+              lineHeight: 1.3
+            }}>
+              GIF TO ZIP
+            </h1>
+            <p style={{ color: '#A7A9BE', fontSize: '1.2rem', margin: 0 }}>
+              將 GIF 動畫分解並轉換為 PNG 序列打包下載
+            </p>
+          </div>
+
+          {/* Upload Dropzone */}
+          <div
+            onDragOver={(e) => {
+              e.preventDefault();
+              e.currentTarget.style.background = '#2A2A3B';
+              e.currentTarget.style.borderColor = '#FF8E3C';
+            }}
+            onDragLeave={(e) => {
+              e.preventDefault();
+              e.currentTarget.style.background = '#0F0E17';
+              e.currentTarget.style.borderColor = '#383A3F';
+            }}
+            onDrop={(e) => {
+              handleDrop(e);
+              e.currentTarget.style.background = '#0F0E17';
+              e.currentTarget.style.borderColor = '#383A3F';
+            }}
+            onClick={() => document.getElementById('fileInput')?.click()}
             style={{
-              background: 'rgba(255, 255, 255, 0.05)',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              color: 'white',
-              padding: '8px 16px',
-              borderRadius: '8px',
-              width: '90px',
-              fontSize: '1rem',
+              border: '3px dashed #383A3F',
+              padding: '36px 20px',
+              cursor: 'pointer',
+              background: '#0F0E17',
+              marginBottom: '28px',
+              transition: 'all 0.1s step-end',
               textAlign: 'center'
             }}
-          />
-        </div>
-
-        <button
-          onClick={processGif}
-          disabled={!selectedFile || isProcessing}
-          style={{
-            background: 'linear-gradient(135deg, #8b5cf6, #ec4899)',
-            color: 'white',
-            border: 'none',
-            padding: '16px 32px',
-            borderRadius: '12px',
-            fontSize: '1.1rem',
-            fontWeight: 600,
-            cursor: !selectedFile || isProcessing ? 'not-allowed' : 'pointer',
-            width: '100%',
-            opacity: !selectedFile || isProcessing ? 0.5 : 1
-          }}
-        >
-          {isProcessing ? '處理中...' : '開始轉換'}
-        </button>
-
-        {statusText && (
-          <div style={{ marginTop: '20px', fontSize: '0.95rem', color: '#38bdf8', fontWeight: 500 }}>
-            {statusText}
-          </div>
-        )}
-
-        {result && (
-          <div style={{
-            marginTop: '32px',
-            padding: '24px',
-            background: 'rgba(16, 185, 129, 0.05)',
-            borderRadius: '16px',
-            border: '1px solid rgba(16, 185, 129, 0.2)',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '16px'
-          }}>
-            <label style={{ color: '#10b981', fontWeight: 600, fontSize: '1.1rem' }}>
-              轉換完成！
-            </label>
-            <img src={result.thumb} alt="轉換結果縮圖" style={{ maxWidth: '100%', maxHeight: '180px', borderRadius: '12px', border: '2px solid #10b981' }} />
-            <a
-              href={result.zipUrl}
-              download={result.fileName}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
+          >
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
+              <div style={{ 
+                fontFamily: "'Press Start 2P', monospace",
+                width: '48px', 
+                height: '48px', 
+                border: '3px solid #000000', 
+                boxShadow: '3px 3px 0px #000000',
+                display: 'flex', 
+                alignItems: 'center', 
                 justifyContent: 'center',
-                gap: '8px',
-                background: '#10b981',
-                color: 'white',
-                textDecoration: 'none',
-                padding: '14px 28px',
-                borderRadius: '12px',
-                fontWeight: 600,
-                fontSize: '1.05rem',
-                width: '100%'
+                fontSize: '1.2rem',
+                background: selectedFile ? '#2CB67D' : '#FF8E3C',
+                color: '#0F0E17'
+              }}>
+                {selectedFile ? '✓' : '+'}
+              </div>
+              <span style={{ fontSize: '1.2rem', color: selectedFile ? '#2CB67D' : '#FFFFFE' }}>
+                {selectedFile ? `SELECTED: ${selectedFile.name}` : '拖曳 GIF 檔案至此，或點擊選擇'}
+              </span>
+            </div>
+            <input
+              type="file"
+              id="fileInput"
+              accept="image/gif"
+              style={{ display: 'none' }}
+              onChange={(e) => {
+                if (e.target.files && e.target.files.length > 0) {
+                  handleFileChange(e.target.files[0]);
+                }
               }}
-            >
-              下載 ZIP 壓縮包
-            </a>
+            />
           </div>
-        )}
+
+          {/* Preview Section */}
+          {previewUrl && (
+            <div style={{ marginBottom: '28px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <label style={{ 
+                fontFamily: "'Press Start 2P', monospace", 
+                fontSize: '0.7rem', 
+                color: '#2CB67D' 
+              }}>
+                PREVIEW [GIF]
+              </label>
+              <div style={{ 
+                border: '3px solid #000000', 
+                padding: '12px', 
+                background: '#0F0E17', 
+                display: 'inline-block',
+                boxShadow: '4px 4px 0px #000000',
+                imageRendering: 'pixelated'
+              }}>
+                <img src={previewUrl} alt="GIF 預覽" style={{ maxWidth: '100%', maxHeight: '250px', display: 'block', imageRendering: 'pixelated' }} />
+              </div>
+            </div>
+          )}
+
+          {/* Settings Section */}
+          <div style={{
+            marginBottom: '28px',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            border: '3px solid #000000',
+            padding: '16px 20px',
+            background: '#0F0E17',
+            boxShadow: '4px 4px 0px #000000'
+          }}>
+            <label style={{ 
+              fontFamily: "'Press Start 2P', monospace", 
+              fontSize: '0.75rem', 
+              color: '#FFFFFE' 
+            }}>
+              TARGET FRAMES
+            </label>
+            <input
+              type="number"
+              value={frameCount}
+              min={1}
+              max={500}
+              onChange={(e) => setFrameCount(parseInt(e.target.value) || 100)}
+              style={{
+                fontFamily: "'Press Start 2P', monospace",
+                background: '#16161A',
+                border: '3px solid #000000',
+                color: '#FF8E3C',
+                padding: '8px 12px',
+                width: '90px',
+                fontSize: '0.9rem',
+                textAlign: 'center',
+                outline: 'none'
+              }}
+            />
+          </div>
+
+          {/* Action Button */}
+          <button
+            onClick={processGif}
+            disabled={!selectedFile || isProcessing}
+            style={{
+              fontFamily: "'Press Start 2P', monospace",
+              background: !selectedFile || isProcessing ? '#383A3F' : '#2CB67D',
+              color: !selectedFile || isProcessing ? '#A7A9BE' : '#0F0E17',
+              border: '3px solid #000000',
+              padding: '18px',
+              fontSize: '0.85rem',
+              cursor: !selectedFile || isProcessing ? 'not-allowed' : 'pointer',
+              width: '100%',
+              boxShadow: !selectedFile || isProcessing ? 'none' : '5px 5px 0px #000000',
+              transition: 'all 0.1s step-end',
+              imageRendering: 'pixelated'
+            }}
+            onMouseDown={(e) => {
+              if (!selectedFile || isProcessing) return;
+              e.currentTarget.style.transform = 'translate(3px, 3px)';
+              e.currentTarget.style.boxShadow = '2px 2px 0px #000000';
+            }}
+            onMouseUp={(e) => {
+              if (!selectedFile || isProcessing) return;
+              e.currentTarget.style.transform = 'translate(0px, 0px)';
+              e.currentTarget.style.boxShadow = '5px 5px 0px #000000';
+            }}
+          >
+            {isProcessing ? 'PROCESSING...' : 'PROCESS & EXPORT ZIP ►'}
+          </button>
+
+          {/* Status Output Terminal */}
+          {statusText && (
+            <div style={{ 
+              marginTop: '24px', 
+              padding: '16px', 
+              border: '3px solid #000000', 
+              background: '#0F0E17', 
+              color: '#2CB67D', 
+              fontFamily: "'VT323', monospace",
+              fontSize: '1.2rem',
+              boxShadow: '4px 4px 0px #000000'
+            }}>
+              {'>'} {statusText}
+            </div>
+          )}
+
+          {/* Result Output */}
+          {result && (
+            <div style={{
+              marginTop: '28px',
+              padding: '24px',
+              border: '3px solid #2CB67D',
+              background: '#0F0E17',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: '20px',
+              boxShadow: '5px 5px 0px #000000'
+            }}>
+              <div style={{ 
+                fontFamily: "'Press Start 2P', monospace", 
+                fontSize: '0.8rem', 
+                color: '#2CB67D' 
+              }}>
+                ✓ CONVERSION COMPLETE
+              </div>
+              <div style={{ border: '3px solid #000000', padding: '8px', background: '#16161A' }}>
+                <img src={result.thumb} alt="第一幀縮圖" style={{ maxWidth: '100%', maxHeight: '180px', display: 'block', imageRendering: 'pixelated' }} />
+              </div>
+              <a
+                href={result.zipUrl}
+                download={result.fileName}
+                style={{
+                  fontFamily: "'Press Start 2P', monospace",
+                  display: 'block',
+                  background: '#FF8E3C',
+                  color: '#0F0E17',
+                  textDecoration: 'none',
+                  padding: '16px 20px',
+                  fontSize: '0.8rem',
+                  width: '100%',
+                  textAlign: 'center',
+                  border: '3px solid #000000',
+                  boxShadow: '4px 4px 0px #000000',
+                  boxSizing: 'border-box'
+                }}
+                onMouseDown={(e) => {
+                  e.currentTarget.style.transform = 'translate(3px, 3px)';
+                  e.currentTarget.style.boxShadow = '1px 1px 0px #000000';
+                }}
+                onMouseUp={(e) => {
+                  e.currentTarget.style.transform = 'translate(0px, 0px)';
+                  e.currentTarget.style.boxShadow = '4px 4px 0px #000000';
+                }}
+              >
+                DOWNLOAD ZIP (.ZIP) ►
+              </a>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
 };
+
