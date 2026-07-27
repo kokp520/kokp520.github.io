@@ -1,0 +1,213 @@
+.terminal-container {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  color: #e0e0e0;
+  border-radius: 12px;
+  height: 100%;
+  width: 100%;
+  max-height: 400px;
+  min-height: 400px;
+  padding-block: 20px;
+  padding-inline: 20px;
+  box-shadow: 
+    0 8px 32px rgba(0,0,0,0.3),
+    0 2px 8px rgba(0,0,0,0.2),
+    inset 0 1px 0 rgba(255,255,255,0.1);
+  overflow: hidden;
+  /* font-family: 'Fira Code', 'Consolas', 'Monaco', monospace; */
+  border: 1px solid #333;
+  position: relative;
+}
+
+.terminal-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 30px;
+  background: linear-gradient(90deg, #ff5f57 0%, #ff5f57 33%, #ffbd2e 33%, #ffbd2e 66%, #28ca42 66%, #28ca42 100%);
+  border-radius: 12px 12px 0 0;
+  opacity: 0.8;
+}
+
+.terminal-container::after {
+  content: 'terminal';
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: #666;
+  font-weight: 500;
+}
+.terminal-output-area {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 12px;
+  height: 100%;
+  margin-top: 35px;
+  padding-right: 8px;
+}
+
+.terminal-output-area::-webkit-scrollbar {
+  width: 8px;
+}
+
+.terminal-output-area::-webkit-scrollbar-track {
+  background: #2a2a2a;
+  border-radius: 4px;
+}
+
+.terminal-output-area::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 4px;
+}
+
+.terminal-output-area::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}
+.terminal-line {
+  white-space: pre-wrap;
+  line-height: 1.6;
+  opacity: 1;
+  transition: opacity 0.5s;
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+
+.terminal-line.input {
+  color: #00ff88;
+}
+
+.terminal-line.output {
+  color: #e0e0e0;
+}
+.terminal-input-line {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  border-top: 1px solid #333;
+  margin-top: 8px;
+}
+
+.terminal-prompt {
+  color: #00ff88;
+  margin-right: 8px;
+  font-weight: bold;
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+}
+
+.terminal-input {
+  background: transparent;
+  border: none;
+  color: #e0e0e0;
+  font-family: inherit;
+  font-size: 14px;
+  outline: none;
+  flex: 1;
+  caret-color: #00ff88;
+}
+
+.terminal-input::selection {
+  background: rgba(0, 255, 136, 0.3);
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-out {
+  opacity: 1;
+  animation: fadeOut 0.5s forwards;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}
+
+/* 打字機效果 */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+/* 閃爍的游標效果 */
+.terminal-input::after {
+  content: '';
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: #00ff88;
+  animation: blink 1s infinite;
+  margin-left: 2px;
+}
+
+/* 命令行輸入動畫 */
+.terminal-line.input {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* 輸出動畫 */
+.terminal-line.output {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* 歡迎訊息動畫 */
+.terminal-welcome {
+  animation: fadeIn 2s ease-out;
+}
+
+/* 特殊效果 - 矩陣雨 */
+.matrix-rain {
+  color: #00ff41;
+  text-shadow: 0 0 5px #00ff41;
+  animation: fadeIn 0.1s ease-out;
+}
+
+/* 錯誤訊息 */
+.error-message {
+  color: #ff6b6b;
+  text-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+}
+
+/* 成功訊息 */
+.success-message {
+  color: #51cf66;
+  text-shadow: 0 0 10px rgba(81, 207, 102, 0.5);
+}
+
+/* 警告訊息 */
+.warning-message {
+  color: #ffd43b;
+  text-shadow: 0 0 10px rgba(255, 212, 59, 0.5);
+}
+
+/* 資訊訊息 */
+.info-message {
+  color: #74c0fc;
+  text-shadow: 0 0 10px rgba(116, 192, 252, 0.5);
+} 
