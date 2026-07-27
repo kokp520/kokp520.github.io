@@ -86,43 +86,42 @@ const WorldGame = forwardRef(({ onComputerInteract, onPlayerMove }, ref) => {
     nearComputer
   }));
 
-  // 渲染世界
-  const renderWorld = () => {
-    if (!canvasRef.current) return;
-    
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    const map = mapData[currentMap];
-    
-    // 動態調整canvas尺寸
-    const rect = canvas.getBoundingClientRect();
-    canvas.width = rect.width;
-    canvas.height = rect.height;
-    
-    // 渲染地圖
-    MapRenderer.renderMap(ctx, map, camera, canvas.width, canvas.height);
-    
-    // 繪製玩家（相對於攝像頭的位置）
-    const playerScreenX = (player.x - camera.x) * TILE_SIZE;
-    const playerScreenY = (player.y - camera.y) * TILE_SIZE;
-    player.draw(ctx, playerScreenX, playerScreenY, TILE_SIZE);
-  };
-
-  // 初始化攝像頭位置
+  // 渲染與鏡頭循環
   useEffect(() => {
-    updateCamera(player.x, player.y);
-  }, []);
+    let animationFrameId;
 
-  // 渲染循環
-  useEffect(() => {
-    renderWorld();
+    const render = () => {
+      if (canvasRef.current) {
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        const map = mapData[currentMap];
+
+        const rect = canvas.getBoundingClientRect();
+        if (canvas.width !== rect.width || canvas.height !== rect.height) {
+          canvas.width = rect.width;
+          canvas.height = rect.height;
+        }
+
+        MapRenderer.renderMap(ctx, map, camera, canvas.width, canvas.height);
+
+        const playerScreenX = (player.x - camera.x) * TILE_SIZE;
+        const playerScreenY = (player.y - camera.y) * TILE_SIZE;
+        player.draw(ctx, playerScreenX, playerScreenY, TILE_SIZE);
+      }
+      animationFrameId = requestAnimationFrame(render);
+    };
+
+    animationFrameId = requestAnimationFrame(render);
+
+    return () => {
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+    };
   }, [player, camera, currentMap]);
 
   // 監聽窗口大小變化
   useEffect(() => {
     const handleResize = () => {
       updateCamera(player.x, player.y);
-      renderWorld();
     };
 
     window.addEventListener('resize', handleResize);

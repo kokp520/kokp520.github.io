@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, lazy, Suspense } from "react";
 import {
   GlobalStyle,
   CRTFrame,
@@ -20,18 +20,34 @@ import { AppWindowsProvider, useAppWindows } from "../components/AppWindowsConte
 import MacMenuBar from "../components/MacMenuBar";
 import ErrorBoundary from "../components/ErrorBoundary";
 
-// app
+// app (Dynamic Imports)
 import { FileSystemProvider } from "../apps/FileSystemContext";
-import BrowserApp from "../components/BrowserApp";
-import MP3Player from "../components/MP3Player";
-import Terminal from "../apps/Terminal";
-import YahooChat from '../apps/YahooChat';
-import PDFViewer from "../components/PDFViewer";
-import VSCodeTextEditor from "../apps/vscodeEditor";
-import DitherImageViewer from "../components/DitherImageViewer";
-import OpenAppStore from '../apps/OpenAppStore';
-import Finder from "../components/Finder";
-import GameBoyAdvance from "../apps/GameBoyAdvance";
+const BrowserApp = lazy(() => import("../components/BrowserApp"));
+const MP3Player = lazy(() => import("../components/MP3Player"));
+const Terminal = lazy(() => import("../apps/Terminal"));
+const YahooChat = lazy(() => import("../apps/YahooChat"));
+const PDFViewer = lazy(() => import("../components/PDFViewer"));
+const VSCodeTextEditor = lazy(() => import("../apps/vscodeEditor"));
+const DitherImageViewer = lazy(() => import("../components/DitherImageViewer"));
+const OpenAppStore = lazy(() => import("../apps/OpenAppStore"));
+const GameBoyAdvance = lazy(() => import("../apps/GameBoyAdvance"));
+
+const WindowLoadingFallback = () => (
+  <div style={{
+    display: 'flex',
+    alignItems: 'center',
+    justify: 'center',
+    height: '100%',
+    width: '100%',
+    background: '#f0f0f0',
+    color: '#333',
+    fontFamily: 'monospace',
+    fontSize: '14px',
+    padding: '20px'
+  }}>
+    Loading application...
+  </div>
+);
 
 // 集中管理所有 app 設定
 const APP_CONFIGS = [
@@ -47,7 +63,7 @@ const APP_CONFIGS = [
         fontSize: '1.1em',
         maxHeight: '100%',
         overflowY: 'auto',
-        boxSizing: 'border-box', // 這一行很重要
+        boxSizing: 'border-box',
         background: '#fff',
         borderRadius: '8px',
         boxShadow: '0 2px 8px rgba(0,0,0,0.08)'
@@ -82,72 +98,64 @@ const APP_CONFIGS = [
     name: "Chrome",
     icon: "/assets/app/B/Google_Chrome.png",
     windowProps: { title: "Chrome", defaultSize: { x: 220, y: 120, width: 650, height: 540 } },
-    content: <BrowserApp />,
+    Component: BrowserApp,
   },
   {
     id: "terminal",
     name: "Terminal",
     icon: "/assets/app/terminal-removebg-preview.png",
     windowProps: { title: "Terminal", defaultSize: { x: 100, y: 100, width: 700, height: 350 } },
-    content: <Terminal />,
+    Component: Terminal,
   },
   {
     id: "cv",
     name: "CV.pdf",
     icon: "/assets/app/B/Microsoft_PowerPoint.png",
     windowProps: { title: "CV.pdf", defaultSize: { x: 150, y: 150, width: 800, height: 600 } },
-    content: <PDFViewer filePath="/assets/cv.pdf" />,
+    Component: () => <PDFViewer filePath="/assets/cv.pdf" />,
   },
   {
     id: "mp3player",
     name: "千千靜聽",
     icon: "/assets/app/mp3player-removebg-preview.png",
     windowProps: { title: "千千靜聽", defaultSize: { x: 180, y: 180, width: 380, height: 330 }, resizable: false },
-    content: <MP3Player />,
+    Component: MP3Player,
   },
   {
     id: "dither-image-viewer",
     name: "Instagram CCD",
     icon: '/assets/app/B/instagram-old.png',
     windowProps: { title: "Instagram CCD", defaultSize: { x: 180, y: 180, width: 500, height: 490 }, resizable: false },
-    content: <DitherImageViewer />,
+    Component: DitherImageViewer,
   },
   {
     id: "vscode-text-editor",
     name: "VSCode Editor",
     icon: "/assets/app/vscode-removebg-preview.png",
     windowProps: { title: "VSCode Editor", defaultSize: { x: 400, y: 100, width: 820, height: 600 }, resizable: true },
-    content: <VSCodeTextEditor />,
+    Component: VSCodeTextEditor,
   },
   {
     id: 'instant-chat',
     name: '即時通',
     icon: '/assets/app/yahoo-message-removebg-preview.png',
     windowProps: { title: '即時通', defaultSize: { x: 900, y: 200, width: 350, height: 600 } },
-    content: <YahooChat />,
+    Component: YahooChat,
   },
   {
     id: 'open-appstore',
     name: 'App Store 下載',
     icon: '/assets/app/app-store-removebg-preview.png',
     windowProps: { title: 'App Store 下載', defaultSize: { x: 200, y: 120, width: 400, height: 300 }, resizable: true },
-    content: <OpenAppStore />,
+    Component: OpenAppStore,
   },
   {
     id: 'gameboy-advance',
     name: 'Game Boy Advance',
     icon: '/assets/gba/gba-interface.png',
     windowProps: { title: 'Game Boy Advance', defaultSize: { x: 300, y: 150, width: 500, height: 340 }, resizable: false },
-    content: <GameBoyAdvance />,
+    Component: GameBoyAdvance,
   },
-  // {
-  //   id: "finder",
-  //   name: "Finder",
-  //   icon: "/assets/app/B/F.PNG",
-  //   windowProps: { title: "Finder", defaultSize: { x: 120, y: 120, width: 600, height: 400 } },
-  //   content: <Finder />,
-  //   disabled: true,
-  // },
 ];
 
 function AppContent() {
@@ -206,16 +214,21 @@ function AppContent() {
           </DesktopIconsContainer>
           {/* 視窗 */}
           <div style={{ position: 'relative', zIndex: 2 }}>
-            {openedWindows.map(app => (
-              <CustomWindowFrame
-                key={app.id}
-                icon={app.icon}
-                {...app.windowProps}
-                onClose={() => handleCloseApp(app.id)}
-              >
-                {app.content}
-              </CustomWindowFrame>
-            ))}
+            {openedWindows.map(app => {
+              const AppComponent = app.Component;
+              return (
+                <CustomWindowFrame
+                  key={app.id}
+                  icon={app.icon}
+                  {...app.windowProps}
+                  onClose={() => handleCloseApp(app.id)}
+                >
+                  <Suspense fallback={<WindowLoadingFallback />}>
+                    {AppComponent ? <AppComponent /> : app.content}
+                  </Suspense>
+                </CustomWindowFrame>
+              );
+            })}
           </div>
           {/* <Taskbar activeAppId={activeAppId} onAppClick={handleAppClick} /> */}
         </div>
