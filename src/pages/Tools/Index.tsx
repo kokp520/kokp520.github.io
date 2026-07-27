@@ -4,88 +4,210 @@ import { Link } from 'react-router-dom';
 export const ToolsIndex: React.FC = () => {
   return (
     <div style={{
-      fontFamily: "'Outfit', system-ui, -apple-system, sans-serif",
-      background: '#0b0f19',
-      backgroundImage: `
-        radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.15) 0px, transparent 50%)
-      `,
-      color: '#f8fafc',
+      fontFamily: "'VT323', 'DotGothic16', monospace",
+      background: '#0F0E17',
+      color: '#FFFFFE',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       minHeight: '100vh',
-      padding: '40px 20px',
-      boxSizing: 'border-box'
+      padding: '60px 24px',
+      boxSizing: 'border-box',
+      position: 'relative',
+      overflow: 'hidden'
     }}>
+      {/* CRT Scanline Overlay Effect */}
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        background: 'linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.35) 50%)',
+        backgroundSize: '100% 4px',
+        pointerEvents: 'none',
+        zIndex: 99
+      }} />
+
+      {/* Back to Home Link */}
+      <div style={{ width: '100%', maxWidth: '1000px', marginBottom: '24px' }}>
+        <Link 
+          to="/" 
+          style={{
+            fontFamily: "'Press Start 2P', monospace",
+            fontSize: '0.75rem',
+            color: '#FF8E3C',
+            textDecoration: 'none',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            background: '#2A2A3B',
+            padding: '8px 16px',
+            border: '3px solid #000000',
+            boxShadow: '3px 3px 0px #000000',
+            imageRendering: 'pixelated'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = '#FF8E3C';
+            e.currentTarget.style.color = '#0F0E17';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = '#2A2A3B';
+            e.currentTarget.style.color = '#FF8E3C';
+          }}
+        >
+          ◄ RETURN TO PC
+        </Link>
+      </div>
+
+      {/* Title Header */}
       <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-        <h1 style={{
-          fontSize: '3rem',
-          fontWeight: 700,
+        <div style={{
+          fontFamily: "'Press Start 2P', monospace",
+          fontSize: '0.75rem',
+          color: '#2CB67D',
+          letterSpacing: '2px',
           marginBottom: '12px',
-          background: 'linear-gradient(135deg, #e879f9, #8b5cf6, #3b82f6)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          letterSpacing: '-0.02em'
+          textTransform: 'uppercase'
         }}>
-          Adi's Toolbox
+          ★ SYSTEM TOOLBOX V1.0 ★
+        </div>
+
+        <h1 style={{
+          fontFamily: "'Press Start 2P', monospace",
+          fontSize: '2.5rem',
+          color: '#FFFFFE',
+          margin: '0 0 16px 0',
+          lineHeight: 1.3,
+          textShadow: '4px 4px 0px #FF8E3C, 8px 8px 0px #000000',
+          letterSpacing: '-1px'
+        }}>
+          ADI'S TOOLBOX
         </h1>
-        <p style={{ color: '#94a3b8', fontSize: '1.1rem', fontWeight: 300 }}>
-          日常實用小工具集合
+
+        <p style={{ 
+          fontSize: '1.5rem', 
+          margin: 0,
+          color: '#A7A9BE',
+          fontFamily: "'VT323', 'DotGothic16', monospace",
+          letterSpacing: '1px'
+        }}>
+          日常實用小工具集合 // UTILITY INVENTORY
         </p>
       </div>
 
+      {/* Grid Container */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-        gap: '24px',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+        gap: '32px',
         width: '100%',
-        maxWidth: '900px'
+        maxWidth: '1000px',
+        zIndex: 1
       }}>
         {/* GIF to ZIP Tool */}
         <Link 
           to="/tools/gifToZip" 
           style={{
-            background: 'rgba(22, 27, 43, 0.65)',
-            backdropFilter: 'blur(20px)',
-            WebkitBackdropFilter: 'blur(20px)',
-            borderRadius: '20px',
-            border: '1px solid rgba(255, 255, 255, 0.08)',
+            background: '#16161A',
+            border: '4px solid #000000',
             padding: '28px',
             textDecoration: 'none',
-            color: '#f8fafc',
+            color: '#FFFFFE',
             display: 'flex',
             flexDirection: 'column',
-            gap: '16px',
-            transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+            gap: '20px',
             position: 'relative',
-            overflow: 'hidden',
-            boxShadow: '0 10px 30px -10px rgba(0, 0, 0, 0.5)'
+            boxShadow: '6px 6px 0px #000000, inset -3px -3px 0px #242629, inset 3px 3px 0px #383A3F',
+            transition: 'all 0.1s step-end',
+            imageRendering: 'pixelated'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'translate(-2px, -2px)';
+            e.currentTarget.style.boxShadow = '8px 8px 0px #000000, inset -3px -3px 0px #2CB67D, inset 3px 3px 0px #72F2B2';
+            e.currentTarget.style.borderColor = '#2CB67D';
+            const icon = e.currentTarget.querySelector('.pixel-icon') as HTMLElement;
+            if (icon) {
+              icon.style.background = '#2CB67D';
+              icon.style.color = '#0F0E17';
+            }
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'translate(0px, 0px)';
+            e.currentTarget.style.boxShadow = '6px 6px 0px #000000, inset -3px -3px 0px #242629, inset 3px 3px 0px #383A3F';
+            e.currentTarget.style.borderColor = '#000000';
+            const icon = e.currentTarget.querySelector('.pixel-icon') as HTMLElement;
+            if (icon) {
+              icon.style.background = '#FF8E3C';
+              icon.style.color = '#0F0E17';
+            }
+          }}
+          onMouseDown={(e) => {
+            e.currentTarget.style.transform = 'translate(4px, 4px)';
+            e.currentTarget.style.boxShadow = '2px 2px 0px #000000';
           }}
         >
-          <div style={{
-            fontSize: '2.5rem',
-            width: '60px',
-            height: '60px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            background: 'rgba(255, 255, 255, 0.05)',
-            borderRadius: '16px',
-            border: '1px solid rgba(255, 255, 255, 0.1)'
-          }}>
-            🎬
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+            <div 
+              className="pixel-icon"
+              style={{
+                fontFamily: "'Press Start 2P', monospace",
+                fontSize: '0.85rem',
+                fontWeight: 'bold',
+                width: '56px',
+                height: '56px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: '#FF8E3C',
+                color: '#0F0E17',
+                border: '3px solid #000000',
+                boxShadow: '3px 3px 0px #000000',
+                flexShrink: 0
+            }}>
+              GIF
+            </div>
+            <div>
+              <div style={{ 
+                fontFamily: "'Press Start 2P', monospace",
+                fontSize: '1.1rem', 
+                color: '#FFFFFE',
+                lineHeight: 1.2
+              }}>
+                GIF TO ZIP
+              </div>
+              <div style={{
+                fontSize: '1rem',
+                color: '#2CB67D',
+                marginTop: '6px'
+              }}>
+                [ONLINE TOOL]
+              </div>
+            </div>
           </div>
-          <div>
-            <div style={{ fontSize: '1.4rem', fontWeight: 600, marginBottom: '8px', color: '#e2e8f0' }}>
-              GIF to ZIP
-            </div>
-            <div style={{ fontSize: '0.95rem', color: '#94a3b8', lineHeight: 1.5 }}>
-              將 GIF 動畫轉換為高品質的 PNG 序列，並打包成 ZIP 下載。純前端處理，確保隱私安全。
-            </div>
+
+          <div 
+            style={{ 
+              fontSize: '1.25rem', 
+              color: '#A7A9BE', 
+              lineHeight: 1.5,
+              fontFamily: "'VT323', 'DotGothic16', monospace"
+            }}>
+            將 GIF 動畫分解並轉換為 PNG 圖片序列，打包成 ZIP 壓縮檔下載。純前端本機運算，隱私安全無保留。
+          </div>
+
+          <div style={{
+            fontFamily: "'Press Start 2P', monospace",
+            fontSize: '0.65rem',
+            color: '#FF8E3C',
+            alignSelf: 'flex-end',
+            marginTop: 'auto'
+          }}>
+            LAUNCH TOOL ►
           </div>
         </Link>
       </div>
     </div>
   );
 };
+
