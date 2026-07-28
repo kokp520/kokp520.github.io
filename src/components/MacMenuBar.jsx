@@ -87,15 +87,15 @@ export default function MacMenuBar({ onOpenApp }) {
     position: 'relative',
     width: '100%',
     height: 28,
-    background: '#fff',
-    borderBottom: '1.5px solid #222',
+    background: '#ffffff',
+    borderBottom: '2px solid #000000',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    fontFamily: "'Cubic_11', 'Press Start 2P', 'Pixel', 'monospace'",
-    fontSize: 15,
-    color: '#222',
-    boxShadow: '0 1px 4px rgba(0,0,0,0.04)',
+    justify: 'space-between',
+    fontFamily: "'DotGothic16', 'VT323', monospace",
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#000000',
     zIndex: 999
   };
   const leftStyle = {
