@@ -157,6 +157,14 @@ const APP_CONFIGS = [
     windowProps: { title: 'Game Boy Advance', defaultSize: { x: 300, y: 150, width: 500, height: 340 }, resizable: false },
     Component: GameBoyAdvance,
   },
+  {
+    id: 'tools',
+    name: 'Developer Tools',
+    icon: '/assets/app/B/Toggl.png',
+    onOpen: () => {
+      window.location.href = '#/tools';
+    },
+  },
 ];
 
 function AppContent() {
@@ -172,9 +180,13 @@ function AppContent() {
 
   // 開啟 app 並聚焦
   const handleOpenApp = (id) => {
+    const appConfig = APP_CONFIGS.find(app => app.id === id);
+    if (appConfig?.onOpen) {
+      appConfig.onOpen();
+      return;
+    }
     setOpenApps(prev => ({ ...prev, [id]: true }));
     setActiveAppId(id);
-    const appConfig = APP_CONFIGS.find(app => app.id === id);
     if (appConfig) {
       openApp({ id: appConfig.id, name: appConfig.name, icon: appConfig.icon });
     }
@@ -198,12 +210,12 @@ function AppContent() {
       </Helmet>
       <CRTScreen>
         <DesktopBackground background={background} />
-        <CRTReflection />
-        <CRTScanlines />
-        <CRTVignette />
-        <Particles />
+        <CRTReflection style={{ pointerEvents: 'none' }} />
+        <CRTScanlines style={{ pointerEvents: 'none' }} />
+        <CRTVignette style={{ pointerEvents: 'none' }} />
+        <Particles style={{ pointerEvents: 'none' }} />
         <GlobalStyle />
-        <div style={{ position: 'relative', zIndex: 1, width: '100%', height: '100%' }}>
+        <div style={{ position: 'relative', zIndex: 10, width: '100%', height: '100%' }}>
           <MacMenuBar onOpenApp={handleOpenApp} />
           {/* 桌面 icon */}
           <DesktopIconsContainer style={{ zIndex: 1 }}>
@@ -227,6 +239,7 @@ function AppContent() {
                   icon={app.icon}
                   {...app.windowProps}
                   onClose={() => handleCloseApp(app.id)}
+                  onFocus={() => setActiveAppId(app.id)}
                 >
                   <Suspense fallback={<WindowLoadingFallback />}>
                     {AppComponent ? <AppComponent /> : app.content}

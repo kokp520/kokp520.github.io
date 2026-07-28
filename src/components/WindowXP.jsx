@@ -14,6 +14,8 @@ const TitleBar = styled.div`
   height:24px;
   font-size: 1.1rem;
   border-bottom: 1px solid #ddd;
+  cursor: move;
+  user-select: none;
 `;
 
 const TitleBarText = styled.div`
@@ -62,7 +64,7 @@ const WindowBody = styled.div`
   font-size: 12px;
 `;
 
-const CustomWindowFrame = ({ icon, title, children, onClose, defaultSize = { x: 100, y: 100, width: 320, height: 200 } }) => {
+const CustomWindowFrame = ({ icon, title, children, onClose, onFocus, defaultSize = { x: 100, y: 100, width: 320, height: 200 } }) => {
   const playClick = useClickSound();
   const { playCancel } = useSound();
 
@@ -86,9 +88,11 @@ const CustomWindowFrame = ({ icon, title, children, onClose, defaultSize = { x: 
       minHeight={100}
       disableDragging={isMobile}
       enableResizing={!isMobile}
+      dragHandleClassName="window-title-bar"
+      onDragStart={() => onFocus && onFocus()}
     >
-      <CustomWindow style={{ width: "100%", height: "100%" }}>
-        <TitleBar onMouseDown={() => {
+      <CustomWindow style={{ width: "100%", height: "100%" }} onMouseDown={() => onFocus && onFocus()}>
+        <TitleBar className="window-title-bar" onMouseDown={() => {
           try {
             playClick();
           } catch (error) {
