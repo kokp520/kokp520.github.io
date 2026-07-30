@@ -1,4 +1,4 @@
-# kokp520.github.io
+# adiolk98.github.io
 
 Personal website, portfolio, and utility toolbox built with **React**, **TypeScript**, **Vite**, and **React Router**. Automatically built and deployed via **GitHub Actions** to GitHub Pages.
 
@@ -36,7 +36,7 @@ Personal website, portfolio, and utility toolbox built with **React**, **TypeScr
 ## 📦 Project Structure
 
 ```text
-kokp520.github.io/
+adiolk98.github.io/
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml      # Automated GitHub Pages CI/CD workflow
