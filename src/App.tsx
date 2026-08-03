@@ -7,6 +7,7 @@ const ToolsIndex = lazy(() => import('./pages/Tools/Index').then(m => ({ default
 const GifToZip = lazy(() => import('./pages/Tools/GifToZip').then(m => ({ default: m.GifToZip })))
 const JsonFormatter = lazy(() => import('./pages/Tools/JsonFormatter').then(m => ({ default: m.JsonFormatter })))
 const YamlFormatter = lazy(() => import('./pages/Tools/YamlFormatter').then(m => ({ default: m.YamlFormatter })))
+const VideoToGif = lazy(() => import('./pages/Tools/VideoToGif').then(m => ({ default: m.VideoToGif })))
 const Me = lazy(() => import('./pages/Me').then(m => ({ default: m.Me })))
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path="/tools/gifToZip" element={<GifToZip />} />
           <Route path="/tools/jsonFormatter" element={<JsonFormatter />} />
           <Route path="/tools/yamlFormatter" element={<YamlFormatter />} />
+          <Route path="/tools/videoToGif" element={<VideoToGif />} />
           <Route path="/me" element={<Me />} />
         </Routes>
       </Suspense>
