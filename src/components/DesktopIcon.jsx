@@ -7,24 +7,32 @@ const IconWrapper = styled.button`
   flex-direction: column;
   align-items: center;
   margin: 10px;
-  padding: 5px;
+  padding: 8px 5px;
   width: 80px;
   cursor: pointer;
   user-select: none;
-  border: none;
-  background: transparent;
+  border: 2px solid ${props => props.selected ? '#ffffff' : 'transparent'};
+  background: ${props => props.selected ? '#ffffff' : 'transparent'};
+  color: ${props => props.selected ? '#000000' : '#ffffff'};
   filter: ${props => (props.disabled ? 'grayscale(100%)' : 'none')};
   opacity: ${props => (props.disabled ? 0.6 : 1)};
   pointer-events: ${props => (props.disabled ? 'none' : 'auto')};
-  border-radius: 4px;
-  background-color: ${props => props.selected ? 'rgba(255, 255, 255, 0.1)' : 'transparent'};
+  border-radius: 0px;
+  transition: none;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: #ffffff;
+    border-color: #ffffff;
+    color: #000000;
+  }
+
+  &:hover span {
+    color: #000000;
+    text-shadow: none;
   }
 
   &:focus-visible {
-    outline: 2px solid #3b82f6;
+    outline: 2px solid #ffffff;
     outline-offset: 2px;
   }
 `;
@@ -32,16 +40,18 @@ const IconWrapper = styled.button`
 const IconImage = styled.img`
   width: 48px;
   height: 48px;
+  image-rendering: pixelated;
 `;
 
 const IconLabel = styled.span`
-  color: white;
-  text-shadow: 1px 1px 2px black;
+  color: #ffffff;
+  font-family: var(--font-mono, monospace);
   font-size: 12px;
   text-align: center;
-  margin-top: 5px;
+  margin-top: 6px;
   word-break: break-word;
   min-width: 0;
+  letter-spacing: 0.5px;
 `;
 
 function DesktopIcon({ icon, label, onDoubleClick, disabled = false }) {

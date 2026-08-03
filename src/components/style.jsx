@@ -77,32 +77,61 @@ export const Particles = () => {
     return <ParticlesContainer>{createParticles(20)}</ParticlesContainer>;
 }
 
-// 新增像素字型 @font-face
-const GlobalStyle = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle`
   @font-face {
     font-family: 'Cubic_11';
     src: url('/assets/Cubic_11.ttf') format('truetype');
     font-display: swap;
   }
+
+  :root {
+    --color-bg: #000000;
+    --color-card: #000000;
+    --color-primary: #ffffff;
+    --color-text: #ffffff;
+    --color-border: #ffffff;
+
+    --font-pixel: 'Press Start 2P', cursive;
+    --font-terminal: 'VT323', monospace;
+    --font-mono: 'DotGothic16', 'JetBrains Mono', 'Cubic_11', monospace;
+  }
+
   body {
-    font-family: 'Cubic_11', 'Tahoma', 'Arial', sans-serif;
-    background: #222;
+    font-family: var(--font-mono);
+    background: #000000;
+    color: #ffffff;
     min-height: 100vh;
     margin: 0;
     padding: 0;
+    image-rendering: pixelated;
+    -webkit-font-smoothing: none;
   }
-  .title-bar.xp {
-    background: #111 !important;
-    color: #fff;
-    border-bottom: 1px solid #222;
-  }
-`
 
-// CRT 螢幕外框
+  /* 1-Bit Macintosh Title Bar Overrides */
+  .title-bar.xp {
+    background: #ffffff !important;
+    color: #000000 !important;
+    border-bottom: 2px solid #000000 !important;
+    font-family: var(--font-terminal);
+    font-size: 18px;
+    letter-spacing: 1px;
+    font-weight: bold;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+`;
+
+// CRT 螢幕外框 - 1-Bit Edition
 const CRTFrame = styled.div`
   width: 100%;
   height: 100vh;
-  background: #fff;
+  background: #000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -115,17 +144,14 @@ const CRTVignette = styled.div`
   width: 100%; height: 100%;
   pointer-events: none;
   z-index: 4;
-  background: radial-gradient(ellipse 80% 80% at 50% 50%, transparent 70%, rgba(0,0,0,0.18) 100%);
+  background: radial-gradient(ellipse 85% 85% at 50% 50%, transparent 70%, rgba(0,0,0,0.6) 100%);
 `;
 
 const CRTScreen = styled.div`
   width: 100%;
   height: 100%;
-  border-radius: 5px;
-  box-shadow:
-    0 0 60px 10px #000,
-    0 0 0 5px #333 inset,
-    0 0 80px 0 #222 inset;
+  border: 4px solid #fff;
+  box-shadow: 0 0 0 8px #000 inset;
   overflow: hidden;
   position: relative;
   background: #000;
@@ -137,10 +163,7 @@ const CRTReflection = styled.div`
   width: 100%; height: 100%;
   pointer-events: none;
   z-index: 2;
-  /* 斜斜的高光條紋 */
-  background:
-    linear-gradient(120deg, rgba(255,255,255,0.18) 10%, rgba(255,255,255,0.04) 60%, transparent 80%),
-    radial-gradient(ellipse 120% 60% at 50% 0%, rgba(255,255,255,0.13) 0%, transparent 80%);
+  background: none;
 `;
 
 const CRTScanlines = styled.div`
@@ -151,8 +174,8 @@ const CRTScanlines = styled.div`
   z-index: 3;
   background: repeating-linear-gradient(
     to bottom,
-    rgba(0,0,0,0.08) 0px,
-    rgba(0,0,0,0.08) 1px,
+    rgba(255,255,255,0.06) 0px,
+    rgba(255,255,255,0.06) 1px,
     transparent 2px,
     transparent 4px
   );
@@ -160,38 +183,14 @@ const CRTScanlines = styled.div`
 
 export const CRTBackground = createGlobalStyle`
   body {
-    background: linear-gradient(180deg, #181c22 0%, #23272e 100%);
+    background-color: #000000;
+    /* 1-Bit Dither Checkered Background */
+    background-image: radial-gradient(#ffffff 1px, transparent 0);
+    background-size: 4px 4px;
     min-height: 100vh;
     min-width: 100vw;
     position: relative;
     overflow-x: hidden;
-  }
-  body::before {
-    content: '';
-    position: fixed;
-    left: 0; top: 0; right: 0; bottom: 0;
-    pointer-events: none;
-    z-index: 0;
-    /* Scanline */
-    background: repeating-linear-gradient(
-      to bottom,
-      rgba(255,255,255,0.04) 0px,
-      rgba(255,255,255,0.04) 1px,
-      transparent 1.5px,
-      transparent 4px
-    );
-    opacity: 0.5;
-  }
-  body::after {
-    content: '';
-    position: fixed;
-    left: 0; top: 0; right: 0; bottom: 0;
-    pointer-events: none;
-    z-index: 0;
-    /* CRT noise */
-    background: url('data:image/svg+xml;utf8,<svg width="120" height="120" xmlns="http://www.w3.org/2000/svg"><filter id="n" x="0" y="0"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2"/></filter><rect width="120" height="120" filter="url(%23n)" opacity="0.18"/></svg>');
-    opacity: 0.25;
-    mix-blend-mode: screen;
   }
 `;
 
@@ -217,7 +216,6 @@ export const DesktopIconsContainer = styled.div`
 `;
 
 export {
-  GlobalStyle,
   CRTFrame,
   CRTVignette,
   CRTScreen,

@@ -59,36 +59,51 @@ const APP_CONFIGS = [
     windowProps: { title: "wiki", defaultSize: { x: 200, y: 120, width: 400, height: 500 } },
     content: (
       <div style={{
-        padding: '16px',
+        padding: '20px',
         lineHeight: 1.8,
-        fontSize: '1.1em',
+        fontSize: '1em',
         maxHeight: '100%',
         overflowY: 'auto',
         boxSizing: 'border-box',
-        background: '#fff',
-        borderRadius: '8px',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.08)'
+        background: '#000000',
+        color: '#ffffff',
+        border: '2px solid #ffffff',
+        fontFamily: 'var(--font-mono, monospace)',
+        imageRendering: 'pixelated'
       }}>
-        <h2 style={{ marginBottom: '8px', color: '#2d72d9' }}>Welcome to adi.tw. v1</h2>
-        <div style={{ marginBottom: '12px', color: '#d9534f', fontWeight: 'bold' }}>
-          公告：即時通功能可以留言！我會看到！
+        <h2 style={{
+          marginBottom: '12px',
+          color: '#000000',
+          background: '#ffffff',
+          padding: '4px 8px',
+          fontFamily: 'var(--font-pixel, cursive)',
+          fontSize: '14px'
+        }}>SYSTEM WIKI // 1-BIT SYSTEM v1.0</h2>
+        <div style={{
+          marginBottom: '16px',
+          color: '#ffffff',
+          fontWeight: 'bold',
+          border: '1px dashed #ffffff',
+          padding: '8px'
+        }}>
+          [NOTICE] 即時通功能可以留言！我會看到！
         </div>
-        <div>
-          <span style={{ fontWeight: 'bold' }}>feature:</span>
-          <ol style={{ margin: '8px 0 0 24px' }}>
+        <div style={{ marginBottom: '16px' }}>
+          <span style={{ color: '#000000', background: '#ffffff', padding: '1px 6px', fontWeight: 'bold' }}>[FEATURES]</span>
+          <ol style={{ margin: '8px 0 0 24px', paddingLeft: '0' }}>
             <li>即時通可以留言!!</li>
-            <li>instagram 盡量還原我喜歡的ccd風格, 原本想說要做無名小站</li>
-            <li>cv.pdf, 是我的履歷有興趣可以聯絡我 kokp520@gmail.com</li>
-            <li>App store 目前還沒做其他功能只放連結！</li>
+            <li>instagram CCD 復古風格</li>
+            <li>cv.pdf 履歷（kokp520@gmail.com）</li>
+            <li>App store 連結專區</li>
           </ol>
         </div>
         <div>
-          <span style={{ fontWeight: 'bold' }}>todo：</span>
-          <ol style={{ margin: '8px 0 0 24px' }}>
-            <li>[feature]yahoo即時通 storage狀態功能</li>
-            <li>[feature]finder feature</li>
-            <li>[feature]GBA game 做實際小遊戲，頁面調整</li>
-            <li>[feature]chrome 多做網頁的功能</li>
+          <span style={{ color: '#000000', background: '#ffffff', padding: '1px 6px', fontWeight: 'bold' }}>[TODO LOG]</span>
+          <ol style={{ margin: '8px 0 0 24px', paddingLeft: '0' }}>
+            <li>[feature] yahoo 即時通 storage 狀態功能</li>
+            <li>[feature] finder 功能擴充</li>
+            <li>[feature] GBA 小遊戲與頁面調整</li>
+            <li>[feature] Chrome 模擬網頁功能</li>
           </ol>
         </div>
       </div>
