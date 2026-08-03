@@ -14,12 +14,16 @@ export const VideoToGif: React.FC = () => {
   // Video properties
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoDim, setVideoDim] = useState({ width: 0, height: 0, naturalWidth: 0, naturalHeight: 0 });
+  const [videoDuration, setVideoDuration] = useState<number>(0);
   const [startTime, setStartTime] = useState<number>(0);
-  const [duration, setDuration] = useState<number>(3);
+  const [endTime, setEndTime] = useState<number>(3);
+  const [currentTime, setCurrentTime] = useState<number>(0);
   const [fps, setFps] = useState<number>(10);
 
   // Crop box properties
   const [cropBox, setCropBox] = useState({ x: 0, y: 0, width: 200, height: 200 });
+
+  const duration = Math.max(0.1, endTime - startTime);
 
   const handleFileChange = (file: File) => {
     if (!file.type.startsWith('video/')) {
@@ -43,6 +47,10 @@ export const VideoToGif: React.FC = () => {
   const handleVideoLoaded = (e: React.SyntheticEvent<HTMLVideoElement, Event>) => {
     const video = e.currentTarget;
     const rect = video.getBoundingClientRect();
+    const dur = video.duration || 10;
+    setVideoDuration(dur);
+    setStartTime(0);
+    setEndTime(Math.min(3, dur));
     setVideoDim({
       width: rect.width,
       height: rect.height,
@@ -89,7 +97,7 @@ export const VideoToGif: React.FC = () => {
     const canvas = document.createElement('canvas');
     canvas.width = outputSize;
     canvas.height = outputSize;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
     if (!ctx) {
       setStatusText('Failed to get canvas context');
       setIsProcessing(false);
@@ -163,19 +171,6 @@ export const VideoToGif: React.FC = () => {
         <title>Video to GIF | adi's Toolbox</title>
         <meta name="description" content="Crop a square from a video and convert it to a GIF." />
       </Helmet>
-      
-      {/* CRT Scanline Overlay Effect */}
-      <div style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100vw',
-        height: '100vh',
-        background: 'linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.35) 50%)',
-        backgroundSize: '100% 4px',
-        pointerEvents: 'none',
-        zIndex: 99
-      }} />
 
       {/* Main Container */}
       <div style={{
@@ -323,50 +318,369 @@ export const VideoToGif: React.FC = () => {
               }}>
                 PREVIEW & CROP AREA
               </label>
+              {/* Custom Integrated Player with Built-in Timeline Controls */}
               <div style={{ 
                 position: 'relative', 
-                border: '3px solid #000000', 
+                border: '4px solid #000000', 
                 background: '#0F0E17',
-                boxShadow: '4px 4px 0px #000000',
-                display: 'inline-block',
+                boxShadow: '6px 6px 0px #000000',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
                 maxWidth: '100%',
-                overflow: 'hidden'
+                overflow: 'hidden',
+                borderRadius: '2px'
               }}>
-                <video
-                  ref={videoRef}
-                  src={videoUrl}
-                  controls
-                  crossOrigin="anonymous"
-                  onLoadedData={handleVideoLoaded}
-                  style={{ display: 'block', maxWidth: '100%', maxHeight: '400px' }}
-                />
-                
-                {videoDim.width > 0 && (
-                  <Rnd
-                    bounds="parent"
-                    position={{ x: cropBox.x, y: cropBox.y }}
-                    size={{ width: cropBox.width, height: cropBox.height }}
-                    onDragStop={(_e, d) => {
-                      setCropBox(prev => ({ ...prev, x: d.x, y: d.y }));
+                {/* Video Display Area */}
+                <div style={{ 
+                  position: 'relative', 
+                  display: 'flex', 
+                  justifyContent: 'center', 
+                  alignItems: 'center',
+                  width: '100%',
+                  background: '#050508',
+                  minHeight: '260px'
+                }}>
+                  <video
+                    ref={videoRef}
+                    src={videoUrl}
+                    crossOrigin="anonymous"
+                    onLoadedData={handleVideoLoaded}
+                    onTimeUpdate={() => {
+                      if (videoRef.current) {
+                        setCurrentTime(videoRef.current.currentTime);
+                        if (videoRef.current.currentTime >= endTime) {
+                          videoRef.current.currentTime = startTime;
+                        }
+                      }
                     }}
-                    onResizeStop={(_e, _dir, ref, _delta, position) => {
-                      const newSize = Math.max(50, Math.min(ref.offsetWidth, ref.offsetHeight));
-                      setCropBox({
-                        width: newSize,
-                        height: newSize,
-                        x: position.x,
-                        y: position.y
-                      });
-                    }}
-                    lockAspectRatio={true}
-                    style={{
-                      border: '3px dashed #FF8E3C',
-                      boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.5)',
-                      cursor: 'move',
-                      zIndex: 10
-                    }}
+                    style={{ display: 'block', maxWidth: '100%', maxHeight: '420px', objectFit: 'contain' }}
                   />
-                )}
+                  
+                  {videoDim.width > 0 && (
+                    <Rnd
+                      bounds="parent"
+                      position={{ x: cropBox.x, y: cropBox.y }}
+                      size={{ width: cropBox.width, height: cropBox.height }}
+                      onDragStop={(_e, d) => {
+                        setCropBox(prev => ({ ...prev, x: d.x, y: d.y }));
+                      }}
+                      onResizeStop={(_e, _dir, ref, _delta, position) => {
+                        const newSize = Math.max(50, Math.min(ref.offsetWidth, ref.offsetHeight));
+                        setCropBox({
+                          width: newSize,
+                          height: newSize,
+                          x: position.x,
+                          y: position.y
+                        });
+                      }}
+                      lockAspectRatio={true}
+                      style={{
+                        border: '3px dashed #2CB67D',
+                        boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.6)',
+                        cursor: 'move',
+                        zIndex: 10
+                      }}
+                    >
+                      <div style={{
+                        position: 'absolute',
+                        top: '4px',
+                        left: '4px',
+                        background: '#2CB67D',
+                        color: '#0F0E17',
+                        fontFamily: "'Press Start 2P', monospace",
+                        fontSize: '0.5rem',
+                        padding: '2px 4px',
+                        fontWeight: 'bold',
+                        pointerEvents: 'none'
+                      }}>
+                        GIF CROP
+                      </div>
+                    </Rnd>
+                  )}
+                </div>
+
+                {/* Sleek Player Control Bar */}
+                <div style={{
+                  width: '100%',
+                  background: '#16161A',
+                  borderTop: '3px solid #000000',
+                  padding: '16px 20px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '12px',
+                  boxSizing: 'border-box'
+                }}>
+                  {/* Timeline Title & Time Indicators */}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span style={{
+                        width: '10px',
+                        height: '10px',
+                        background: '#2CB67D',
+                        display: 'inline-block',
+                        boxShadow: '0 0 6px #2CB67D'
+                      }} />
+                      <span style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '0.65rem', color: '#FFFFFE' }}>
+                        TRIM TIMELINE
+                      </span>
+                    </div>
+
+                    <div style={{ fontFamily: "'VT323', monospace", fontSize: '1.2rem', color: '#FF8E3C', display: 'flex', gap: '12px' }}>
+                      <span>CUR: <strong style={{ color: '#2CB67D' }}>{currentTime.toFixed(1)}s</strong></span>
+                      <span>RANGE: <strong>{startTime.toFixed(1)}s - {endTime.toFixed(1)}s</strong></span>
+                      <span>DUR: <strong>{duration.toFixed(1)}s</strong></span>
+                    </div>
+                  </div>
+
+                  {/* Multi-layer Interactive Timeline Track */}
+                  <div style={{
+                    position: 'relative',
+                    height: '32px',
+                    background: '#0F0E17',
+                    border: '2px solid #383A3F',
+                    boxShadow: 'inset 0 0 6px rgba(0,0,0,0.8)',
+                    borderRadius: '3px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    overflow: 'visible'
+                  }}>
+                    {/* Selected Clip Highlight Area */}
+                    <div style={{
+                      position: 'absolute',
+                      left: `${videoDuration ? (startTime / videoDuration) * 100 : 0}%`,
+                      width: `${videoDuration ? ((endTime - startTime) / videoDuration) * 100 : 0}%`,
+                      height: '100%',
+                      background: 'linear-gradient(90deg, rgba(255, 142, 60, 0.2) 0%, rgba(255, 142, 60, 0.4) 50%, rgba(255, 142, 60, 0.2) 100%)',
+                      borderLeft: '3px solid #FF8E3C',
+                      borderRight: '3px solid #FF8E3C',
+                      boxSizing: 'border-box'
+                    }} />
+
+                    {/* Current Playhead Indicator */}
+                    <div style={{
+                      position: 'absolute',
+                      left: `${videoDuration ? (currentTime / videoDuration) * 100 : 0}%`,
+                      width: '2px',
+                      height: '100%',
+                      background: '#2CB67D',
+                      boxShadow: '0 0 8px #2CB67D',
+                      zIndex: 3,
+                      pointerEvents: 'none'
+                    }} />
+
+                    {/* Scrubber Range Input */}
+                    <input
+                      type="range"
+                      min={0}
+                      max={videoDuration || 10}
+                      step={0.1}
+                      value={currentTime}
+                      onChange={(e) => {
+                        const val = parseFloat(e.target.value) || 0;
+                        setCurrentTime(val);
+                        if (videoRef.current) {
+                          videoRef.current.currentTime = val;
+                        }
+                      }}
+                      style={{
+                        position: 'absolute',
+                        width: '100%',
+                        height: '100%',
+                        margin: 0,
+                        opacity: 0,
+                        cursor: 'pointer',
+                        zIndex: 5
+                      }}
+                    />
+
+                    {/* Draggable Start Handle (開始槓槓) */}
+                    <input
+                      type="range"
+                      min={0}
+                      max={videoDuration || 10}
+                      step={0.1}
+                      value={startTime}
+                      onChange={(e) => {
+                        const val = Math.min(parseFloat(e.target.value) || 0, endTime - 0.1);
+                        setStartTime(val);
+                        if (videoRef.current) {
+                          videoRef.current.currentTime = val;
+                        }
+                      }}
+                      title={`Drag Start Marker: ${startTime.toFixed(1)}s`}
+                      style={{
+                        position: 'absolute',
+                        left: `calc(${videoDuration ? (startTime / videoDuration) * 100 : 0}% - 10px)`,
+                        width: '20px',
+                        height: '100%',
+                        margin: 0,
+                        opacity: 0,
+                        cursor: 'ew-resize',
+                        zIndex: 6
+                      }}
+                    />
+                    <div 
+                      style={{
+                        position: 'absolute',
+                        left: `calc(${videoDuration ? (startTime / videoDuration) * 100 : 0}% - 6px)`,
+                        width: '12px',
+                        height: '100%',
+                        background: '#FF8E3C',
+                        border: '2px solid #000000',
+                        boxShadow: '0 0 6px #FF8E3C',
+                        zIndex: 2,
+                        pointerEvents: 'none',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '8px',
+                        fontWeight: 'bold',
+                        color: '#0F0E17',
+                        fontFamily: "'Press Start 2P', monospace"
+                      }}
+                    >
+                      S
+                    </div>
+
+                    {/* Draggable End Handle (結束槓槓) */}
+                    <input
+                      type="range"
+                      min={0}
+                      max={videoDuration || 10}
+                      step={0.1}
+                      value={endTime}
+                      onChange={(e) => {
+                        const val = Math.max(parseFloat(e.target.value) || 0.1, startTime + 0.1);
+                        setEndTime(val);
+                        if (videoRef.current) {
+                          videoRef.current.currentTime = val;
+                        }
+                      }}
+                      title={`Drag End Marker: ${endTime.toFixed(1)}s`}
+                      style={{
+                        position: 'absolute',
+                        left: `calc(${videoDuration ? (endTime / videoDuration) * 100 : 0}% - 10px)`,
+                        width: '20px',
+                        height: '100%',
+                        margin: 0,
+                        opacity: 0,
+                        cursor: 'ew-resize',
+                        zIndex: 7
+                      }}
+                    />
+                    <div 
+                      style={{
+                        position: 'absolute',
+                        left: `calc(${videoDuration ? (endTime / videoDuration) * 100 : 0}% - 6px)`,
+                        width: '12px',
+                        height: '100%',
+                        background: '#FF8E3C',
+                        border: '2px solid #000000',
+                        boxShadow: '0 0 6px #FF8E3C',
+                        zIndex: 2,
+                        pointerEvents: 'none',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '8px',
+                        fontWeight: 'bold',
+                        color: '#0F0E17',
+                        fontFamily: "'Press Start 2P', monospace"
+                      }}
+                    >
+                      E
+                    </div>
+                  </div>
+
+                  {/* Action Bar & Quick Setter Buttons */}
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px', marginTop: '4px' }}>
+                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (videoRef.current) {
+                            if (videoRef.current.paused) {
+                              if (videoRef.current.currentTime < startTime || videoRef.current.currentTime >= endTime) {
+                                videoRef.current.currentTime = startTime;
+                              }
+                              const playPromise = videoRef.current.play();
+                              if (playPromise !== undefined) {
+                                playPromise.catch(() => {});
+                              }
+                            } else {
+                              videoRef.current.pause();
+                            }
+                          }
+                        }}
+                        style={{
+                          fontFamily: "'Press Start 2P', monospace",
+                          fontSize: '0.65rem',
+                          background: '#FF8E3C',
+                          color: '#0F0E17',
+                          border: '2px solid #000000',
+                          padding: '8px 14px',
+                          cursor: 'pointer',
+                          boxShadow: '3px 3px 0px #000000'
+                        }}
+                      >
+                        ▶ PLAY / PAUSE
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (videoRef.current) {
+                            setStartTime(videoRef.current.currentTime);
+                          }
+                        }}
+                        style={{
+                          fontFamily: "'Press Start 2P', monospace",
+                          fontSize: '0.6rem',
+                          background: '#2A2A3B',
+                          color: '#2CB67D',
+                          border: '2px solid #000000',
+                          padding: '8px 12px',
+                          cursor: 'pointer',
+                          boxShadow: '2px 2px 0px #000000'
+                        }}
+                      >
+                        SET START [S]
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (videoRef.current && videoRef.current.currentTime > startTime) {
+                            setEndTime(videoRef.current.currentTime);
+                          }
+                        }}
+                        style={{
+                          fontFamily: "'Press Start 2P', monospace",
+                          fontSize: '0.6rem',
+                          background: '#2A2A3B',
+                          color: '#2CB67D',
+                          border: '2px solid #000000',
+                          padding: '8px 12px',
+                          cursor: 'pointer',
+                          boxShadow: '2px 2px 0px #000000'
+                        }}
+                      >
+                        SET END [E]
+                      </button>
+                    </div>
+
+                    <div style={{
+                      fontFamily: "'VT323', monospace",
+                      fontSize: '1.2rem',
+                      color: '#A7A9BE'
+                    }}>
+                      TOTAL: {videoDuration.toFixed(1)}s
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           )}
@@ -379,71 +693,6 @@ export const VideoToGif: React.FC = () => {
               gap: '16px',
               marginBottom: '28px'
             }}>
-              <div style={{
-                flex: 1,
-                minWidth: '150px',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '8px',
-                border: '3px solid #000000',
-                padding: '16px',
-                background: '#0F0E17',
-                boxShadow: '4px 4px 0px #000000'
-              }}>
-                <label style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '0.65rem', color: '#FFFFFE' }}>
-                  START TIME (s)
-                </label>
-                <input
-                  type="number"
-                  value={startTime}
-                  min={0}
-                  step={0.1}
-                  onChange={(e) => setStartTime(parseFloat(e.target.value) || 0)}
-                  style={{
-                    fontFamily: "'VT323', monospace",
-                    background: '#16161A',
-                    border: '3px solid #000000',
-                    color: '#FF8E3C',
-                    padding: '8px',
-                    fontSize: '1.2rem',
-                    outline: 'none'
-                  }}
-                />
-              </div>
-
-              <div style={{
-                flex: 1,
-                minWidth: '150px',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '8px',
-                border: '3px solid #000000',
-                padding: '16px',
-                background: '#0F0E17',
-                boxShadow: '4px 4px 0px #000000'
-              }}>
-                <label style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '0.65rem', color: '#FFFFFE' }}>
-                  DURATION (s)
-                </label>
-                <input
-                  type="number"
-                  value={duration}
-                  min={0.1}
-                  max={10}
-                  step={0.1}
-                  onChange={(e) => setDuration(parseFloat(e.target.value) || 1)}
-                  style={{
-                    fontFamily: "'VT323', monospace",
-                    background: '#16161A',
-                    border: '3px solid #000000',
-                    color: '#FF8E3C',
-                    padding: '8px',
-                    fontSize: '1.2rem',
-                    outline: 'none'
-                  }}
-                />
-              </div>
-
               <div style={{
                 flex: 1,
                 minWidth: '150px',
