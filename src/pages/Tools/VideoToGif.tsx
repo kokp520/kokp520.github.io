@@ -153,6 +153,17 @@ export const VideoToGif: React.FC = () => {
     gif.render();
   };
 
+  // Touch/Mobile detection state
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <div style={{
       fontFamily: "'VT323', 'DotGothic16', monospace",
@@ -162,7 +173,7 @@ export const VideoToGif: React.FC = () => {
       flexDirection: 'column',
       alignItems: 'center',
       minHeight: '100vh',
-      padding: '60px 24px',
+      padding: isMobile ? '20px 12px 40px' : '60px 24px',
       boxSizing: 'border-box',
       position: 'relative',
       overflow: 'hidden'
@@ -179,22 +190,23 @@ export const VideoToGif: React.FC = () => {
         zIndex: 1
       }}>
         {/* Back Link */}
-        <div style={{ marginBottom: '24px' }}>
+        <div style={{ marginBottom: isMobile ? '16px' : '24px' }}>
           <Link 
             to="/tools" 
             style={{
               fontFamily: "'Press Start 2P', monospace",
-              fontSize: '0.75rem',
+              fontSize: isMobile ? '0.65rem' : '0.75rem',
               color: '#FF8E3C',
               textDecoration: 'none',
               display: 'inline-flex',
               alignItems: 'center',
               gap: '8px',
               background: '#2A2A3B',
-              padding: '8px 16px',
+              padding: isMobile ? '10px 14px' : '8px 16px',
               border: '3px solid #000000',
               boxShadow: '3px 3px 0px #000000',
-              imageRendering: 'pixelated'
+              imageRendering: 'pixelated',
+              touchAction: 'manipulation'
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.background = '#FF8E3C';
@@ -212,18 +224,18 @@ export const VideoToGif: React.FC = () => {
         {/* Retro Card */}
         <div style={{
           background: '#16161A',
-          padding: '40px 32px',
+          padding: isMobile ? '20px 16px' : '40px 32px',
           border: '4px solid #000000',
-          boxShadow: '8px 8px 0px #000000, inset -3px -3px 0px #242629, inset 3px 3px 0px #383A3F',
+          boxShadow: isMobile ? '4px 4px 0px #000000, inset -2px -2px 0px #242629' : '8px 8px 0px #000000, inset -3px -3px 0px #242629, inset 3px 3px 0px #383A3F',
           imageRendering: 'pixelated'
         }}>
           {/* Header */}
-          <div style={{ marginBottom: '32px', borderBottom: '3px dashed #383A3F', paddingBottom: '20px' }}>
+          <div style={{ marginBottom: isMobile ? '20px' : '32px', borderBottom: '3px dashed #383A3F', paddingBottom: isMobile ? '16px' : '20px' }}>
             <div 
               className="game-blink"
               style={{
                 fontFamily: "'Press Start 2P', monospace",
-                fontSize: '0.65rem',
+                fontSize: isMobile ? '0.55rem' : '0.65rem',
                 letterSpacing: '1px',
                 marginBottom: '8px'
               }}
@@ -234,14 +246,14 @@ export const VideoToGif: React.FC = () => {
               className="game-color-shift"
               style={{
                 fontFamily: "'Press Start 2P', monospace",
-                fontSize: '1.6rem',
+                fontSize: isMobile ? '1.2rem' : '1.6rem',
                 margin: '0 0 12px 0',
                 lineHeight: 1.3
               }}
             >
               VIDEO TO GIF CROPPER
             </h1>
-            <p style={{ color: '#A7A9BE', fontSize: '1.2rem', margin: 0 }}>
+            <p style={{ color: '#A7A9BE', fontSize: isMobile ? '1rem' : '1.2rem', margin: 0 }}>
               Select a square region from your video and export it as a GIF.
             </p>
           </div>
@@ -267,12 +279,13 @@ export const VideoToGif: React.FC = () => {
               onClick={() => document.getElementById('fileInput')?.click()}
               style={{
                 border: '3px dashed #383A3F',
-                padding: '36px 20px',
+                padding: isMobile ? '28px 16px' : '36px 20px',
                 cursor: 'pointer',
                 background: '#0F0E17',
                 marginBottom: '28px',
                 transition: 'all 0.1s step-end',
-                textAlign: 'center'
+                textAlign: 'center',
+                touchAction: 'manipulation'
               }}
             >
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px' }}>
@@ -291,8 +304,8 @@ export const VideoToGif: React.FC = () => {
                 }}>
                   +
                 </div>
-                <span style={{ fontSize: '1.2rem', color: '#FFFFFE' }}>
-                  Drag & drop video file here, or click to browse
+                <span style={{ fontSize: isMobile ? '1rem' : '1.2rem', color: '#FFFFFE', lineHeight: 1.4 }}>
+                  {isMobile ? 'Tap to choose a video file' : 'Drag & drop video file here, or click to browse'}
                 </span>
               </div>
               <input
@@ -314,7 +327,7 @@ export const VideoToGif: React.FC = () => {
             <div style={{ marginBottom: '28px' }}>
               <label style={{ 
                 fontFamily: "'Press Start 2P', monospace", 
-                fontSize: '0.7rem', 
+                fontSize: isMobile ? '0.6rem' : '0.7rem', 
                 color: '#2CB67D',
                 marginBottom: '8px',
                 display: 'block'
@@ -326,7 +339,7 @@ export const VideoToGif: React.FC = () => {
                 position: 'relative', 
                 border: '4px solid #000000', 
                 background: '#0F0E17',
-                boxShadow: '6px 6px 0px #000000',
+                boxShadow: isMobile ? '3px 3px 0px #000000' : '6px 6px 0px #000000',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
@@ -342,7 +355,7 @@ export const VideoToGif: React.FC = () => {
                   alignItems: 'center',
                   width: '100%',
                   background: '#050508',
-                  minHeight: '260px'
+                  minHeight: isMobile ? '200px' : '260px'
                 }}>
                   <video
                     ref={videoRef}
@@ -357,7 +370,7 @@ export const VideoToGif: React.FC = () => {
                         }
                       }
                     }}
-                    style={{ display: 'block', maxWidth: '100%', maxHeight: '420px', objectFit: 'contain' }}
+                    style={{ display: 'block', maxWidth: '100%', maxHeight: isMobile ? '300px' : '420px', objectFit: 'contain' }}
                   />
                   
                   {videoDim.width > 0 && (
@@ -382,7 +395,8 @@ export const VideoToGif: React.FC = () => {
                         border: '3px dashed #2CB67D',
                         boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.6)',
                         cursor: 'move',
-                        zIndex: 10
+                        zIndex: 10,
+                        touchAction: 'none'
                       }}
                     >
                       <div style={{
@@ -392,7 +406,7 @@ export const VideoToGif: React.FC = () => {
                         background: '#2CB67D',
                         color: '#0F0E17',
                         fontFamily: "'Press Start 2P', monospace",
-                        fontSize: '0.5rem',
+                        fontSize: isMobile ? '0.45rem' : '0.5rem',
                         padding: '2px 4px',
                         fontWeight: 'bold',
                         pointerEvents: 'none'
@@ -408,14 +422,20 @@ export const VideoToGif: React.FC = () => {
                   width: '100%',
                   background: '#16161A',
                   borderTop: '3px solid #000000',
-                  padding: '16px 20px',
+                  padding: isMobile ? '12px 10px' : '16px 20px',
                   display: 'flex',
                   flexDirection: 'column',
                   gap: '12px',
                   boxSizing: 'border-box'
                 }}>
                   {/* Timeline Title & Time Indicators */}
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div style={{ 
+                    display: 'flex', 
+                    flexDirection: isMobile ? 'column' : 'row',
+                    alignItems: isMobile ? 'flex-start' : 'center', 
+                    justifyContent: 'space-between', 
+                    gap: isMobile ? '6px' : '0' 
+                  }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                       <span style={{
                         width: '10px',
@@ -424,12 +444,19 @@ export const VideoToGif: React.FC = () => {
                         display: 'inline-block',
                         boxShadow: '0 0 6px #2CB67D'
                       }} />
-                      <span style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '0.65rem', color: '#FFFFFE' }}>
+                      <span style={{ fontFamily: "'Press Start 2P', monospace", fontSize: isMobile ? '0.55rem' : '0.65rem', color: '#FFFFFE' }}>
                         TRIM TIMELINE
                       </span>
                     </div>
 
-                    <div style={{ fontFamily: "'VT323', monospace", fontSize: '1.2rem', color: '#FF8E3C', display: 'flex', gap: '12px' }}>
+                    <div style={{ 
+                      fontFamily: "'VT323', monospace", 
+                      fontSize: isMobile ? '1.05rem' : '1.2rem', 
+                      color: '#FF8E3C', 
+                      display: 'flex', 
+                      gap: isMobile ? '8px' : '12px',
+                      flexWrap: 'wrap'
+                    }}>
                       <span>CUR: <strong style={{ color: '#2CB67D' }}>{currentTime.toFixed(1)}s</strong></span>
                       <span>RANGE: <strong>{startTime.toFixed(1)}s - {endTime.toFixed(1)}s</strong></span>
                       <span>DUR: <strong>{duration.toFixed(1)}s</strong></span>
@@ -439,7 +466,7 @@ export const VideoToGif: React.FC = () => {
                   {/* Multi-layer Interactive Timeline Track */}
                   <div style={{
                     position: 'relative',
-                    height: '32px',
+                    height: isMobile ? '40px' : '32px',
                     background: '#0F0E17',
                     border: '2px solid #383A3F',
                     boxShadow: 'inset 0 0 6px rgba(0,0,0,0.8)',
@@ -493,7 +520,8 @@ export const VideoToGif: React.FC = () => {
                         margin: 0,
                         opacity: 0,
                         cursor: 'pointer',
-                        zIndex: 5
+                        zIndex: 5,
+                        touchAction: 'manipulation'
                       }}
                     />
 
@@ -514,20 +542,21 @@ export const VideoToGif: React.FC = () => {
                       title={`Drag Start Marker: ${startTime.toFixed(1)}s`}
                       style={{
                         position: 'absolute',
-                        left: `calc(${videoDuration ? (startTime / videoDuration) * 100 : 0}% - 10px)`,
-                        width: '20px',
+                        left: `calc(${videoDuration ? (startTime / videoDuration) * 100 : 0}% - ${isMobile ? '16px' : '10px'})`,
+                        width: isMobile ? '32px' : '20px',
                         height: '100%',
                         margin: 0,
                         opacity: 0,
                         cursor: 'ew-resize',
-                        zIndex: 6
+                        zIndex: 6,
+                        touchAction: 'manipulation'
                       }}
                     />
                     <div 
                       style={{
                         position: 'absolute',
-                        left: `calc(${videoDuration ? (startTime / videoDuration) * 100 : 0}% - 6px)`,
-                        width: '12px',
+                        left: `calc(${videoDuration ? (startTime / videoDuration) * 100 : 0}% - ${isMobile ? '8px' : '6px'})`,
+                        width: isMobile ? '16px' : '12px',
                         height: '100%',
                         background: '#FF8E3C',
                         border: '2px solid #000000',
@@ -538,7 +567,7 @@ export const VideoToGif: React.FC = () => {
                         flexDirection: 'column',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        fontSize: '8px',
+                        fontSize: isMobile ? '9px' : '8px',
                         fontWeight: 'bold',
                         color: '#0F0E17',
                         fontFamily: "'Press Start 2P', monospace"
@@ -564,20 +593,21 @@ export const VideoToGif: React.FC = () => {
                       title={`Drag End Marker: ${endTime.toFixed(1)}s`}
                       style={{
                         position: 'absolute',
-                        left: `calc(${videoDuration ? (endTime / videoDuration) * 100 : 0}% - 10px)`,
-                        width: '20px',
+                        left: `calc(${videoDuration ? (endTime / videoDuration) * 100 : 0}% - ${isMobile ? '16px' : '10px'})`,
+                        width: isMobile ? '32px' : '20px',
                         height: '100%',
                         margin: 0,
                         opacity: 0,
                         cursor: 'ew-resize',
-                        zIndex: 7
+                        zIndex: 7,
+                        touchAction: 'manipulation'
                       }}
                     />
                     <div 
                       style={{
                         position: 'absolute',
-                        left: `calc(${videoDuration ? (endTime / videoDuration) * 100 : 0}% - 6px)`,
-                        width: '12px',
+                        left: `calc(${videoDuration ? (endTime / videoDuration) * 100 : 0}% - ${isMobile ? '8px' : '6px'})`,
+                        width: isMobile ? '16px' : '12px',
                         height: '100%',
                         background: '#FF8E3C',
                         border: '2px solid #000000',
@@ -588,7 +618,7 @@ export const VideoToGif: React.FC = () => {
                         flexDirection: 'column',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        fontSize: '8px',
+                        fontSize: isMobile ? '9px' : '8px',
                         fontWeight: 'bold',
                         color: '#0F0E17',
                         fontFamily: "'Press Start 2P', monospace"
@@ -599,8 +629,21 @@ export const VideoToGif: React.FC = () => {
                   </div>
 
                   {/* Action Bar & Quick Setter Buttons */}
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px', marginTop: '4px' }}>
-                    <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                  <div style={{ 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'space-between', 
+                    flexDirection: isMobile ? 'column' : 'row',
+                    gap: isMobile ? '12px' : '10px', 
+                    marginTop: '4px' 
+                  }}>
+                    <div style={{ 
+                      display: 'flex', 
+                      gap: '8px', 
+                      alignItems: 'center', 
+                      width: isMobile ? '100%' : 'auto',
+                      justifyContent: isMobile ? 'space-between' : 'flex-start'
+                    }}>
                       <button
                         type="button"
                         onClick={() => {
@@ -620,13 +663,16 @@ export const VideoToGif: React.FC = () => {
                         }}
                         style={{
                           fontFamily: "'Press Start 2P', monospace",
-                          fontSize: '0.65rem',
+                          fontSize: isMobile ? '0.55rem' : '0.65rem',
                           background: '#FF8E3C',
                           color: '#0F0E17',
                           border: '2px solid #000000',
-                          padding: '8px 14px',
+                          padding: isMobile ? '10px 10px' : '8px 14px',
                           cursor: 'pointer',
-                          boxShadow: '3px 3px 0px #000000'
+                          boxShadow: '3px 3px 0px #000000',
+                          minHeight: '44px',
+                          touchAction: 'manipulation',
+                          flex: isMobile ? 1 : 'none'
                         }}
                       >
                         ▶ PLAY / PAUSE
@@ -641,16 +687,18 @@ export const VideoToGif: React.FC = () => {
                         }}
                         style={{
                           fontFamily: "'Press Start 2P', monospace",
-                          fontSize: '0.6rem',
+                          fontSize: isMobile ? '0.55rem' : '0.6rem',
                           background: '#2A2A3B',
                           color: '#2CB67D',
                           border: '2px solid #000000',
-                          padding: '8px 12px',
+                          padding: isMobile ? '10px 8px' : '8px 12px',
                           cursor: 'pointer',
-                          boxShadow: '2px 2px 0px #000000'
+                          boxShadow: '2px 2px 0px #000000',
+                          minHeight: '44px',
+                          touchAction: 'manipulation'
                         }}
                       >
-                        SET START [S]
+                        SET [S]
                       </button>
 
                       <button
@@ -662,23 +710,26 @@ export const VideoToGif: React.FC = () => {
                         }}
                         style={{
                           fontFamily: "'Press Start 2P', monospace",
-                          fontSize: '0.6rem',
+                          fontSize: isMobile ? '0.55rem' : '0.6rem',
                           background: '#2A2A3B',
                           color: '#2CB67D',
                           border: '2px solid #000000',
-                          padding: '8px 12px',
+                          padding: isMobile ? '10px 8px' : '8px 12px',
                           cursor: 'pointer',
-                          boxShadow: '2px 2px 0px #000000'
+                          boxShadow: '2px 2px 0px #000000',
+                          minHeight: '44px',
+                          touchAction: 'manipulation'
                         }}
                       >
-                        SET END [E]
+                        SET [E]
                       </button>
                     </div>
 
                     <div style={{
                       fontFamily: "'VT323', monospace",
                       fontSize: '1.2rem',
-                      color: '#A7A9BE'
+                      color: '#A7A9BE',
+                      alignSelf: isMobile ? 'flex-end' : 'center'
                     }}>
                       TOTAL: {videoDuration.toFixed(1)}s
                     </div>
@@ -723,7 +774,8 @@ export const VideoToGif: React.FC = () => {
                     color: '#FF8E3C',
                     padding: '8px',
                     fontSize: '1.2rem',
-                    outline: 'none'
+                    outline: 'none',
+                    minHeight: '44px'
                   }}
                 />
               </div>
@@ -741,12 +793,14 @@ export const VideoToGif: React.FC = () => {
                 color: isProcessing ? '#A7A9BE' : '#0F0E17',
                 border: '3px solid #000000',
                 padding: '18px',
-                fontSize: '0.85rem',
+                fontSize: isMobile ? '0.75rem' : '0.85rem',
                 cursor: isProcessing ? 'not-allowed' : 'pointer',
                 width: '100%',
                 boxShadow: isProcessing ? 'none' : '5px 5px 0px #000000',
                 transition: 'all 0.1s step-end',
-                imageRendering: 'pixelated'
+                imageRendering: 'pixelated',
+                minHeight: '48px',
+                touchAction: 'manipulation'
               }}
               onMouseDown={(e) => {
                 if (isProcessing) return;
@@ -783,7 +837,7 @@ export const VideoToGif: React.FC = () => {
           {result && (
             <div style={{
               marginTop: '28px',
-              padding: '24px',
+              padding: isMobile ? '16px' : '24px',
               border: '3px solid #2CB67D',
               background: '#0F0E17',
               display: 'flex',
@@ -794,12 +848,13 @@ export const VideoToGif: React.FC = () => {
             }}>
               <div style={{ 
                 fontFamily: "'Press Start 2P', monospace", 
-                fontSize: '0.8rem', 
-                color: '#2CB67D' 
+                fontSize: isMobile ? '0.7rem' : '0.8rem', 
+                color: '#2CB67D',
+                textAlign: 'center'
               }}>
                 ✓ CONVERSION COMPLETE
               </div>
-              <div style={{ border: '3px solid #000000', padding: '8px', background: '#16161A' }}>
+              <div style={{ border: '3px solid #000000', padding: '8px', background: '#16161A', width: '100%', boxSizing: 'border-box', display: 'flex', justifyContent: 'center' }}>
                 <img src={result} alt="Generated GIF" style={{ maxWidth: '100%', maxHeight: '300px', display: 'block', imageRendering: 'pixelated' }} />
               </div>
               <a
@@ -812,12 +867,14 @@ export const VideoToGif: React.FC = () => {
                   color: '#0F0E17',
                   textDecoration: 'none',
                   padding: '16px 20px',
-                  fontSize: '0.8rem',
+                  fontSize: isMobile ? '0.7rem' : '0.8rem',
                   width: '100%',
                   textAlign: 'center',
                   border: '3px solid #000000',
                   boxShadow: '4px 4px 0px #000000',
-                  boxSizing: 'border-box'
+                  boxSizing: 'border-box',
+                  minHeight: '48px',
+                  touchAction: 'manipulation'
                 }}
                 onMouseDown={(e) => {
                   e.currentTarget.style.transform = 'translate(3px, 3px)';
