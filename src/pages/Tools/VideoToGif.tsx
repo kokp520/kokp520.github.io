@@ -78,23 +78,44 @@ export const VideoToGif: React.FC = () => {
 
     const video = videoRef.current;
     
-    // Get fresh element rect at the time of export
-    const videoRect = video.getBoundingClientRect();
-    const renderedWidth = videoRect.width || videoDim.width || 300;
-    const renderedHeight = videoRect.height || videoDim.height || 300;
-    const naturalW = video.videoWidth || videoDim.naturalWidth || renderedWidth;
-    const naturalH = video.videoHeight || videoDim.naturalHeight || renderedHeight;
+    // Natural intrinsic dimensions of video file
+    const naturalW = video.videoWidth || videoDim.naturalWidth || 300;
+    const naturalH = video.videoHeight || videoDim.naturalHeight || 300;
 
-    // Calculate scale factor from rendered video to natural video
-    const scaleX = naturalW / renderedWidth;
-    const scaleY = naturalH / renderedHeight;
+    // Get rendered element size
+    const rect = video.getBoundingClientRect();
+    const elemW = rect.width || videoDim.width || naturalW;
+    const elemH = rect.height || videoDim.height || naturalH;
 
-    const sourceX = Math.max(0, cropBox.x * scaleX);
-    const sourceY = Math.max(0, cropBox.y * scaleY);
-    const sourceW = Math.min(naturalW - sourceX, cropBox.width * scaleX);
-    const sourceH = Math.min(naturalH - sourceY, cropBox.height * scaleY);
+    // Account for object-fit: contain (letterboxing/pillarboxing inside <video> tag)
+    const videoRatio = naturalW / naturalH;
+    const elemRatio = elemW / elemH;
 
-    const outputSize = 300; 
+    let displayedW = elemW;
+    let displayedH = elemH;
+    let offsetX = 0;
+    let offsetY = 0;
+
+    if (elemRatio > videoRatio) {
+      displayedW = elemH * videoRatio;
+      offsetX = (elemW - displayedW) / 2;
+    } else {
+      displayedH = elemW / videoRatio;
+      offsetY = (elemH - displayedH) / 2;
+    }
+
+    const scale = naturalW / displayedW;
+
+    // Crop box position relative to actual video picture area
+    const relCropX = Math.max(0, cropBox.x - offsetX);
+    const relCropY = Math.max(0, cropBox.y - offsetY);
+
+    const sourceX = Math.min(naturalW, relCropX * scale);
+    const sourceY = Math.min(naturalH, relCropY * scale);
+    const sourceW = Math.min(naturalW - sourceX, cropBox.width * scale);
+    const sourceH = Math.min(naturalH - sourceY, cropBox.height * scale);
+
+    const outputSize = 300;
 
     const gif = new GIF({
       workers: 2,
@@ -139,6 +160,7 @@ export const VideoToGif: React.FC = () => {
       
       // Seek video to exact frame
       video.currentTime = time;
+
       await new Promise<void>((resolve) => {
         let timeoutId: number;
         const onSeeked = () => {
@@ -148,36 +170,25 @@ export const VideoToGif: React.FC = () => {
         };
         video.addEventListener('seeked', onSeeked);
 
-        // Fallback timeout for iOS Safari where seeked event might be delayed
         timeoutId = window.setTimeout(() => {
           video.removeEventListener('seeked', onSeeked);
           resolve();
-        }, 200);
+        }, 150);
       });
 
-      // iOS Safari requires a requestVideoFrameCallback or a small delay after seeking to actually paint frame to memory
-      if ('requestVideoFrameCallback' in video) {
-        await new Promise<void>((resolve) => {
-          (video as any).requestVideoFrameCallback(() => resolve());
-          setTimeout(resolve, 60);
-        });
-      } else {
-        await new Promise((res) => setTimeout(res, 50));
-      }
+      // Frame decode wait
+      await new Promise((res) => setTimeout(res, 40));
 
-      ctx.fillStyle = '#000000';
-      ctx.fillRect(0, 0, outputSize, outputSize);
+      ctx.clearRect(0, 0, outputSize, outputSize);
 
-      if (sourceW > 0 && sourceH > 0) {
-        try {
-          ctx.drawImage(
-            video,
-            sourceX, sourceY, sourceW, sourceH,
-            0, 0, outputSize, outputSize
-          );
-        } catch (err) {
-          console.error('Error drawing frame to canvas:', err);
-        }
+      try {
+        ctx.drawImage(
+          video,
+          sourceX, sourceY, sourceW, sourceH,
+          0, 0, outputSize, outputSize
+        );
+      } catch (err) {
+        console.error('Error drawing frame to canvas:', err);
       }
 
       gif.addFrame(ctx, { copy: true, delay });
@@ -419,7 +430,8 @@ export const VideoToGif: React.FC = () => {
                   alignItems: 'center',
                   width: '100%',
                   background: '#050508',
-                  minHeight: isMobile ? '200px' : '260px'
+                  minHeight: isMobile ? '200px' : '260px',
+                  overflow: 'hidden'
                 }}>
                   {/* Loading overlay */}
                   {isVideoLoading && (
@@ -454,72 +466,76 @@ export const VideoToGif: React.FC = () => {
                     </div>
                   )}
 
-                  <video
-                    ref={videoRef}
-                    src={videoUrl}
-                    crossOrigin="anonymous"
-                    playsInline
-                    webkit-playsinline="true"
-                    onLoadStart={() => setIsVideoLoading(true)}
-                    onLoadedMetadata={handleVideoLoaded}
-                    onLoadedData={handleVideoLoaded}
-                    onTimeUpdate={() => {
-                      if (videoRef.current) {
-                        setCurrentTime(videoRef.current.currentTime);
-                        if (videoRef.current.currentTime >= endTime) {
-                          videoRef.current.currentTime = startTime;
+                  {/* Video & Crop Overlay Wrapper */}
+                  <div style={{ position: 'relative', display: 'inline-block', lineHeight: 0 }}>
+                    <video
+                      ref={videoRef}
+                      src={videoUrl}
+                      muted
+                      preload="auto"
+                      playsInline
+                      webkit-playsinline="true"
+                      onLoadStart={() => setIsVideoLoading(true)}
+                      onLoadedMetadata={handleVideoLoaded}
+                      onLoadedData={handleVideoLoaded}
+                      onTimeUpdate={() => {
+                        if (videoRef.current) {
+                          setCurrentTime(videoRef.current.currentTime);
+                          if (videoRef.current.currentTime >= endTime) {
+                            videoRef.current.currentTime = startTime;
+                          }
                         }
-                      }
-                    }}
-                    style={{ display: 'block', maxWidth: '100%', maxHeight: isMobile ? '300px' : '420px', objectFit: 'contain' }}
-                  />
-                  
-                  {videoDim.width > 0 && !isVideoLoading && (
-                    <Rnd
-                      bounds="parent"
-                      position={{ x: cropBox.x, y: cropBox.y }}
-                      size={{ width: cropBox.width, height: cropBox.height }}
-                      onDragStart={() => setIsDraggingCrop(true)}
-                      onDragStop={(_e, d) => {
-                        setIsDraggingCrop(false);
-                        setCropBox(prev => ({ ...prev, x: d.x, y: d.y }));
                       }}
-                      onResizeStart={() => setIsDraggingCrop(true)}
-                      onResizeStop={(_e, _dir, ref, _delta, position) => {
-                        setIsDraggingCrop(false);
-                        const newSize = Math.max(50, Math.min(ref.offsetWidth, ref.offsetHeight));
-                        setCropBox({
-                          width: newSize,
-                          height: newSize,
-                          x: position.x,
-                          y: position.y
-                        });
-                      }}
-                      lockAspectRatio={true}
-                      style={{
-                        border: '3px dashed #2CB67D',
-                        boxShadow: isDraggingCrop ? '0 0 0 9999px rgba(0, 0, 0, 0.6)' : 'none',
-                        cursor: 'move',
-                        zIndex: 10,
-                        touchAction: 'none'
-                      }}
-                    >
-                      <div style={{
-                        position: 'absolute',
-                        top: '4px',
-                        left: '4px',
-                        background: '#2CB67D',
-                        color: '#0F0E17',
-                        fontFamily: "'Press Start 2P', monospace",
-                        fontSize: isMobile ? '0.45rem' : '0.5rem',
-                        padding: '2px 4px',
-                        fontWeight: 'bold',
-                        pointerEvents: 'none'
-                      }}>
-                        GIF CROP
-                      </div>
-                    </Rnd>
-                  )}
+                      style={{ display: 'block', maxWidth: '100%', maxHeight: isMobile ? '300px' : '420px', objectFit: 'contain' }}
+                    />
+                    
+                    {videoDim.width > 0 && !isVideoLoading && (
+                      <Rnd
+                        bounds="parent"
+                        position={{ x: cropBox.x, y: cropBox.y }}
+                        size={{ width: cropBox.width, height: cropBox.height }}
+                        onDragStart={() => setIsDraggingCrop(true)}
+                        onDragStop={(_e, d) => {
+                          setIsDraggingCrop(false);
+                          setCropBox(prev => ({ ...prev, x: d.x, y: d.y }));
+                        }}
+                        onResizeStart={() => setIsDraggingCrop(true)}
+                        onResizeStop={(_e, _dir, ref, _delta, position) => {
+                          setIsDraggingCrop(false);
+                          const newSize = Math.max(40, Math.min(ref.offsetWidth, ref.offsetHeight));
+                          setCropBox({
+                            width: newSize,
+                            height: newSize,
+                            x: position.x,
+                            y: position.y
+                          });
+                        }}
+                        lockAspectRatio={true}
+                        style={{
+                          border: '3px dashed #2CB67D',
+                          boxShadow: isDraggingCrop ? '0 0 0 9999px rgba(0, 0, 0, 0.6)' : 'none',
+                          cursor: 'move',
+                          zIndex: 10,
+                          touchAction: 'none'
+                        }}
+                      >
+                        <div style={{
+                          position: 'absolute',
+                          top: '4px',
+                          left: '4px',
+                          background: '#2CB67D',
+                          color: '#0F0E17',
+                          fontFamily: "'Press Start 2P', monospace",
+                          fontSize: isMobile ? '0.45rem' : '0.5rem',
+                          padding: '2px 4px',
+                          fontWeight: 'bold',
+                          pointerEvents: 'none'
+                        }}>
+                          GIF CROP
+                        </div>
+                      </Rnd>
+                    )}
+                  </div>
                 </div>
 
                 {/* Sleek Player Control Bar */}
