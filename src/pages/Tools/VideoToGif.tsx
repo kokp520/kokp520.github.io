@@ -7,6 +7,7 @@ import GIF from 'gif.js';
 export const VideoToGif: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [videoUrl, setVideoUrl] = useState<string>('');
+  const [isVideoLoading, setIsVideoLoading] = useState<boolean>(false);
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [statusText, setStatusText] = useState<string>('');
   const [result, setResult] = useState<string | null>(null);
@@ -33,6 +34,7 @@ export const VideoToGif: React.FC = () => {
     setSelectedFile(file);
     const url = URL.createObjectURL(file);
     setVideoUrl(url);
+    setIsVideoLoading(true);
     setResult(null);
     setStatusText('');
   };
@@ -51,6 +53,7 @@ export const VideoToGif: React.FC = () => {
     setVideoDuration(dur);
     setStartTime(0);
     setEndTime(Math.min(3, dur));
+    setCurrentTime(0);
     setVideoDim({
       width: rect.width,
       height: rect.height,
@@ -63,6 +66,7 @@ export const VideoToGif: React.FC = () => {
       width: 200,
       height: 200,
     });
+    setIsVideoLoading(false);
   };
 
   const processVideo = async () => {
@@ -74,16 +78,22 @@ export const VideoToGif: React.FC = () => {
 
     const video = videoRef.current;
     
+    // Get fresh element rect at the time of export
+    const videoRect = video.getBoundingClientRect();
+    const renderedWidth = videoRect.width || videoDim.width || 300;
+    const renderedHeight = videoRect.height || videoDim.height || 300;
+    const naturalW = video.videoWidth || videoDim.naturalWidth || renderedWidth;
+    const naturalH = video.videoHeight || videoDim.naturalHeight || renderedHeight;
+
     // Calculate scale factor from rendered video to natural video
-    const scaleX = videoDim.naturalWidth / videoDim.width;
-    const scaleY = videoDim.naturalHeight / videoDim.height;
+    const scaleX = naturalW / renderedWidth;
+    const scaleY = naturalH / renderedHeight;
 
-    const sourceX = cropBox.x * scaleX;
-    const sourceY = cropBox.y * scaleY;
-    const sourceW = cropBox.width * scaleX;
-    const sourceH = cropBox.height * scaleY;
+    const sourceX = Math.max(0, cropBox.x * scaleX);
+    const sourceY = Math.max(0, cropBox.y * scaleY);
+    const sourceW = Math.min(naturalW - sourceX, cropBox.width * scaleX);
+    const sourceH = Math.min(naturalH - sourceY, cropBox.height * scaleY);
 
-    // Use a fixed output size to avoid massive GIFs, or use the sourceW/sourceH if small enough
     const outputSize = 300; 
 
     const gif = new GIF({
@@ -126,23 +136,49 @@ export const VideoToGif: React.FC = () => {
 
     for (let i = 0; i < totalFrames; i++) {
       const time = startTime + (i / fps);
-      video.currentTime = time;
       
-      // Wait for seeked event
+      // Seek video to exact frame
+      video.currentTime = time;
       await new Promise<void>((resolve) => {
+        let timeoutId: number;
         const onSeeked = () => {
+          clearTimeout(timeoutId);
           video.removeEventListener('seeked', onSeeked);
           resolve();
         };
         video.addEventListener('seeked', onSeeked);
+
+        // Fallback timeout for iOS Safari where seeked event might be delayed
+        timeoutId = window.setTimeout(() => {
+          video.removeEventListener('seeked', onSeeked);
+          resolve();
+        }, 200);
       });
 
-      ctx.clearRect(0, 0, outputSize, outputSize);
-      ctx.drawImage(
-        video,
-        sourceX, sourceY, sourceW, sourceH,
-        0, 0, outputSize, outputSize
-      );
+      // iOS Safari requires a requestVideoFrameCallback or a small delay after seeking to actually paint frame to memory
+      if ('requestVideoFrameCallback' in video) {
+        await new Promise<void>((resolve) => {
+          (video as any).requestVideoFrameCallback(() => resolve());
+          setTimeout(resolve, 60);
+        });
+      } else {
+        await new Promise((res) => setTimeout(res, 50));
+      }
+
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(0, 0, outputSize, outputSize);
+
+      if (sourceW > 0 && sourceH > 0) {
+        try {
+          ctx.drawImage(
+            video,
+            sourceX, sourceY, sourceW, sourceH,
+            0, 0, outputSize, outputSize
+          );
+        } catch (err) {
+          console.error('Error drawing frame to canvas:', err);
+        }
+      }
 
       gif.addFrame(ctx, { copy: true, delay });
       currentFrame++;
@@ -385,12 +421,47 @@ export const VideoToGif: React.FC = () => {
                   background: '#050508',
                   minHeight: isMobile ? '200px' : '260px'
                 }}>
+                  {/* Loading overlay */}
+                  {isVideoLoading && (
+                    <div style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'rgba(15, 14, 23, 0.92)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      zIndex: 20,
+                      gap: '16px'
+                    }}>
+                      <div className="retro-spinner" style={{
+                        width: '40px',
+                        height: '40px',
+                        border: '4px solid #383A3F',
+                        borderTopColor: '#FF8E3C',
+                        borderRightColor: '#2CB67D',
+                        borderRadius: '50%',
+                        animation: 'spin 0.8s linear infinite'
+                      }} />
+                      <div style={{
+                        fontFamily: "'Press Start 2P', monospace",
+                        fontSize: isMobile ? '0.65rem' : '0.8rem',
+                        color: '#FF8E3C',
+                        letterSpacing: '1px'
+                      }} className="game-blink">
+                        LOADING VIDEO...
+                      </div>
+                    </div>
+                  )}
+
                   <video
                     ref={videoRef}
                     src={videoUrl}
                     crossOrigin="anonymous"
                     playsInline
                     webkit-playsinline="true"
+                    onLoadStart={() => setIsVideoLoading(true)}
+                    onLoadedMetadata={handleVideoLoaded}
                     onLoadedData={handleVideoLoaded}
                     onTimeUpdate={() => {
                       if (videoRef.current) {
@@ -403,7 +474,7 @@ export const VideoToGif: React.FC = () => {
                     style={{ display: 'block', maxWidth: '100%', maxHeight: isMobile ? '300px' : '420px', objectFit: 'contain' }}
                   />
                   
-                  {videoDim.width > 0 && (
+                  {videoDim.width > 0 && !isVideoLoading && (
                     <Rnd
                       bounds="parent"
                       position={{ x: cropBox.x, y: cropBox.y }}
@@ -521,7 +592,7 @@ export const VideoToGif: React.FC = () => {
                       boxSizing: 'border-box'
                     }} />
 
-                    {/* Current Playhead Indicator */}
+                    {/* Current Playhead Indicator (Green Line / Playhead) */}
                     <div style={{
                       position: 'absolute',
                       left: `${videoDuration ? (currentTime / videoDuration) * 100 : 0}%`,
@@ -559,7 +630,7 @@ export const VideoToGif: React.FC = () => {
                       }}
                     />
 
-                    {/* Draggable Start Handle (開始槓槓) */}
+                    {/* Draggable Start Handle (開始槓槓 / 綠線起點) */}
                     <input
                       type="range"
                       min={0}
@@ -569,6 +640,7 @@ export const VideoToGif: React.FC = () => {
                       onChange={(e) => {
                         const val = Math.min(parseFloat(e.target.value) || 0, endTime - 0.1);
                         setStartTime(val);
+                        setCurrentTime(val);
                         if (videoRef.current) {
                           videoRef.current.currentTime = val;
                         }
@@ -592,9 +664,9 @@ export const VideoToGif: React.FC = () => {
                         left: `calc(${videoDuration ? (startTime / videoDuration) * 100 : 0}% - ${isMobile ? '8px' : '6px'})`,
                         width: isMobile ? '16px' : '12px',
                         height: '100%',
-                        background: '#FF8E3C',
+                        background: '#2CB67D',
                         border: '2px solid #000000',
-                        boxShadow: '0 0 6px #FF8E3C',
+                        boxShadow: '0 0 6px #2CB67D',
                         zIndex: 2,
                         pointerEvents: 'none',
                         display: 'flex',
