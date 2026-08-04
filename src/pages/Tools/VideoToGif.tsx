@@ -136,90 +136,121 @@ export const VideoToGif: React.FC = () => {
     const sourceW = Math.min(naturalW - sourceX, cropBox.width * scale);
     const sourceH = Math.min(naturalH - sourceY, cropBox.height * scale);
 
-    const targetSize = outputSize || 128;
+    let currentFps = exportPreset === 'slack' ? 10 : fps;
+    let targetSize = outputSize || 128;
+    const maxSlackBytes = 128 * 1024; // 128 KB limit for Slack
 
-    const gif = new GIF({
-      workers: 2,
-      quality: 10,
-      workerScript: '/gif.worker.js',
-      width: targetSize,
-      height: targetSize,
-    });
+    // Helper to encode GIF with given fps & targetSize
+    const generateGif = async (effectiveFps: number, dimensions: number): Promise<Blob> => {
+      return new Promise<Blob>(async (resolve, reject) => {
+        const gif = new GIF({
+          workers: 2,
+          quality: 10,
+          workerScript: '/gif.worker.js',
+          width: dimensions,
+          height: dimensions,
+        });
 
-    const canvas = document.createElement('canvas');
-    canvas.width = targetSize;
-    canvas.height = targetSize;
-    const ctx = canvas.getContext('2d', { willReadFrequently: true });
-    if (!ctx) {
-      setStatusText('Failed to get canvas context');
-      setIsProcessing(false);
-      return;
-    }
+        const canvas = document.createElement('canvas');
+        canvas.width = dimensions;
+        canvas.height = dimensions;
+        const ctx = canvas.getContext('2d', { willReadFrequently: true });
+        if (!ctx) {
+          reject(new Error('Failed to get canvas context'));
+          return;
+        }
 
-    const delay = 1000 / fps;
-    const totalFrames = Math.floor(duration * fps);
-    let currentFrame = 0;
+        const delay = 1000 / effectiveFps;
+        const totalFrames = Math.max(1, Math.floor(duration * effectiveFps));
+        let currentFrame = 0;
 
-    gif.on('progress', (p: number) => {
-      setStatusText(`Encoding GIF... ${Math.round(p * 100)}%`);
-    });
+        gif.on('progress', (p: number) => {
+          setStatusText(`Encoding GIF (${dimensions}x${dimensions} @ ${effectiveFps}FPS)... ${Math.round(p * 100)}%`);
+        });
 
-    gif.on('finished', (blob: Blob) => {
-      const url = URL.createObjectURL(blob);
-      setResult(url);
-      setResultSizeKb(Math.round(blob.size / 1024));
-      setStatusText(`Done! (${(blob.size / 1024).toFixed(1)} KB)`);
-      setIsProcessing(false);
-    });
+        gif.on('finished', (blob: Blob) => {
+          resolve(blob);
+        });
 
-    // Pause video to manually seek
-    video.pause();
-    
-    setStatusText('Extracting frames...');
+        video.pause();
 
-    for (let i = 0; i < totalFrames; i++) {
-      const time = startTime + (i / fps);
-      
-      // Seek video to exact frame
-      video.currentTime = time;
+        for (let i = 0; i < totalFrames; i++) {
+          const time = startTime + (i / effectiveFps);
+          video.currentTime = time;
 
-      await new Promise<void>((resolve) => {
-        let timeoutId: number;
-        const onSeeked = () => {
-          clearTimeout(timeoutId);
-          video.removeEventListener('seeked', onSeeked);
-          resolve();
-        };
-        video.addEventListener('seeked', onSeeked);
+          await new Promise<void>((res) => {
+            let timeoutId: number;
+            const onSeeked = () => {
+              clearTimeout(timeoutId);
+              video.removeEventListener('seeked', onSeeked);
+              res();
+            };
+            video.addEventListener('seeked', onSeeked);
 
-        timeoutId = window.setTimeout(() => {
-          video.removeEventListener('seeked', onSeeked);
-          resolve();
-        }, 150);
+            timeoutId = window.setTimeout(() => {
+              video.removeEventListener('seeked', onSeeked);
+              res();
+            }, 150);
+          });
+
+          await new Promise((res) => setTimeout(res, 30));
+
+          ctx.clearRect(0, 0, dimensions, dimensions);
+          try {
+            ctx.drawImage(
+              video,
+              sourceX, sourceY, sourceW, sourceH,
+              0, 0, dimensions, dimensions
+            );
+          } catch (err) {
+            console.error('Error drawing frame:', err);
+          }
+
+          gif.addFrame(ctx, { copy: true, delay });
+          currentFrame++;
+          setStatusText(`Extracting frames (${currentFrame}/${totalFrames})...`);
+        }
+
+        setStatusText('Rendering GIF...');
+        gif.render();
       });
+    };
 
-      // Frame decode wait
-      await new Promise((res) => setTimeout(res, 40));
+    try {
+      let finalBlob = await generateGif(currentFps, targetSize);
 
-      ctx.clearRect(0, 0, targetSize, targetSize);
+      // If Slack preset is active and output exceeds 128KB, automatically optimize parameters
+      if (exportPreset === 'slack' && finalBlob.size > maxSlackBytes) {
+        setStatusText(`Size is ${(finalBlob.size / 1024).toFixed(1)}KB (>128KB). Optimizing FPS & Resolution...`);
+        
+        // Pass 2: Try lowering FPS to 8
+        currentFps = 8;
+        finalBlob = await generateGif(currentFps, targetSize);
 
-      try {
-        ctx.drawImage(
-          video,
-          sourceX, sourceY, sourceW, sourceH,
-          0, 0, targetSize, targetSize
-        );
-      } catch (err) {
-        console.error('Error drawing frame to canvas:', err);
+        // Pass 3: If still > 128KB, try FPS 6
+        if (finalBlob.size > maxSlackBytes) {
+          currentFps = 6;
+          finalBlob = await generateGif(currentFps, targetSize);
+        }
+
+        // Pass 4: If still > 128KB, try 96x96 @ 6FPS
+        if (finalBlob.size > maxSlackBytes) {
+          currentFps = 6;
+          targetSize = 96;
+          finalBlob = await generateGif(currentFps, targetSize);
+        }
       }
 
-      gif.addFrame(ctx, { copy: true, delay });
-      currentFrame++;
-      setStatusText(`Extracting frames... ${currentFrame}/${totalFrames}`);
+      const url = URL.createObjectURL(finalBlob);
+      setResult(url);
+      setResultSizeKb(Math.round(finalBlob.size / 1024));
+      setStatusText(`Done! (${(finalBlob.size / 1024).toFixed(1)} KB)`);
+    } catch (err) {
+      console.error('GIF generation failed:', err);
+      setStatusText('GIF generation failed.');
+    } finally {
+      setIsProcessing(false);
     }
-
-    setStatusText('Rendering GIF...');
-    gif.render();
   };
 
   // Touch/Mobile detection state
@@ -685,7 +716,7 @@ export const VideoToGif: React.FC = () => {
                         margin: 0,
                         opacity: 0,
                         cursor: 'pointer',
-                        zIndex: 5,
+                        zIndex: 4,
                         touchAction: 'manipulation'
                       }}
                     />
@@ -732,13 +763,13 @@ export const VideoToGif: React.FC = () => {
                       title={exportPreset === 'slack' ? `Drag Clip Window (1.5s): ${startTime.toFixed(1)}s` : `Drag Start Marker (S): ${startTime.toFixed(1)}s`}
                       style={{
                         position: 'absolute',
-                        left: `calc(${videoDuration ? (startTime / videoDuration) * 100 : 0}% - ${isMobile ? '20px' : '12px'})`,
-                        width: isMobile ? '40px' : '24px',
+                        left: 0,
+                        width: '100%',
                         height: '100%',
                         margin: 0,
                         opacity: 0,
                         cursor: 'ew-resize',
-                        zIndex: 8,
+                        zIndex: 10,
                         touchAction: 'manipulation'
                       }}
                     />
@@ -794,13 +825,13 @@ export const VideoToGif: React.FC = () => {
                       title={exportPreset === 'slack' ? 'Fixed in Slack Preset' : `Drag End Marker (E): ${endTime.toFixed(1)}s`}
                       style={{
                         position: 'absolute',
-                        left: `calc(${videoDuration ? (endTime / videoDuration) * 100 : 0}% - ${isMobile ? '20px' : '12px'})`,
-                        width: isMobile ? '40px' : '24px',
+                        left: 0,
+                        width: '100%',
                         height: '100%',
                         margin: 0,
                         opacity: 0,
                         cursor: exportPreset === 'slack' ? 'not-allowed' : 'ew-resize',
-                        zIndex: 8,
+                        zIndex: exportPreset === 'slack' ? 1 : 12,
                         touchAction: 'manipulation'
                       }}
                     />
