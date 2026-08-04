@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kokp520.github.io/sitemap.xml
+Sitemap: https://adiolk98.github.io/sitemap.xml
