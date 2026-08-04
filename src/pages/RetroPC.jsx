@@ -1,5 +1,8 @@
-import React, { useState, lazy, Suspense } from "react";
+import React, { useState, lazy, Suspense, useCallback } from "react";
+import { useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import RetroLanding from "../components/RetroLanding";
+import CrtBootAnimation from "../components/CrtBootAnimation";
 import {
   GlobalStyle,
   CRTFrame,
@@ -168,6 +171,10 @@ const APP_CONFIGS = [
 ];
 
 function AppContent() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const isBootedParam = searchParams.get('boot') === 'true';
+  const [isBooting, setIsBooting] = useState(false);
+
   const [openApps, setOpenApps] = useState({}); // { about: true, maple: false, ... }
   const [activeAppId, setActiveAppId] = useState(null);
   const { openApp, closeApp } = useAppWindows();
@@ -178,8 +185,22 @@ function AppContent() {
     src: '/assets/wallpaper-compressed.mp4'
   });
 
+  const handleStartBoot = useCallback(() => {
+    setIsBooting(true);
+  }, []);
+
+  const handleBootComplete = useCallback(() => {
+    setIsBooting(false);
+    setSearchParams({ boot: 'true' });
+  }, [setSearchParams]);
+
+  const handleExitToLanding = useCallback(() => {
+    setSearchParams({});
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [setSearchParams]);
+
   // 開啟 app 並聚焦
-  const handleOpenApp = (id) => {
+  const handleOpenApp = useCallback((id) => {
     const appConfig = APP_CONFIGS.find(app => app.id === id);
     if (appConfig?.onOpen) {
       appConfig.onOpen();
@@ -190,17 +211,26 @@ function AppContent() {
     if (appConfig) {
       openApp({ id: appConfig.id, name: appConfig.name, icon: appConfig.icon });
     }
-  };
+  }, [openApp]);
+
   // 關閉 app
-  const handleCloseApp = (id) => {
+  const handleCloseApp = useCallback((id) => {
     setOpenApps(prev => ({ ...prev, [id]: false }));
     closeApp(id);
-    if (activeAppId === id) setActiveAppId(null);
-  };
+    setActiveAppId(prev => (prev === id ? null : prev));
+  }, [closeApp]);
 
   // 依照 activeAppId 決定視窗渲染順序（聚焦的最後渲染）
   const openedWindows = APP_CONFIGS.filter(app => openApps[app.id])
     .sort(w => w.id === activeAppId ? 1 : -1);
+
+  if (isBooting) {
+    return <CrtBootAnimation onComplete={handleBootComplete} />;
+  }
+
+  if (!isBootedParam) {
+    return <RetroLanding onBoot={handleStartBoot} />;
+  }
 
   return (
     <CRTFrame>
@@ -216,7 +246,7 @@ function AppContent() {
         <Particles style={{ pointerEvents: 'none' }} />
         <GlobalStyle />
         <div style={{ position: 'relative', zIndex: 10, width: '100%', height: '100%' }}>
-          <MacMenuBar onOpenApp={handleOpenApp} />
+          <MacMenuBar onOpenApp={handleOpenApp} onExit={handleExitToLanding} />
           {/* 桌面 icon */}
           <DesktopIconsContainer style={{ zIndex: 1 }}>
             {APP_CONFIGS.map(app => (
