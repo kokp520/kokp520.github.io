@@ -20,6 +20,7 @@ export const VideoToGif: React.FC = () => {
   const [startTime, setStartTime] = useState<number>(0);
   const [endTime, setEndTime] = useState<number>(3);
   const [currentTime, setCurrentTime] = useState<number>(0);
+  const [exportPreset, setExportPreset] = useState<'slack' | 'custom'>('slack');
   const [fps, setFps] = useState<number>(10);
   const [outputSize, setOutputSize] = useState<number>(128);
 
@@ -54,7 +55,7 @@ export const VideoToGif: React.FC = () => {
     
     setVideoDuration(dur);
     setStartTime(0);
-    setEndTime(dur);
+    setEndTime(exportPreset === 'slack' ? Math.min(dur, 2.0) : dur);
     setCurrentTime(0);
 
     // Force video to seek to 0s and pause so frame renders on mobile browsers without playing
@@ -689,30 +690,46 @@ export const VideoToGif: React.FC = () => {
                       }}
                     />
 
-                    {/* Draggable Start Handle (開始槓槓 / S 標記) */}
+                    {/* Draggable Start Handle (開始槓槓 / S 標記 - 在 Slack 模式下滑動會移動整區間 1.5s) */}
                     <input
                       type="range"
                       min={0}
-                      max={videoDuration || 10}
+                      max={exportPreset === 'slack' ? Math.max(0, (videoDuration || 10) - 1.5) : (videoDuration || 10)}
                       step={0.1}
                       value={startTime}
                       onInput={(e: any) => {
-                        const val = Math.min(parseFloat(e.target.value) || 0, endTime - 0.1);
-                        setStartTime(val);
-                        setCurrentTime(val);
+                        const val = parseFloat(e.target.value) || 0;
+                        if (exportPreset === 'slack') {
+                          const newS = Math.min(val, Math.max(0, (videoDuration || 10) - 1.5));
+                          setStartTime(newS);
+                          setEndTime(newS + 1.5);
+                          setCurrentTime(newS);
+                        } else {
+                          const newS = Math.min(val, endTime - 0.1);
+                          setStartTime(newS);
+                          setCurrentTime(newS);
+                        }
                         if (videoRef.current) {
                           videoRef.current.currentTime = val;
                         }
                       }}
                       onChange={(e) => {
-                        const val = Math.min(parseFloat(e.target.value) || 0, endTime - 0.1);
-                        setStartTime(val);
-                        setCurrentTime(val);
+                        const val = parseFloat(e.target.value) || 0;
+                        if (exportPreset === 'slack') {
+                          const newS = Math.min(val, Math.max(0, (videoDuration || 10) - 1.5));
+                          setStartTime(newS);
+                          setEndTime(newS + 1.5);
+                          setCurrentTime(newS);
+                        } else {
+                          const newS = Math.min(val, endTime - 0.1);
+                          setStartTime(newS);
+                          setCurrentTime(newS);
+                        }
                         if (videoRef.current) {
                           videoRef.current.currentTime = val;
                         }
                       }}
-                      title={`Drag Start Marker (S): ${startTime.toFixed(1)}s`}
+                      title={exportPreset === 'slack' ? `Drag Clip Window (1.5s): ${startTime.toFixed(1)}s` : `Drag Start Marker (S): ${startTime.toFixed(1)}s`}
                       style={{
                         position: 'absolute',
                         left: `calc(${videoDuration ? (startTime / videoDuration) * 100 : 0}% - ${isMobile ? '20px' : '12px'})`,
@@ -750,14 +767,16 @@ export const VideoToGif: React.FC = () => {
                       S
                     </div>
 
-                    {/* Draggable End Handle (結束槓槓 / E 標記) */}
+                    {/* Draggable End Handle (結束槓槓 / E 標記 - Custom 模式可調，Slack 模式固定) */}
                     <input
                       type="range"
                       min={0}
                       max={videoDuration || 10}
                       step={0.1}
+                      disabled={exportPreset === 'slack'}
                       value={endTime}
                       onInput={(e: any) => {
+                        if (exportPreset === 'slack') return;
                         const val = Math.max(parseFloat(e.target.value) || 0.1, startTime + 0.1);
                         setEndTime(val);
                         if (videoRef.current) {
@@ -765,13 +784,14 @@ export const VideoToGif: React.FC = () => {
                         }
                       }}
                       onChange={(e) => {
+                        if (exportPreset === 'slack') return;
                         const val = Math.max(parseFloat(e.target.value) || 0.1, startTime + 0.1);
                         setEndTime(val);
                         if (videoRef.current) {
                           videoRef.current.currentTime = val;
                         }
                       }}
-                      title={`Drag End Marker (E): ${endTime.toFixed(1)}s`}
+                      title={exportPreset === 'slack' ? 'Fixed in Slack Preset' : `Drag End Marker (E): ${endTime.toFixed(1)}s`}
                       style={{
                         position: 'absolute',
                         left: `calc(${videoDuration ? (endTime / videoDuration) * 100 : 0}% - ${isMobile ? '20px' : '12px'})`,
@@ -779,7 +799,7 @@ export const VideoToGif: React.FC = () => {
                         height: '100%',
                         margin: 0,
                         opacity: 0,
-                        cursor: 'ew-resize',
+                        cursor: exportPreset === 'slack' ? 'not-allowed' : 'ew-resize',
                         zIndex: 8,
                         touchAction: 'manipulation'
                       }}
@@ -790,9 +810,9 @@ export const VideoToGif: React.FC = () => {
                         left: `calc(${videoDuration ? (endTime / videoDuration) * 100 : 0}% - ${isMobile ? '10px' : '8px'})`,
                         width: isMobile ? '20px' : '16px',
                         height: '110%',
-                        background: '#FF8E3C',
+                        background: exportPreset === 'slack' ? '#72757E' : '#FF8E3C',
                         border: '2px solid #000000',
-                        boxShadow: '0 0 8px #FF8E3C',
+                        boxShadow: exportPreset === 'slack' ? 'none' : '0 0 8px #FF8E3C',
                         zIndex: 7,
                         pointerEvents: 'none',
                         display: 'flex',
@@ -803,7 +823,8 @@ export const VideoToGif: React.FC = () => {
                         fontWeight: 'bold',
                         color: '#0F0E17',
                         fontFamily: "'Press Start 2P', monospace",
-                        borderRadius: '2px'
+                        borderRadius: '2px',
+                        opacity: exportPreset === 'slack' ? 0.7 : 1
                       }}
                     >
                       E
@@ -860,51 +881,80 @@ export const VideoToGif: React.FC = () => {
                         ▶ PLAY / PAUSE
                       </button>
 
-                      <button
-                        type="button"
-                        onClick={() => {
-                          if (videoRef.current) {
-                            setStartTime(videoRef.current.currentTime);
-                          }
-                        }}
-                        style={{
-                          fontFamily: "'Press Start 2P', monospace",
-                          fontSize: isMobile ? '0.55rem' : '0.6rem',
-                          background: '#2A2A3B',
-                          color: '#2CB67D',
-                          border: '2px solid #000000',
-                          padding: isMobile ? '10px 8px' : '8px 12px',
-                          cursor: 'pointer',
-                          boxShadow: '2px 2px 0px #000000',
-                          minHeight: '44px',
-                          touchAction: 'manipulation'
-                        }}
-                      >
-                        SET [S]
-                      </button>
+                      {exportPreset === 'slack' ? (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            if (videoRef.current) {
+                              const newS = Math.min(videoRef.current.currentTime, Math.max(0, (videoDuration || 10) - 1.5));
+                              setStartTime(newS);
+                              setEndTime(newS + 1.5);
+                            }
+                          }}
+                          style={{
+                            fontFamily: "'Press Start 2P', monospace",
+                            fontSize: isMobile ? '0.55rem' : '0.6rem',
+                            background: '#2CB67D',
+                            color: '#0F0E17',
+                            border: '2px solid #000000',
+                            padding: isMobile ? '10px 8px' : '8px 12px',
+                            cursor: 'pointer',
+                            boxShadow: '2px 2px 0px #000000',
+                            minHeight: '44px',
+                            touchAction: 'manipulation'
+                          }}
+                        >
+                          SET START WINDOW
+                        </button>
+                      ) : (
+                        <>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              if (videoRef.current) {
+                                setStartTime(videoRef.current.currentTime);
+                              }
+                            }}
+                            style={{
+                              fontFamily: "'Press Start 2P', monospace",
+                              fontSize: isMobile ? '0.55rem' : '0.6rem',
+                              background: '#2A2A3B',
+                              color: '#2CB67D',
+                              border: '2px solid #000000',
+                              padding: isMobile ? '10px 8px' : '8px 12px',
+                              cursor: 'pointer',
+                              boxShadow: '2px 2px 0px #000000',
+                              minHeight: '44px',
+                              touchAction: 'manipulation'
+                            }}
+                          >
+                            SET [S]
+                          </button>
 
-                      <button
-                        type="button"
-                        onClick={() => {
-                          if (videoRef.current && videoRef.current.currentTime > startTime) {
-                            setEndTime(videoRef.current.currentTime);
-                          }
-                        }}
-                        style={{
-                          fontFamily: "'Press Start 2P', monospace",
-                          fontSize: isMobile ? '0.55rem' : '0.6rem',
-                          background: '#2A2A3B',
-                          color: '#2CB67D',
-                          border: '2px solid #000000',
-                          padding: isMobile ? '10px 8px' : '8px 12px',
-                          cursor: 'pointer',
-                          boxShadow: '2px 2px 0px #000000',
-                          minHeight: '44px',
-                          touchAction: 'manipulation'
-                        }}
-                      >
-                        SET [E]
-                      </button>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              if (videoRef.current && videoRef.current.currentTime > startTime) {
+                                setEndTime(videoRef.current.currentTime);
+                              }
+                            }}
+                            style={{
+                              fontFamily: "'Press Start 2P', monospace",
+                              fontSize: isMobile ? '0.55rem' : '0.6rem',
+                              background: '#2A2A3B',
+                              color: '#2CB67D',
+                              border: '2px solid #000000',
+                              padding: isMobile ? '10px 8px' : '8px 12px',
+                              cursor: 'pointer',
+                              boxShadow: '2px 2px 0px #000000',
+                              minHeight: '44px',
+                              touchAction: 'manipulation'
+                            }}
+                          >
+                            SET [E]
+                          </button>
+                        </>
+                      )}
                     </div>
 
                     <div style={{
@@ -921,6 +971,85 @@ export const VideoToGif: React.FC = () => {
             </div>
           )}
 
+          {/* Preset Mode Mode Selector */}
+          {videoUrl && (
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '12px',
+              marginBottom: '24px',
+              background: '#0F0E17',
+              border: '3px solid #000000',
+              padding: '16px',
+              boxShadow: '4px 4px 0px #000000'
+            }}>
+              <label style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '0.65rem', color: '#FFFFFE' }}>
+                EXPORT PRESET MODE
+              </label>
+              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setExportPreset('slack');
+                    setOutputSize(128);
+                    setFps(10);
+                    // Lock trim length to fixed 1.5s
+                    const fixedLen = 1.5;
+                    const maxS = Math.max(0, (videoDuration || 10) - fixedLen);
+                    const newS = Math.min(startTime, maxS);
+                    setStartTime(newS);
+                    setEndTime(newS + fixedLen);
+                    if (videoRef.current) {
+                      videoRef.current.currentTime = newS;
+                    }
+                  }}
+                  style={{
+                    fontFamily: "'Press Start 2P', monospace",
+                    fontSize: isMobile ? '0.6rem' : '0.7rem',
+                    background: exportPreset === 'slack' ? '#2CB67D' : '#16161A',
+                    color: exportPreset === 'slack' ? '#0F0E17' : '#A7A9BE',
+                    border: '3px solid #000000',
+                    padding: '12px 16px',
+                    cursor: 'pointer',
+                    boxShadow: exportPreset === 'slack' ? '3px 3px 0px #000000' : 'none',
+                    flex: 1,
+                    minWidth: '160px',
+                    touchAction: 'manipulation'
+                  }}
+                >
+                  ⚡ SLACK EMOJI PRESET (&lt;128KB)
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setExportPreset('custom');
+                  }}
+                  style={{
+                    fontFamily: "'Press Start 2P', monospace",
+                    fontSize: isMobile ? '0.6rem' : '0.7rem',
+                    background: exportPreset === 'custom' ? '#FF8E3C' : '#16161A',
+                    color: exportPreset === 'custom' ? '#0F0E17' : '#A7A9BE',
+                    border: '3px solid #000000',
+                    padding: '12px 16px',
+                    cursor: 'pointer',
+                    boxShadow: exportPreset === 'custom' ? '3px 3px 0px #000000' : 'none',
+                    flex: 1,
+                    minWidth: '160px',
+                    touchAction: 'manipulation'
+                  }}
+                >
+                  ⚙ CUSTOM MODE
+                </button>
+              </div>
+              {exportPreset === 'slack' && (
+                <div style={{ fontFamily: "'VT323', monospace", fontSize: '1.15rem', color: '#2CB67D' }}>
+                  ★ Slack Preset Active: Fixed 128x128, 10 FPS, 1.5s duration limit. Drag the timeline to select the clip window!
+                </div>
+              )}
+            </div>
+          )}
+
           {/* Settings */}
           {videoUrl && (
             <div style={{
@@ -929,6 +1058,7 @@ export const VideoToGif: React.FC = () => {
               gap: '16px',
               marginBottom: '28px'
             }}>
+              {/* FPS Setting */}
               <div style={{
                 flex: 1,
                 minWidth: '150px',
@@ -937,15 +1067,17 @@ export const VideoToGif: React.FC = () => {
                 gap: '8px',
                 border: '3px solid #000000',
                 padding: '16px',
-                background: '#0F0E17',
+                background: exportPreset === 'slack' ? '#16161A' : '#0F0E17',
+                opacity: exportPreset === 'slack' ? 0.6 : 1,
                 boxShadow: '4px 4px 0px #000000'
               }}>
-                <label style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '0.65rem', color: '#FFFFFE' }}>
-                  FPS
+                <label style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '0.65rem', color: exportPreset === 'slack' ? '#A7A9BE' : '#FFFFFE' }}>
+                  FPS {exportPreset === 'slack' && '(LOCKED 10)'}
                 </label>
                 <input
                   type="number"
                   value={fps}
+                  disabled={exportPreset === 'slack'}
                   min={1}
                   max={30}
                   onChange={(e) => setFps(parseInt(e.target.value) || 10)}
@@ -953,11 +1085,12 @@ export const VideoToGif: React.FC = () => {
                     fontFamily: "'VT323', monospace",
                     background: '#16161A',
                     border: '3px solid #000000',
-                    color: '#FF8E3C',
+                    color: exportPreset === 'slack' ? '#72757E' : '#FF8E3C',
                     padding: '8px',
                     fontSize: '1.2rem',
                     outline: 'none',
-                    minHeight: '44px'
+                    minHeight: '44px',
+                    cursor: exportPreset === 'slack' ? 'not-allowed' : 'text'
                   }}
                 />
               </div>
@@ -971,27 +1104,29 @@ export const VideoToGif: React.FC = () => {
                 gap: '8px',
                 border: '3px solid #000000',
                 padding: '16px',
-                background: '#0F0E17',
+                background: exportPreset === 'slack' ? '#16161A' : '#0F0E17',
+                opacity: exportPreset === 'slack' ? 0.6 : 1,
                 boxShadow: '4px 4px 0px #000000'
               }}>
-                <label style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '0.65rem', color: '#FFFFFE' }}>
-                  OUTPUT SIZE ({outputSize}x{outputSize})
+                <label style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '0.65rem', color: exportPreset === 'slack' ? '#A7A9BE' : '#FFFFFE' }}>
+                  OUTPUT SIZE ({outputSize}x{outputSize}) {exportPreset === 'slack' && '(LOCKED)'}
                 </label>
                 <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                   <select
                     value={outputSize}
+                    disabled={exportPreset === 'slack'}
                     onChange={(e) => setOutputSize(parseInt(e.target.value) || 128)}
                     style={{
                       fontFamily: "'VT323', monospace",
                       background: '#16161A',
                       border: '3px solid #000000',
-                      color: '#2CB67D',
+                      color: exportPreset === 'slack' ? '#72757E' : '#2CB67D',
                       padding: '8px',
                       fontSize: '1.2rem',
                       outline: 'none',
                       minHeight: '44px',
                       flex: 1,
-                      cursor: 'pointer'
+                      cursor: exportPreset === 'slack' ? 'not-allowed' : 'pointer'
                     }}
                   >
                     <option value={128}>128 x 128 (Emoji / Avatar)</option>
