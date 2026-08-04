@@ -653,17 +653,85 @@ export const VideoToGif: React.FC = () => {
                   </div>
 
                   {/* Multi-layer Interactive Timeline Track */}
-                  <div style={{
-                    position: 'relative',
-                    height: isMobile ? '40px' : '32px',
-                    background: '#0F0E17',
-                    border: '2px solid #383A3F',
-                    boxShadow: 'inset 0 0 6px rgba(0,0,0,0.8)',
-                    borderRadius: '3px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    overflow: 'visible'
-                  }}>
+                  <div 
+                    style={{
+                      position: 'relative',
+                      height: isMobile ? '40px' : '32px',
+                      background: '#0F0E17',
+                      border: '2px solid #383A3F',
+                      boxShadow: 'inset 0 0 6px rgba(0,0,0,0.8)',
+                      borderRadius: '3px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      overflow: 'visible',
+                      cursor: 'pointer',
+                      touchAction: 'none'
+                    }}
+                    onPointerDown={(e) => {
+                      if (!videoDuration) return;
+                      const rect = e.currentTarget.getBoundingClientRect();
+                      const clickX = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+                      const clickRatio = clickX / rect.width;
+                      const clickedTime = clickRatio * videoDuration;
+
+                      const distS = Math.abs(clickedTime - startTime);
+                      const distE = Math.abs(clickedTime - endTime);
+                      const threshold = (videoDuration * 0.12) || 1.0; // Distance threshold to grab S or E handle
+
+                      let activeTarget: 'S' | 'E' | 'PLAYHEAD' = 'PLAYHEAD';
+                      if (exportPreset === 'slack') {
+                        // In Slack preset, dragging anywhere on track adjusts the S position (moving the 1.5s window)
+                        activeTarget = 'S';
+                      } else {
+                        if (distS <= threshold && distS <= distE) {
+                          activeTarget = 'S';
+                        } else if (distE <= threshold) {
+                          activeTarget = 'E';
+                        } else {
+                          activeTarget = 'PLAYHEAD';
+                        }
+                      }
+
+                      const handlePointerMove = (moveEvent: PointerEvent) => {
+                        const mX = Math.max(0, Math.min(moveEvent.clientX - rect.left, rect.width));
+                        const mTime = (mX / rect.width) * videoDuration;
+
+                        if (exportPreset === 'slack') {
+                          const newS = Math.min(mTime, Math.max(0, videoDuration - 1.5));
+                          setStartTime(newS);
+                          setEndTime(newS + 1.5);
+                          setCurrentTime(newS);
+                          if (videoRef.current) videoRef.current.currentTime = newS;
+                        } else {
+                          if (activeTarget === 'S') {
+                            const newS = Math.min(mTime, endTime - 0.1);
+                            setStartTime(newS);
+                            setCurrentTime(newS);
+                            if (videoRef.current) videoRef.current.currentTime = newS;
+                          } else if (activeTarget === 'E') {
+                            const newE = Math.max(mTime, startTime + 0.1);
+                            setEndTime(newE);
+                            setCurrentTime(newE);
+                            if (videoRef.current) videoRef.current.currentTime = newE;
+                          } else {
+                            setCurrentTime(mTime);
+                            if (videoRef.current) videoRef.current.currentTime = mTime;
+                          }
+                        }
+                      };
+
+                      const handlePointerUp = () => {
+                        window.removeEventListener('pointermove', handlePointerMove);
+                        window.removeEventListener('pointerup', handlePointerUp);
+                      };
+
+                      window.addEventListener('pointermove', handlePointerMove);
+                      window.addEventListener('pointerup', handlePointerUp);
+
+                      // Initial trigger on pointer down
+                      handlePointerMove(e.nativeEvent);
+                    }}
+                  >
                     {/* Selected Clip Highlight Area */}
                     <div style={{
                       position: 'absolute',
@@ -673,7 +741,8 @@ export const VideoToGif: React.FC = () => {
                       background: 'linear-gradient(90deg, rgba(255, 142, 60, 0.2) 0%, rgba(255, 142, 60, 0.4) 50%, rgba(255, 142, 60, 0.2) 100%)',
                       borderLeft: '3px solid #FF8E3C',
                       borderRight: '3px solid #FF8E3C',
-                      boxSizing: 'border-box'
+                      boxSizing: 'border-box',
+                      pointerEvents: 'none'
                     }} />
 
                     {/* Current Playhead Indicator (Green Line / Playhead) */}
@@ -688,91 +757,7 @@ export const VideoToGif: React.FC = () => {
                       pointerEvents: 'none'
                     }} />
 
-                    {/* Scrubber Range Input */}
-                    <input
-                      type="range"
-                      min={0}
-                      max={videoDuration || 10}
-                      step={0.1}
-                      value={currentTime}
-                      onInput={(e: any) => {
-                        const val = parseFloat(e.target.value) || 0;
-                        setCurrentTime(val);
-                        if (videoRef.current) {
-                          videoRef.current.currentTime = val;
-                        }
-                      }}
-                      onChange={(e) => {
-                        const val = parseFloat(e.target.value) || 0;
-                        setCurrentTime(val);
-                        if (videoRef.current) {
-                          videoRef.current.currentTime = val;
-                        }
-                      }}
-                      style={{
-                        position: 'absolute',
-                        width: '100%',
-                        height: '100%',
-                        margin: 0,
-                        opacity: 0,
-                        cursor: 'pointer',
-                        zIndex: 4,
-                        touchAction: 'manipulation'
-                      }}
-                    />
-
-                    {/* Draggable Start Handle (開始槓槓 / S 標記 - 在 Slack 模式下滑動會移動整區間 1.5s) */}
-                    <input
-                      type="range"
-                      min={0}
-                      max={exportPreset === 'slack' ? Math.max(0, (videoDuration || 10) - 1.5) : (videoDuration || 10)}
-                      step={0.1}
-                      value={startTime}
-                      onInput={(e: any) => {
-                        const val = parseFloat(e.target.value) || 0;
-                        if (exportPreset === 'slack') {
-                          const newS = Math.min(val, Math.max(0, (videoDuration || 10) - 1.5));
-                          setStartTime(newS);
-                          setEndTime(newS + 1.5);
-                          setCurrentTime(newS);
-                        } else {
-                          const newS = Math.min(val, endTime - 0.1);
-                          setStartTime(newS);
-                          setCurrentTime(newS);
-                        }
-                        if (videoRef.current) {
-                          videoRef.current.currentTime = val;
-                        }
-                      }}
-                      onChange={(e) => {
-                        const val = parseFloat(e.target.value) || 0;
-                        if (exportPreset === 'slack') {
-                          const newS = Math.min(val, Math.max(0, (videoDuration || 10) - 1.5));
-                          setStartTime(newS);
-                          setEndTime(newS + 1.5);
-                          setCurrentTime(newS);
-                        } else {
-                          const newS = Math.min(val, endTime - 0.1);
-                          setStartTime(newS);
-                          setCurrentTime(newS);
-                        }
-                        if (videoRef.current) {
-                          videoRef.current.currentTime = val;
-                        }
-                      }}
-                      title={exportPreset === 'slack' ? `Drag Clip Window (1.5s): ${startTime.toFixed(1)}s` : `Drag Start Marker (S): ${startTime.toFixed(1)}s`}
-                      style={{
-                        position: 'absolute',
-                        left: 0,
-                        width: '100%',
-                        height: '100%',
-                        margin: 0,
-                        opacity: 0,
-                        cursor: 'ew-resize',
-                        zIndex: 10,
-                        touchAction: 'manipulation'
-                      }}
-                    />
+                    {/* Start Handle (S 標記) */}
                     <div 
                       style={{
                         position: 'absolute',
@@ -798,43 +783,7 @@ export const VideoToGif: React.FC = () => {
                       S
                     </div>
 
-                    {/* Draggable End Handle (結束槓槓 / E 標記 - Custom 模式可調，Slack 模式固定) */}
-                    <input
-                      type="range"
-                      min={0}
-                      max={videoDuration || 10}
-                      step={0.1}
-                      disabled={exportPreset === 'slack'}
-                      value={endTime}
-                      onInput={(e: any) => {
-                        if (exportPreset === 'slack') return;
-                        const val = Math.max(parseFloat(e.target.value) || 0.1, startTime + 0.1);
-                        setEndTime(val);
-                        if (videoRef.current) {
-                          videoRef.current.currentTime = val;
-                        }
-                      }}
-                      onChange={(e) => {
-                        if (exportPreset === 'slack') return;
-                        const val = Math.max(parseFloat(e.target.value) || 0.1, startTime + 0.1);
-                        setEndTime(val);
-                        if (videoRef.current) {
-                          videoRef.current.currentTime = val;
-                        }
-                      }}
-                      title={exportPreset === 'slack' ? 'Fixed in Slack Preset' : `Drag End Marker (E): ${endTime.toFixed(1)}s`}
-                      style={{
-                        position: 'absolute',
-                        left: 0,
-                        width: '100%',
-                        height: '100%',
-                        margin: 0,
-                        opacity: 0,
-                        cursor: exportPreset === 'slack' ? 'not-allowed' : 'ew-resize',
-                        zIndex: exportPreset === 'slack' ? 1 : 12,
-                        touchAction: 'manipulation'
-                      }}
-                    />
+                    {/* End Handle (E 標記) */}
                     <div 
                       style={{
                         position: 'absolute',
