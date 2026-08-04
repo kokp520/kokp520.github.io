@@ -219,23 +219,26 @@ export const VideoToGif: React.FC = () => {
         }}>
           {/* Header */}
           <div style={{ marginBottom: '32px', borderBottom: '3px dashed #383A3F', paddingBottom: '20px' }}>
-            <div style={{
-              fontFamily: "'Press Start 2P', monospace",
-              fontSize: '0.65rem',
-              color: '#2CB67D',
-              letterSpacing: '1px',
-              marginBottom: '8px'
-            }}>
+            <div 
+              className="game-blink"
+              style={{
+                fontFamily: "'Press Start 2P', monospace",
+                fontSize: '0.65rem',
+                letterSpacing: '1px',
+                marginBottom: '8px'
+              }}
+            >
               ★ SYSTEM UTILITY // CONVERTER ★
             </div>
-            <h1 style={{
-              fontFamily: "'Press Start 2P', monospace",
-              fontSize: '1.8rem',
-              color: '#FFFFFE',
-              margin: '0 0 12px 0',
-              textShadow: '3px 3px 0px #FF8E3C, 5px 5px 0px #000000',
-              lineHeight: 1.3
-            }}>
+            <h1 
+              className="game-color-shift"
+              style={{
+                fontFamily: "'Press Start 2P', monospace",
+                fontSize: '1.6rem',
+                margin: '0 0 12px 0',
+                lineHeight: 1.3
+              }}
+            >
               VIDEO TO GIF CROPPER
             </h1>
             <p style={{ color: '#A7A9BE', fontSize: '1.2rem', margin: 0 }}>

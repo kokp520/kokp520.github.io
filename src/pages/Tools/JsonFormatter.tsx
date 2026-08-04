@@ -304,13 +304,14 @@ export const JsonFormatter: React.FC = () => {
               ◄ BACK TO TOOLBOX
             </Link>
 
-            <h1 style={{
-              fontFamily: "'Press Start 2P', monospace",
-              fontSize: '1.4rem',
-              color: '#2CB67D',
-              margin: 0,
-              textShadow: '3px 3px 0px #000000'
-            }}>
+            <h1 
+              className="game-color-shift"
+              style={{
+                fontFamily: "'Press Start 2P', monospace",
+                fontSize: '1.2rem',
+                margin: 0
+              }}
+            >
               JSON FORMATTER
             </h1>
           </div>

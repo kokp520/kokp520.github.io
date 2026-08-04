@@ -67,35 +67,38 @@ export const ToolsIndex: React.FC = () => {
 
       {/* Title Header */}
       <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-        <div style={{
-          fontFamily: "'Press Start 2P', monospace",
-          fontSize: '0.75rem',
-          color: '#2CB67D',
-          letterSpacing: '2px',
-          marginBottom: '12px',
-          textTransform: 'uppercase'
-        }}>
+        <div 
+          className="game-blink"
+          style={{
+            fontFamily: "'Press Start 2P', monospace",
+            fontSize: '0.75rem',
+            letterSpacing: '2px',
+            marginBottom: '12px',
+            textTransform: 'uppercase'
+          }}
+        >
           ★ SYSTEM TOOLBOX V1.0 ★
         </div>
 
-        <h1 style={{
-          fontFamily: "'Press Start 2P', monospace",
-          fontSize: '2.5rem',
-          color: '#FFFFFE',
-          margin: '0 0 16px 0',
-          lineHeight: 1.3,
-          textShadow: '4px 4px 0px #FF8E3C, 8px 8px 0px #000000',
-          letterSpacing: '-1px'
-        }}>
+        <h1 
+          className="game-color-shift"
+          style={{
+            fontFamily: "'Press Start 2P', monospace",
+            fontSize: '1.6rem',
+            margin: '0 0 14px 0',
+            lineHeight: 1.3,
+            letterSpacing: '0px'
+          }}
+        >
           ADI'S TOOLBOX
         </h1>
 
         <p style={{ 
-          fontSize: '1.5rem', 
+          fontSize: '1.1rem', 
           margin: 0,
           color: '#A7A9BE',
           fontFamily: "'VT323', 'DotGothic16', monospace",
-          letterSpacing: '1px'
+          letterSpacing: '0.5px'
         }}>
           UTILITY INVENTORY & DEVELOPER TOOLS
         </p>
@@ -175,14 +178,14 @@ export const ToolsIndex: React.FC = () => {
             <div>
               <div style={{ 
                 fontFamily: "'Press Start 2P', monospace",
-                fontSize: '1.1rem', 
+                fontSize: '0.9rem', 
                 color: '#FFFFFE',
                 lineHeight: 1.2
               }}>
                 GIF TO ZIP
               </div>
               <div style={{
-                fontSize: '1rem',
+                fontSize: '0.85rem',
                 color: '#2CB67D',
                 marginTop: '6px'
               }}>
@@ -193,7 +196,7 @@ export const ToolsIndex: React.FC = () => {
 
           <div 
             style={{ 
-              fontSize: '1.25rem', 
+              fontSize: '1rem', 
               color: '#A7A9BE', 
               lineHeight: 1.5,
               fontFamily: "'VT323', 'DotGothic16', monospace"

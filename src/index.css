@@ -15,8 +15,8 @@
   --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
+  font: 15px/150% var(--sans);
+  letter-spacing: 0.15px;
   color-scheme: light dark;
   color: var(--text);
   background: var(--bg);
@@ -26,7 +26,7 @@
   -moz-osx-font-smoothing: grayscale;
 
   @media (max-width: 1024px) {
-    font-size: 16px;
+    font-size: 14px;
   }
 }
 
@@ -74,21 +74,21 @@ h2 {
 }
 
 h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
+  font-size: 36px;
+  letter-spacing: -1px;
+  margin: 24px 0;
   @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
+    font-size: 28px;
+    margin: 16px 0;
   }
 }
 h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
+  font-size: 20px;
+  line-height: 125%;
+  letter-spacing: -0.2px;
   margin: 0 0 8px;
   @media (max-width: 1024px) {
-    font-size: 20px;
+    font-size: 18px;
   }
 }
 p {
@@ -109,3 +109,49 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+/* Retro Game Font Animations */
+@keyframes game-blink {
+  0%, 100% {
+    opacity: 1;
+    color: #FF8E3C;
+    text-shadow: 0 0 8px rgba(255, 142, 60, 0.6);
+  }
+  50% {
+    opacity: 0.35;
+    color: #2CB67D;
+    text-shadow: 0 0 4px rgba(44, 182, 125, 0.3);
+  }
+}
+
+@keyframes game-color-shift {
+  0% {
+    color: #FF8E3C;
+    text-shadow: 2px 2px 0px #000000;
+  }
+  25% {
+    color: #2CB67D;
+    text-shadow: 2px 2px 0px #000000;
+  }
+  50% {
+    color: #72F2B2;
+    text-shadow: 2px 2px 0px #000000;
+  }
+  75% {
+    color: #E8C547;
+    text-shadow: 2px 2px 0px #000000;
+  }
+  100% {
+    color: #FF8E3C;
+    text-shadow: 2px 2px 0px #000000;
+  }
+}
+
+.game-blink {
+  animation: game-blink 1.2s steps(2, start) infinite;
+}
+
+.game-color-shift {
+  animation: game-color-shift 3s infinite;
+}
+
