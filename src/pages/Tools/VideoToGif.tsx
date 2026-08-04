@@ -20,6 +20,7 @@ export const VideoToGif: React.FC = () => {
   const [endTime, setEndTime] = useState<number>(3);
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [fps, setFps] = useState<number>(10);
+  const [outputSize, setOutputSize] = useState<number>(128);
 
   // Crop box properties
   const [cropBox, setCropBox] = useState({ x: 0, y: 0, width: 200, height: 200 });
@@ -133,19 +134,19 @@ export const VideoToGif: React.FC = () => {
     const sourceW = Math.min(naturalW - sourceX, cropBox.width * scale);
     const sourceH = Math.min(naturalH - sourceY, cropBox.height * scale);
 
-    const outputSize = 300;
+    const targetSize = outputSize || 128;
 
     const gif = new GIF({
       workers: 2,
       quality: 10,
       workerScript: '/gif.worker.js',
-      width: outputSize,
-      height: outputSize,
+      width: targetSize,
+      height: targetSize,
     });
 
     const canvas = document.createElement('canvas');
-    canvas.width = outputSize;
-    canvas.height = outputSize;
+    canvas.width = targetSize;
+    canvas.height = targetSize;
     const ctx = canvas.getContext('2d', { willReadFrequently: true });
     if (!ctx) {
       setStatusText('Failed to get canvas context');
@@ -197,13 +198,13 @@ export const VideoToGif: React.FC = () => {
       // Frame decode wait
       await new Promise((res) => setTimeout(res, 40));
 
-      ctx.clearRect(0, 0, outputSize, outputSize);
+      ctx.clearRect(0, 0, targetSize, targetSize);
 
       try {
         ctx.drawImage(
           video,
           sourceX, sourceY, sourceW, sourceH,
-          0, 0, outputSize, outputSize
+          0, 0, targetSize, targetSize
         );
       } catch (err) {
         console.error('Error drawing frame to canvas:', err);
@@ -957,6 +958,46 @@ export const VideoToGif: React.FC = () => {
                     minHeight: '44px'
                   }}
                 />
+              </div>
+
+              {/* Output Size Formatter */}
+              <div style={{
+                flex: 1,
+                minWidth: '200px',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '8px',
+                border: '3px solid #000000',
+                padding: '16px',
+                background: '#0F0E17',
+                boxShadow: '4px 4px 0px #000000'
+              }}>
+                <label style={{ fontFamily: "'Press Start 2P', monospace", fontSize: '0.65rem', color: '#FFFFFE' }}>
+                  OUTPUT SIZE ({outputSize}x{outputSize})
+                </label>
+                <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                  <select
+                    value={outputSize}
+                    onChange={(e) => setOutputSize(parseInt(e.target.value) || 128)}
+                    style={{
+                      fontFamily: "'VT323', monospace",
+                      background: '#16161A',
+                      border: '3px solid #000000',
+                      color: '#2CB67D',
+                      padding: '8px',
+                      fontSize: '1.2rem',
+                      outline: 'none',
+                      minHeight: '44px',
+                      flex: 1,
+                      cursor: 'pointer'
+                    }}
+                  >
+                    <option value={128}>128 x 128 (Emoji / Avatar)</option>
+                    <option value={200}>200 x 200 (Medium)</option>
+                    <option value={300}>300 x 300 (Standard)</option>
+                    <option value={400}>400 x 400 (High Res)</option>
+                  </select>
+                </div>
               </div>
             </div>
           )}
