@@ -155,6 +155,7 @@ export const VideoToGif: React.FC = () => {
 
   // Touch/Mobile detection state
   const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 768);
+  const [isDraggingCrop, setIsDraggingCrop] = useState<boolean>(false);
 
   React.useEffect(() => {
     const handleResize = () => {
@@ -163,6 +164,33 @@ export const VideoToGif: React.FC = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  const handleSaveToImages = async () => {
+    if (!result) return;
+    try {
+      const response = await fetch(result);
+      const blob = await response.blob();
+      const fileName = `${selectedFile?.name ? selectedFile.name.replace(/\.[^/.]+$/, '') : 'exported'}.gif`;
+      const file = new File([blob], fileName, { type: 'image/gif' });
+
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title: 'Exported GIF',
+          text: 'Save or share this GIF',
+        });
+      } else {
+        // Fallback: Open image in new window/tab or direct long-press overlay
+        const newTab = window.open(result, '_blank');
+        if (!newTab) {
+          alert('Long press the GIF image above and select "Save to Photos" / "Save Image".');
+        }
+      }
+    } catch (err) {
+      console.error('Error saving image:', err);
+      alert('Long press the GIF image above and select "Save to Photos" / "Save Image".');
+    }
+  };
 
   return (
     <div style={{
@@ -361,6 +389,8 @@ export const VideoToGif: React.FC = () => {
                     ref={videoRef}
                     src={videoUrl}
                     crossOrigin="anonymous"
+                    playsInline
+                    webkit-playsinline="true"
                     onLoadedData={handleVideoLoaded}
                     onTimeUpdate={() => {
                       if (videoRef.current) {
@@ -378,10 +408,14 @@ export const VideoToGif: React.FC = () => {
                       bounds="parent"
                       position={{ x: cropBox.x, y: cropBox.y }}
                       size={{ width: cropBox.width, height: cropBox.height }}
+                      onDragStart={() => setIsDraggingCrop(true)}
                       onDragStop={(_e, d) => {
+                        setIsDraggingCrop(false);
                         setCropBox(prev => ({ ...prev, x: d.x, y: d.y }));
                       }}
+                      onResizeStart={() => setIsDraggingCrop(true)}
                       onResizeStop={(_e, _dir, ref, _delta, position) => {
+                        setIsDraggingCrop(false);
                         const newSize = Math.max(50, Math.min(ref.offsetWidth, ref.offsetHeight));
                         setCropBox({
                           width: newSize,
@@ -393,7 +427,7 @@ export const VideoToGif: React.FC = () => {
                       lockAspectRatio={true}
                       style={{
                         border: '3px dashed #2CB67D',
-                        boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.6)',
+                        boxShadow: isDraggingCrop ? '0 0 0 9999px rgba(0, 0, 0, 0.6)' : 'none',
                         cursor: 'move',
                         zIndex: 10,
                         touchAction: 'none'
@@ -857,36 +891,68 @@ export const VideoToGif: React.FC = () => {
               <div style={{ border: '3px solid #000000', padding: '8px', background: '#16161A', width: '100%', boxSizing: 'border-box', display: 'flex', justifyContent: 'center' }}>
                 <img src={result} alt="Generated GIF" style={{ maxWidth: '100%', maxHeight: '300px', display: 'block', imageRendering: 'pixelated' }} />
               </div>
-              <a
-                href={result}
-                download={`${selectedFile?.name || 'video'}.gif`}
-                style={{
-                  fontFamily: "'Press Start 2P', monospace",
-                  display: 'block',
-                  background: '#FF8E3C',
-                  color: '#0F0E17',
-                  textDecoration: 'none',
-                  padding: '16px 20px',
-                  fontSize: isMobile ? '0.7rem' : '0.8rem',
-                  width: '100%',
-                  textAlign: 'center',
-                  border: '3px solid #000000',
-                  boxShadow: '4px 4px 0px #000000',
-                  boxSizing: 'border-box',
-                  minHeight: '48px',
-                  touchAction: 'manipulation'
-                }}
-                onMouseDown={(e) => {
-                  e.currentTarget.style.transform = 'translate(3px, 3px)';
-                  e.currentTarget.style.boxShadow = '1px 1px 0px #000000';
-                }}
-                onMouseUp={(e) => {
-                  e.currentTarget.style.transform = 'translate(0px, 0px)';
-                  e.currentTarget.style.boxShadow = '4px 4px 0px #000000';
-                }}
-              >
-                DOWNLOAD GIF (.GIF) ►
-              </a>
+              <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: '12px', width: '100%' }}>
+                <a
+                  href={result}
+                  download={`${selectedFile?.name || 'video'}.gif`}
+                  style={{
+                    fontFamily: "'Press Start 2P', monospace",
+                    display: 'block',
+                    background: '#FF8E3C',
+                    color: '#0F0E17',
+                    textDecoration: 'none',
+                    padding: '16px 20px',
+                    fontSize: isMobile ? '0.65rem' : '0.75rem',
+                    flex: 1,
+                    textAlign: 'center',
+                    border: '3px solid #000000',
+                    boxShadow: '4px 4px 0px #000000',
+                    boxSizing: 'border-box',
+                    minHeight: '48px',
+                    touchAction: 'manipulation'
+                  }}
+                  onMouseDown={(e) => {
+                    e.currentTarget.style.transform = 'translate(3px, 3px)';
+                    e.currentTarget.style.boxShadow = '1px 1px 0px #000000';
+                  }}
+                  onMouseUp={(e) => {
+                    e.currentTarget.style.transform = 'translate(0px, 0px)';
+                    e.currentTarget.style.boxShadow = '4px 4px 0px #000000';
+                  }}
+                >
+                  DOWNLOAD (.GIF) ►
+                </a>
+                <button
+                  type="button"
+                  onClick={handleSaveToImages}
+                  style={{
+                    fontFamily: "'Press Start 2P', monospace",
+                    display: 'block',
+                    background: '#2CB67D',
+                    color: '#0F0E17',
+                    padding: '16px 20px',
+                    fontSize: isMobile ? '0.65rem' : '0.75rem',
+                    flex: 1,
+                    textAlign: 'center',
+                    border: '3px solid #000000',
+                    boxShadow: '4px 4px 0px #000000',
+                    boxSizing: 'border-box',
+                    minHeight: '48px',
+                    cursor: 'pointer',
+                    touchAction: 'manipulation'
+                  }}
+                  onMouseDown={(e) => {
+                    e.currentTarget.style.transform = 'translate(3px, 3px)';
+                    e.currentTarget.style.boxShadow = '1px 1px 0px #000000';
+                  }}
+                  onMouseUp={(e) => {
+                    e.currentTarget.style.transform = 'translate(0px, 0px)';
+                    e.currentTarget.style.boxShadow = '4px 4px 0px #000000';
+                  }}
+                >
+                  SAVE TO PHOTOS 🖼
+                </button>
+              </div>
             </div>
           )}
         </div>
