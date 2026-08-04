@@ -494,12 +494,22 @@ export const VideoToGif: React.FC = () => {
                       playsInline
                       webkit-playsinline="true"
                       onLoadStart={() => setIsVideoLoading(true)}
-                      onLoadedMetadata={handleVideoLoaded}
-                      onLoadedData={handleVideoLoaded}
-                      onCanPlay={() => {
-                        if (videoRef.current) {
-                          videoRef.current.currentTime = 0;
+                      onLoadedMetadata={(e) => {
+                        handleVideoLoaded(e);
+                        const v = e.currentTarget;
+                        // iOS Safari requires a play() + pause() tick on muted video to decode and display the first frame
+                        const p = v.play();
+                        if (p !== undefined) {
+                          p.then(() => {
+                            v.pause();
+                            v.currentTime = 0;
+                          }).catch(() => {
+                            v.currentTime = 0;
+                          });
                         }
+                      }}
+                      onLoadedData={(e) => {
+                        handleVideoLoaded(e);
                       }}
                       onTimeUpdate={() => {
                         if (videoRef.current) {
@@ -676,7 +686,7 @@ export const VideoToGif: React.FC = () => {
                       }}
                     />
 
-                    {/* Draggable Start Handle (開始槓槓 / 綠線起點) */}
+                    {/* Draggable Start Handle (開始槓槓 / S 標記) */}
                     <input
                       type="range"
                       min={0}
@@ -699,44 +709,45 @@ export const VideoToGif: React.FC = () => {
                           videoRef.current.currentTime = val;
                         }
                       }}
-                      title={`Drag Start Marker: ${startTime.toFixed(1)}s`}
+                      title={`Drag Start Marker (S): ${startTime.toFixed(1)}s`}
                       style={{
                         position: 'absolute',
-                        left: `calc(${videoDuration ? (startTime / videoDuration) * 100 : 0}% - ${isMobile ? '16px' : '10px'})`,
-                        width: isMobile ? '32px' : '20px',
+                        left: `calc(${videoDuration ? (startTime / videoDuration) * 100 : 0}% - ${isMobile ? '20px' : '12px'})`,
+                        width: isMobile ? '40px' : '24px',
                         height: '100%',
                         margin: 0,
                         opacity: 0,
                         cursor: 'ew-resize',
-                        zIndex: 6,
+                        zIndex: 8,
                         touchAction: 'manipulation'
                       }}
                     />
                     <div 
                       style={{
                         position: 'absolute',
-                        left: `calc(${videoDuration ? (startTime / videoDuration) * 100 : 0}% - ${isMobile ? '8px' : '6px'})`,
-                        width: isMobile ? '16px' : '12px',
-                        height: '100%',
-                        background: '#2CB67D',
+                        left: `calc(${videoDuration ? (startTime / videoDuration) * 100 : 0}% - ${isMobile ? '10px' : '8px'})`,
+                        width: isMobile ? '20px' : '16px',
+                        height: '110%',
+                        background: '#FF8E3C',
                         border: '2px solid #000000',
-                        boxShadow: '0 0 6px #2CB67D',
-                        zIndex: 2,
+                        boxShadow: '0 0 8px #FF8E3C',
+                        zIndex: 7,
                         pointerEvents: 'none',
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        fontSize: isMobile ? '9px' : '8px',
+                        fontSize: isMobile ? '10px' : '9px',
                         fontWeight: 'bold',
                         color: '#0F0E17',
-                        fontFamily: "'Press Start 2P', monospace"
+                        fontFamily: "'Press Start 2P', monospace",
+                        borderRadius: '2px'
                       }}
                     >
                       S
                     </div>
 
-                    {/* Draggable End Handle (結束槓槓) */}
+                    {/* Draggable End Handle (結束槓槓 / E 標記) */}
                     <input
                       type="range"
                       min={0}
@@ -757,38 +768,39 @@ export const VideoToGif: React.FC = () => {
                           videoRef.current.currentTime = val;
                         }
                       }}
-                      title={`Drag End Marker: ${endTime.toFixed(1)}s`}
+                      title={`Drag End Marker (E): ${endTime.toFixed(1)}s`}
                       style={{
                         position: 'absolute',
-                        left: `calc(${videoDuration ? (endTime / videoDuration) * 100 : 0}% - ${isMobile ? '16px' : '10px'})`,
-                        width: isMobile ? '32px' : '20px',
+                        left: `calc(${videoDuration ? (endTime / videoDuration) * 100 : 0}% - ${isMobile ? '20px' : '12px'})`,
+                        width: isMobile ? '40px' : '24px',
                         height: '100%',
                         margin: 0,
                         opacity: 0,
                         cursor: 'ew-resize',
-                        zIndex: 7,
+                        zIndex: 8,
                         touchAction: 'manipulation'
                       }}
                     />
                     <div 
                       style={{
                         position: 'absolute',
-                        left: `calc(${videoDuration ? (endTime / videoDuration) * 100 : 0}% - ${isMobile ? '8px' : '6px'})`,
-                        width: isMobile ? '16px' : '12px',
-                        height: '100%',
+                        left: `calc(${videoDuration ? (endTime / videoDuration) * 100 : 0}% - ${isMobile ? '10px' : '8px'})`,
+                        width: isMobile ? '20px' : '16px',
+                        height: '110%',
                         background: '#FF8E3C',
                         border: '2px solid #000000',
-                        boxShadow: '0 0 6px #FF8E3C',
-                        zIndex: 2,
+                        boxShadow: '0 0 8px #FF8E3C',
+                        zIndex: 7,
                         pointerEvents: 'none',
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        fontSize: isMobile ? '9px' : '8px',
+                        fontSize: isMobile ? '10px' : '9px',
                         fontWeight: 'bold',
                         color: '#0F0E17',
-                        fontFamily: "'Press Start 2P', monospace"
+                        fontFamily: "'Press Start 2P', monospace",
+                        borderRadius: '2px'
                       }}
                     >
                       E
