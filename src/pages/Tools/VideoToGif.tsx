@@ -48,24 +48,42 @@ export const VideoToGif: React.FC = () => {
 
   const handleVideoLoaded = (e: React.SyntheticEvent<HTMLVideoElement, Event>) => {
     const video = e.currentTarget;
-    const rect = video.getBoundingClientRect();
     const dur = video.duration || 10;
+    
     setVideoDuration(dur);
     setStartTime(0);
-    setEndTime(Math.min(3, dur));
+    setEndTime(dur);
     setCurrentTime(0);
+
+    // Force video to seek to 0s and pause so frame renders on mobile browsers without playing
+    video.currentTime = 0;
+    try {
+      video.pause();
+    } catch (_err) {}
+
+    // Calculate actual rendered video dimensions considering object-fit: contain
+    const rect = video.getBoundingClientRect();
+    const naturalW = video.videoWidth || 300;
+    const naturalH = video.videoHeight || 300;
+    const elemW = rect.width || 300;
+    const elemH = rect.height || 300;
+
+    const cropSize = Math.min(200, Math.min(elemW * 0.8, elemH * 0.8));
+
     setVideoDim({
-      width: rect.width,
-      height: rect.height,
-      naturalWidth: video.videoWidth,
-      naturalHeight: video.videoHeight,
+      width: elemW,
+      height: elemH,
+      naturalWidth: naturalW,
+      naturalHeight: naturalH,
     });
+
     setCropBox({
-      x: (rect.width - 200) / 2,
-      y: (rect.height - 200) / 2,
-      width: 200,
-      height: 200,
+      x: (elemW - cropSize) / 2,
+      y: (elemH - cropSize) / 2,
+      width: cropSize,
+      height: cropSize,
     });
+
     setIsVideoLoading(false);
   };
 
@@ -478,6 +496,11 @@ export const VideoToGif: React.FC = () => {
                       onLoadStart={() => setIsVideoLoading(true)}
                       onLoadedMetadata={handleVideoLoaded}
                       onLoadedData={handleVideoLoaded}
+                      onCanPlay={() => {
+                        if (videoRef.current) {
+                          videoRef.current.currentTime = 0;
+                        }
+                      }}
                       onTimeUpdate={() => {
                         if (videoRef.current) {
                           setCurrentTime(videoRef.current.currentTime);
@@ -627,6 +650,13 @@ export const VideoToGif: React.FC = () => {
                       max={videoDuration || 10}
                       step={0.1}
                       value={currentTime}
+                      onInput={(e: any) => {
+                        const val = parseFloat(e.target.value) || 0;
+                        setCurrentTime(val);
+                        if (videoRef.current) {
+                          videoRef.current.currentTime = val;
+                        }
+                      }}
                       onChange={(e) => {
                         const val = parseFloat(e.target.value) || 0;
                         setCurrentTime(val);
@@ -653,6 +683,14 @@ export const VideoToGif: React.FC = () => {
                       max={videoDuration || 10}
                       step={0.1}
                       value={startTime}
+                      onInput={(e: any) => {
+                        const val = Math.min(parseFloat(e.target.value) || 0, endTime - 0.1);
+                        setStartTime(val);
+                        setCurrentTime(val);
+                        if (videoRef.current) {
+                          videoRef.current.currentTime = val;
+                        }
+                      }}
                       onChange={(e) => {
                         const val = Math.min(parseFloat(e.target.value) || 0, endTime - 0.1);
                         setStartTime(val);
@@ -705,6 +743,13 @@ export const VideoToGif: React.FC = () => {
                       max={videoDuration || 10}
                       step={0.1}
                       value={endTime}
+                      onInput={(e: any) => {
+                        const val = Math.max(parseFloat(e.target.value) || 0.1, startTime + 0.1);
+                        setEndTime(val);
+                        if (videoRef.current) {
+                          videoRef.current.currentTime = val;
+                        }
+                      }}
                       onChange={(e) => {
                         const val = Math.max(parseFloat(e.target.value) || 0.1, startTime + 0.1);
                         setEndTime(val);
