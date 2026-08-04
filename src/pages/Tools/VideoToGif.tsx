@@ -11,6 +11,7 @@ export const VideoToGif: React.FC = () => {
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [statusText, setStatusText] = useState<string>('');
   const [result, setResult] = useState<string | null>(null);
+  const [resultSizeKb, setResultSizeKb] = useState<number | null>(null);
 
   // Video properties
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -165,7 +166,8 @@ export const VideoToGif: React.FC = () => {
     gif.on('finished', (blob: Blob) => {
       const url = URL.createObjectURL(blob);
       setResult(url);
-      setStatusText('Done!');
+      setResultSizeKb(Math.round(blob.size / 1024));
+      setStatusText(`Done! (${(blob.size / 1024).toFixed(1)} KB)`);
       setIsProcessing(false);
     });
 
@@ -1074,6 +1076,28 @@ export const VideoToGif: React.FC = () => {
               }}>
                 ✓ CONVERSION COMPLETE
               </div>
+
+              {resultSizeKb !== null && (
+                <div style={{
+                  background: resultSizeKb <= 128 ? 'rgba(44, 182, 125, 0.15)' : 'rgba(255, 142, 60, 0.15)',
+                  border: `2px solid ${resultSizeKb <= 128 ? '#2CB67D' : '#FF8E3C'}`,
+                  padding: '10px 14px',
+                  borderRadius: '4px',
+                  textAlign: 'center',
+                  fontFamily: "'VT323', monospace",
+                  fontSize: '1.2rem',
+                  color: resultSizeKb <= 128 ? '#2CB67D' : '#FF8E3C',
+                  width: '100%',
+                  boxSizing: 'border-box'
+                }}>
+                  {resultSizeKb <= 128 ? (
+                    <span>★ FILE SIZE: <strong>{resultSizeKb} KB</strong> (Ready for Slack Emoji &lt; 128KB!)</span>
+                  ) : (
+                    <span>⚠️ FILE SIZE: <strong>{resultSizeKb} KB</strong> (&gt; 128KB Slack Limit! Lower <strong>FPS</strong> or trim timeline duration to fit under 128KB)</span>
+                  )}
+                </div>
+              )}
+
               <div style={{ border: '3px solid #000000', padding: '8px', background: '#16161A', width: '100%', boxSizing: 'border-box', display: 'flex', justifyContent: 'center' }}>
                 <img src={result} alt="Generated GIF" style={{ maxWidth: '100%', maxHeight: '300px', display: 'block', imageRendering: 'pixelated' }} />
               </div>
