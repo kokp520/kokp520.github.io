@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 
-function createTab(url = "https://kokp520.github.io/#/tools") {
+function createTab(url = "https://adiolk98.github.io/#/tools") {
   return {
     id: Date.now() + Math.random(),
     url,
